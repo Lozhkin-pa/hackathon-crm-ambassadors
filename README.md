@@ -50,4 +50,4 @@
 - [Miron Sadykov](https://github.com/Reagent992)
 - [Samsonov Dmitrii](https://github.com/Samsooon)
 - [Natalia Arlazarova](https://github.com/Sic15)
-- TODO:
+- [Pavel Lozhkin](https://github.com/Lozhkin-pa)
