@@ -29,9 +29,11 @@ DB_HOST = env.str("DB_HOST", default="db")
 DB_PORT = env.int("DB_PORT", default=5432)
 CORS_ALLOWED_ORIGINS = env.list(
     "CORS_ALLOWED_ORIGINS",
-    default=["http://localhost:80", "http://127.0.0.1:80"],
+    default=["http://localhost:8000", "http://127.0.0.1:8000"],
 )
 CSRF_TRUSTED_ORIGINS = CORS_ORIGINS_WHITELIST = CORS_ALLOWED_ORIGINS
+if DEBUG:
+    CORS_ALLOW_ALL_ORIGINS = True
 LANGUAGE_CODE = env.str("LANGUAGE_CODE", default="ru-RU")
 TIME_ZONE = env.str("TIME_ZONE", default="Europe/Moscow")
 # -----------------------------------------------------------------------------
@@ -49,12 +51,14 @@ DJANGO_APPS = [
 THIRD_PARTY_APPS = [
     "rest_framework",
     "rest_framework.authtoken",
+    "djoser",
     "django_filters",
     "drf_spectacular",
     "corsheaders",
 ]
 LOCAL_APPS = [
     "api.v1.apps.ApiConfig",
+    "users.apps.UsersConfig",
 ]
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 
@@ -135,6 +139,8 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 MEDIA_URL = "/media/"
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+
+AUTH_USER_MODEL = "users.ExtendedUser"
 # -----------------------------------------------------------------DRF SETTINGS
 REST_FRAMEWORK = {
     "DEFAULT_PERMISSION_CLASSES": [
@@ -144,11 +150,29 @@ REST_FRAMEWORK = {
     "PAGE_SIZE": 10,
     "DEFAULT_AUTHENTICATION_CLASSES": [
         "rest_framework.authentication.TokenAuthentication",
-        # TODO: Basic и Session Authentication используются для доступа WebAPi, удалить их позже.
-        "rest_framework.authentication.BasicAuthentication",
-        "rest_framework.authentication.SessionAuthentication",
     ],
     "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
+    "DEFAULT_THROTTLE_CLASSES": [
+        "rest_framework.throttling.UserRateThrottle",
+        "rest_framework.throttling.AnonRateThrottle",
+    ],
+    "DEFAULT_THROTTLE_RATES": {
+        "user": "10000/day",
+        "anon": "1000/day",
+    },
+}
+if DEBUG:
+    REST_FRAMEWORK["DEFAULT_AUTHENTICATION_CLASSES"] = [
+        "rest_framework.authentication.TokenAuthentication",
+        "rest_framework.authentication.BasicAuthentication",
+        "rest_framework.authentication.SessionAuthentication",
+    ]
+# --------------------------------------------------------------DJOSER SETTINGS
+DJOSER = {
+    "SERIALIZERS": {
+        "current_user": "api.v1.serializers.users_serializer.CustomUserSerializer",
+    },
+    "LOGIN_FIELD": "email",
 }
 # ---------------------------------------------------------SPECTACULAR_SETTINGS
 SPECTACULAR_SETTINGS = {
