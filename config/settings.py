@@ -29,9 +29,11 @@ DB_HOST = env.str("DB_HOST", default="db")
 DB_PORT = env.int("DB_PORT", default=5432)
 CORS_ALLOWED_ORIGINS = env.list(
     "CORS_ALLOWED_ORIGINS",
-    default=["*"],
+    default=["http://localhost:8000", "http://127.0.0.1:8000"],
 )
 CSRF_TRUSTED_ORIGINS = CORS_ORIGINS_WHITELIST = CORS_ALLOWED_ORIGINS
+if DEBUG:
+    CORS_ALLOW_ALL_ORIGINS = True
 LANGUAGE_CODE = env.str("LANGUAGE_CODE", default="ru-RU")
 TIME_ZONE = env.str("TIME_ZONE", default="Europe/Moscow")
 # -----------------------------------------------------------------------------
