@@ -3,7 +3,7 @@ import uuid
 from django.conf import settings
 from django.db import models
 
-from config.abstract_models import AbstractTimeModel
+from core.abstract_models import AbstractTimeModel
 from core.choices import AmbassadorStatus, ClothingSize, PromoStatus, Sex
 
 
