@@ -57,7 +57,10 @@ class Ambassador(AbstractTimeModel):
         "Телефон", max_length=settings.NAME_LENGTH, null=True, blank=True
     )
     current_work = models.CharField(
-        "Текущее место работы", max_length=settings.NAME_LENGTH
+        "Текущее место работы",
+        max_length=settings.NAME_LENGTH,
+        null=True,
+        blank=True,
     )
     education = models.CharField(
         "Образование", max_length=settings.NAME_LENGTH, null=True, blank=True
@@ -75,9 +78,11 @@ class Ambassador(AbstractTimeModel):
         max_length=settings.NAME_LENGTH,
     )
     foot_size = models.CharField(
-        "Размер ноги", max_length=settings.NAME_LENGTH
+        "Размер ноги", max_length=settings.NAME_LENGTH, null=True, blank=True
     )
-    comment = models.CharField("Комментарий", max_length=settings.NAME_LENGTH)
+    comment = models.CharField(
+        "Комментарий", max_length=settings.NAME_LENGTH, null=True, blank=True
+    )
     education_goal = models.ForeignKey(
         "EducationGoal",
         related_name="ambassadors",
