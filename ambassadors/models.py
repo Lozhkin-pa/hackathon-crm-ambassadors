@@ -1,0 +1,186 @@
+import uuid
+
+from django.conf import settings
+from django.db import models
+
+from config.abstract_models import AbstractTimeModel
+from core.choices import AmbassadorStatus, ClothingSize, PromoStatus, Sex
+
+
+class Ambassador(AbstractTimeModel):
+    """Амбассадоры."""
+
+    id = models.UUIDField(
+        "Уникальный идентификатор",
+        primary_key=True,
+        default=uuid.uuid4,
+        editable=False,
+    )
+    telegram = models.CharField(
+        "Ник в телеграм",
+        max_length=settings.NAME_LENGTH,
+        null=True,
+        blank=True,
+    )
+    name = models.CharField(
+        "ФИО", max_length=settings.NAME_LENGTH, null=True, blank=True
+    )
+    status = models.CharField(
+        "Статус амбассадора",
+        max_length=settings.STATUS_LENGTH,
+        choices=AmbassadorStatus.choices,
+        default=AmbassadorStatus.ACTIVE,
+    )
+    onboarding_status = models.BooleanField("Статус онбординга", default=False)
+    sex = models.CharField(
+        "Пол амбассадора",
+        choices=Sex.choices,
+        default=Sex.UNKNOWN,
+        max_length=settings.STATUS_LENGTH,
+    )
+    country = models.CharField(
+        "Страна", max_length=settings.NAME_LENGTH, null=True, blank=True
+    )
+    city = models.CharField(
+        "Город", max_length=settings.NAME_LENGTH, null=True, blank=True
+    )
+    address = models.CharField(
+        "Адрес", max_length=settings.NAME_LENGTH, null=True, blank=True
+    )
+    index = models.CharField(
+        "Индекс", max_length=settings.NAME_LENGTH, null=True, blank=True
+    )
+    email = models.CharField(
+        "Email", max_length=settings.NAME_LENGTH, null=True, blank=True
+    )
+    phone = models.CharField(
+        "Телефон", max_length=settings.NAME_LENGTH, null=True, blank=True
+    )
+    current_work = models.CharField(
+        "Текущее место работы", max_length=settings.NAME_LENGTH
+    )
+    education = models.CharField(
+        "Образование", max_length=settings.NAME_LENGTH, null=True, blank=True
+    )
+    blog_link = models.CharField(
+        "Ссылка на блог",
+        max_length=settings.NAME_LENGTH,
+        null=True,
+        blank=True,
+    )
+    clothing_size = models.CharField(
+        "Размер одежды",
+        choices=ClothingSize.choices,
+        default=ClothingSize.UNKNOWN,
+        max_length=settings.NAME_LENGTH,
+    )
+    foot_size = models.CharField(
+        "Размер ноги", max_length=settings.NAME_LENGTH
+    )
+    comment = models.CharField("Комментарий", max_length=settings.NAME_LENGTH)
+    education_goal = models.ForeignKey(
+        "EducationGoal",
+        related_name="ambassadors",
+        verbose_name="Цель обучения в ЯП",
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+    )
+    ambassadors_goals = models.ManyToManyField(
+        "AmbassadorGoal", verbose_name="Цели амбассадорства"
+    )
+    course = models.ForeignKey(
+        "Course",
+        verbose_name="Пройденный курс ЯП",
+        related_name="ambassadors",
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+    )
+    promo = models.ForeignKey(
+        "Promo",
+        verbose_name="Промокод амбассадора",
+        related_name="ambassador",
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+    )
+    # TODO: Раскомментировать и дописать после создания этих моделей.
+    # merch = models.ManyToManyField(
+    #     "Merch", through="MerchMiddle", verbose_name="Мерч"
+    # )
+    # content = models.ForeignKey(
+    #     "Content",
+    #     verbose_name="Контент амбассадора",
+    #     related_name="ambassador",
+    # )
+
+    class Meta:
+        ordering = ("-created",)
+        verbose_name = "Амбассадор"
+        verbose_name_plural = "Амбассадоры"
+
+    def __str__(self):
+        return self.name
+
+
+class EducationGoal(AbstractTimeModel):
+    """Цель обучения в Яндекс Практикуме."""
+
+    title = models.CharField(
+        "Цель обучения в ЯП", max_length=settings.NAME_LENGTH
+    )
+
+    class Meta:
+        verbose_name = "Цель обучения в ЯП"
+        verbose_name_plural = "Цели обучения в ЯП"
+
+    def __str__(self):
+        return self.title
+
+
+class AmbassadorGoal(AbstractTimeModel):
+    """Цель амбассадорства."""
+
+    title = models.CharField(
+        "Цель амбассадорства", max_length=settings.NAME_LENGTH
+    )
+
+    class Meta:
+        verbose_name = "Цель амбассадорства"
+        verbose_name_plural = "Цели амбассадорства"
+
+    def __str__(self):
+        return self.title
+
+
+class Course(AbstractTimeModel):
+    """Курс Яндекс Практикума."""
+
+    title = models.CharField("Название курса", max_length=settings.NAME_LENGTH)
+
+    class Meta:
+        verbose_name = "Курс Яндекс Практикума"
+        verbose_name_plural = "Курсы Яндекс Практикума"
+
+    def __str__(self):
+        return self.title
+
+
+class Promo(AbstractTimeModel):
+    """Промокод."""
+
+    value = models.CharField("Промокод", max_length=settings.NAME_LENGTH)
+    status = models.CharField(
+        "Статус",
+        choices=PromoStatus.choices,
+        default=PromoStatus.ACTIVE,
+        max_length=settings.STATUS_LENGTH,
+    )
+
+    class Meta:
+        verbose_name = "Промокод"
+        verbose_name_plural = "Промокоды"
+
+    def __str__(self):
+        return self.value

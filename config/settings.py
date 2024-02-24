@@ -55,6 +55,8 @@ THIRD_PARTY_APPS = [
 ]
 LOCAL_APPS = [
     "api.v1.apps.ApiConfig",
+    "ambassadors.apps.AmbassadorsConfig",
+    "core.apps.CoreConfig",
 ]
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 
@@ -162,4 +164,5 @@ SPECTACULAR_SETTINGS = {
     "SERVE_INCLUDE_SCHEMA": False,
 }
 # --------------------------------------------------------------------CONSTANTS
-# Сюда выносим все константы.
+NAME_LENGTH = 250
+STATUS_LENGTH = 50
