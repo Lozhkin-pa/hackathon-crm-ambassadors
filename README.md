@@ -8,6 +8,19 @@
 ![Docker](https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white)
 ![Nginx](https://img.shields.io/badge/nginx-%23009639.svg?style=for-the-badge&logo=nginx&logoColor=white)
 
+## Скриншоты проекта
+<div style="display: flex; justify-content: space-between; align-items: center;">
+<a href="./docs/img/1.1 Изучение данных амбассадора.jpg" style="display: block; margin: 0 auto;">
+  <img src="./docs/img/1.1 Изучение данных амбассадора.jpg" alt="Данные амбассадора" width="200"/>
+</a>
+<a href="./docs/img/1.5 добавить вручную амбассадора.jpg" style="display: block; margin: 0 auto;">
+  <img src="./docs/img/1.5 добавить вручную амбассадора.jpg" alt="Данные амбассадора" width="200"/>
+</a>
+<a href="./docs/img/2.1 Промокоды просомтр.jpg" style="display: block; margin: 0 auto;">
+  <img src="./docs/img/2.1 Промокоды просомтр.jpg" alt="Данные амбассадора" width="200"/>
+</a>
+</div>
+
 ## Используемые библиотеки и зависимости
 
 | Библиотека                                                                                                                                                                         | Описание                                                             |
