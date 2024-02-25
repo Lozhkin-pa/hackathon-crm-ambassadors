@@ -65,9 +65,7 @@ class AmbassadorTestCase(TestCase):
             education_goal=cls.ambassador1_education_goals,
             course=cls.ambassador1_course,
         )
-        cls.ambassador1.ambassadors_goals.add(
-            cls.ambassador1_ambassadors_goals
-        )
+        cls.ambassador1.ambassador_goals.add(cls.ambassador1_ambassadors_goals)
         cls.ambassador1.promos.add(cls.ambassador1_promo)
 
     def test_object_created_with_right_data(self):
@@ -104,9 +102,9 @@ class AmbassadorTestCase(TestCase):
             ambassador.promos.get(id=self.ambassador1_promo.id),
             self.ambassador1_promo,
         )
-        self.assertEqual(ambassador.ambassadors_goals.count(), 1)
+        self.assertEqual(ambassador.ambassador_goals.count(), 1)
         self.assertEqual(
-            ambassador.ambassadors_goals.first(),
+            ambassador.ambassador_goals.first(),
             self.ambassador1_ambassadors_goals,
         )
         self.assertTrue(type(ambassador.created), datetime),
@@ -129,7 +127,7 @@ class AmbassadorTestCase(TestCase):
         self.assertEqual(obj.status, AmbassadorStatus.ACTIVE)
         self.assertEqual(obj.onboarding_status, False)
         self.assertEqual(obj.sex, Sex.UNKNOWN)
-        self.assertEqual(obj.ambassadors_goals.count(), 0)
+        self.assertEqual(obj.ambassador_goals.count(), 0)
         self.assertEqual(obj.clothing_size, ClothingSize.UNKNOWN)
         self.assertIsNone(obj.telegram)
         self.assertIsNone(obj.name)

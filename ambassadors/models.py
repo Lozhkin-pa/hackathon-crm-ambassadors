@@ -91,8 +91,10 @@ class Ambassador(AbstractTimeModel):
         null=True,
         blank=True,
     )
-    ambassadors_goals = models.ManyToManyField(
-        "AmbassadorGoal", verbose_name="Цели амбассадорства"
+    ambassador_goals = models.ManyToManyField(
+        "AmbassadorGoal",
+        verbose_name="Цели амбассадорства",
+        related_name="ambassador",
     )
     course = models.ForeignKey(
         "Course",
@@ -102,13 +104,12 @@ class Ambassador(AbstractTimeModel):
         null=True,
         blank=True,
     )
-    # promo = models.ManyToManyField(
-    #     "Promo",
-    #     verbose_name="Промокоды амбассадора",
-    # )
     # TODO: Раскомментировать и дописать после создания этих моделей.
     # merch = models.ManyToManyField(
-    #     "Merch", through="MerchMiddle", verbose_name="Мерч"
+    #     "Merch",
+    #     through="MerchMiddle",
+    #     verbose_name="Мерч",
+    #     related_name="ambassador",
     # )
     # content = models.ForeignKey(
     #     "Content",
