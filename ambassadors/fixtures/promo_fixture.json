@@ -1,0 +1,102 @@
+[
+{
+  "model": "ambassadors.promo",
+  "pk": 1,
+  "fields": {
+    "created": "2024-02-25T09:18:47.074Z",
+    "updated": "2024-02-25T09:18:47.076Z",
+    "value": "PROMOCODE1",
+    "status": "active"
+  }
+},
+{
+  "model": "ambassadors.promo",
+  "pk": 2,
+  "fields": {
+    "created": "2024-02-25T09:18:51.288Z",
+    "updated": "2024-02-25T09:18:51.288Z",
+    "value": "PROMOCODE2",
+    "status": "archive"
+  }
+},
+{
+  "model": "ambassadors.promo",
+  "pk": 3,
+  "fields": {
+    "created": "2024-02-25T09:18:55.856Z",
+    "updated": "2024-02-25T09:18:55.856Z",
+    "value": "PROMOCODE3",
+    "status": "active"
+  }
+},
+{
+  "model": "ambassadors.promo",
+  "pk": 4,
+  "fields": {
+    "created": "2024-02-25T09:19:00.142Z",
+    "updated": "2024-02-25T09:19:00.142Z",
+    "value": "PROMOCODE4",
+    "status": "archive"
+  }
+},
+{
+  "model": "ambassadors.promo",
+  "pk": 5,
+  "fields": {
+    "created": "2024-02-25T09:19:04.616Z",
+    "updated": "2024-02-25T09:19:04.616Z",
+    "value": "PROMOCODE5",
+    "status": "active"
+  }
+},
+{
+  "model": "ambassadors.promo",
+  "pk": 6,
+  "fields": {
+    "created": "2024-02-25T09:19:08.280Z",
+    "updated": "2024-02-25T09:19:08.280Z",
+    "value": "PROMOCODE6",
+    "status": "archive"
+  }
+},
+{
+  "model": "ambassadors.promo",
+  "pk": 7,
+  "fields": {
+    "created": "2024-02-25T09:19:11.841Z",
+    "updated": "2024-02-25T09:19:11.841Z",
+    "value": "PROMOCODE7",
+    "status": "active"
+  }
+},
+{
+  "model": "ambassadors.promo",
+  "pk": 8,
+  "fields": {
+    "created": "2024-02-25T09:19:15.670Z",
+    "updated": "2024-02-25T09:19:15.670Z",
+    "value": "PROMOCODE8",
+    "status": "active"
+  }
+},
+{
+  "model": "ambassadors.promo",
+  "pk": 9,
+  "fields": {
+    "created": "2024-02-25T09:19:19.547Z",
+    "updated": "2024-02-25T09:19:19.547Z",
+    "value": "PROMOCODE9",
+    "status": "archive"
+  }
+},
+{
+  "model": "ambassadors.promo",
+  "pk": 10,
+  "fields": {
+    "created": "2024-02-25T09:19:23.721Z",
+    "updated": "2024-02-25T09:19:23.721Z",
+    "value": "PROMOCODE10",
+    "status": "active"
+  }
+}
+]

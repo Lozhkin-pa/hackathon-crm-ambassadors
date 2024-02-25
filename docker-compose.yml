@@ -1,0 +1,8 @@
+# Файл для фронтенедров.
+version: '3'
+
+services:
+  backend:
+    image: reamisd/backend_cms_test:latest
+    env_file: .env
+

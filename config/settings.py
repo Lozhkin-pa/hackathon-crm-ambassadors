@@ -12,7 +12,7 @@ SECRET_KEY = env.str(
     default="django-insecure-pp6rfj83429fhjndu89v2702fhkuj902d2@65!+=$satw167",
 )
 USE_POSTGRESQL = env.bool("USE_POSTGRESQL", default=False)
-DEBUG = env.bool("DEBUG", default=False)
+DEBUG = env.bool("DEBUG", default=True)
 ALLOWED_HOSTS = env.list(
     "ALLOWED_HOSTS",
     default=[

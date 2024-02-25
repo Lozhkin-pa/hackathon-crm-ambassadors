@@ -102,6 +102,7 @@ class Ambassador(AbstractTimeModel):
         null=True,
         blank=True,
     )
+    # TODO: Переделать.У одного пользователя много промокодов.
     promo = models.ForeignKey(
         "Promo",
         verbose_name="Промокод амбассадора",
