@@ -12,6 +12,13 @@ from ambassadors.models import (
 )
 
 
+class PromoInline(admin.TabularInline):
+    """Добавление промокодов при редактирование амбассадора."""
+
+    model = Promo
+    extra = 1
+
+
 @admin.register(Ambassador)
 class AmbassadorAdmin(admin.ModelAdmin):
     """Панель администратора для модели Амбассадор."""
@@ -40,6 +47,8 @@ class AmbassadorAdmin(admin.ModelAdmin):
     )
     ordering = ("-updated",)
     date_hierarchy = "updated"
+    # readonly_fields = ("promos",)
+    inlines = [PromoInline]
 
     @admin.display(description="Телеграм")
     def link_telegram(self, obj):
@@ -86,7 +95,7 @@ class CourseAdmin(admin.ModelAdmin):
 class PromoAdmin(admin.ModelAdmin):
     """Панель администратора для модели Курс Яндекс Практикума."""
 
-    list_display = ("value", "status", "created", "updated")
+    list_display = ("value", "ambassador", "status", "created", "updated")
     search_fields = ("value",)
     list_filter = ("status",)
     ordering = ("-updated",)
