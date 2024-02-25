@@ -102,15 +102,10 @@ class Ambassador(AbstractTimeModel):
         null=True,
         blank=True,
     )
-    # TODO: Переделать.У одного пользователя много промокодов.
-    promo = models.ForeignKey(
-        "Promo",
-        verbose_name="Промокод амбассадора",
-        related_name="ambassador",
-        on_delete=models.SET_NULL,
-        null=True,
-        blank=True,
-    )
+    # promo = models.ManyToManyField(
+    #     "Promo",
+    #     verbose_name="Промокоды амбассадора",
+    # )
     # TODO: Раскомментировать и дописать после создания этих моделей.
     # merch = models.ManyToManyField(
     #     "Merch", through="MerchMiddle", verbose_name="Мерч"
@@ -182,6 +177,14 @@ class Promo(AbstractTimeModel):
         choices=PromoStatus.choices,
         default=PromoStatus.ACTIVE,
         max_length=settings.STATUS_LENGTH,
+    )
+    ambassador = models.ForeignKey(
+        "Ambassador",
+        verbose_name="Амбассадор",
+        related_name="promos",
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True,
     )
 
     class Meta:

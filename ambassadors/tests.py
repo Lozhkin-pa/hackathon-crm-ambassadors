@@ -64,11 +64,11 @@ class AmbassadorTestCase(TestCase):
             comment=cls.ambassador1_comment,
             education_goal=cls.ambassador1_education_goals,
             course=cls.ambassador1_course,
-            promo=cls.ambassador1_promo,
         )
         cls.ambassador1.ambassadors_goals.add(
             cls.ambassador1_ambassadors_goals
         )
+        cls.ambassador1.promos.add(cls.ambassador1_promo)
 
     def test_object_created_with_right_data(self):
         """Объект создался с переданными данными."""
@@ -100,7 +100,10 @@ class AmbassadorTestCase(TestCase):
             ambassador.education_goal, self.ambassador1_education_goals
         )
         self.assertEqual(ambassador.course, self.ambassador1_course)
-        self.assertEqual(ambassador.promo, self.ambassador1_promo)
+        self.assertEqual(
+            ambassador.promos.get(id=self.ambassador1_promo.id),
+            self.ambassador1_promo,
+        )
         self.assertEqual(ambassador.ambassadors_goals.count(), 1)
         self.assertEqual(
             ambassador.ambassadors_goals.first(),
