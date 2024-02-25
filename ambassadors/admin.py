@@ -26,10 +26,11 @@ class AmbassadorAdmin(admin.ModelAdmin):
     list_display = (
         "name",
         "link_telegram",
-        "email",
+        "link_email",
         "status",
         "onboarding_status",
         "sex",
+        "city",
     )
     search_fields = (
         "telegram",
@@ -44,10 +45,10 @@ class AmbassadorAdmin(admin.ModelAdmin):
     list_filter = (
         "sex",
         "status",
+        "city",
     )
     ordering = ("-updated",)
     date_hierarchy = "updated"
-    # readonly_fields = ("promos",)
     inlines = [PromoInline]
 
     @admin.display(description="Телеграм")
@@ -62,6 +63,14 @@ class AmbassadorAdmin(admin.ModelAdmin):
                 return format_html(
                     f'<a href="{obj.telegram}">{obj.telegram}</a>'
                 )
+            else:
+                return obj.telegram
+
+    @admin.display(description="email")
+    def link_email(self, obj):
+        """Прямая ссылка на email."""
+        if hasattr(obj, "email") and obj.email is not None:
+            return format_html(f'<a href="mailto:{obj.email}">{obj.email}</a>')
 
 
 @admin.register(EducationGoal)
