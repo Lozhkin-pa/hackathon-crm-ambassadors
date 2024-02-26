@@ -112,12 +112,6 @@ class Ambassador(AbstractTimeModel):
         verbose_name="Мерч",
         related_name="ambassador",
     )
-    # TODO: Раскомментировать и дописать после создания этих моделей.
-    # content = models.ForeignKey(
-    #     "Content",
-    #     verbose_name="Контент амбассадора",
-    #     related_name="ambassador",
-    # )
 
     class Meta:
         ordering = ("-created",)

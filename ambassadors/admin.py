@@ -11,6 +11,7 @@ from ambassadors.models import (
     MerchMiddle,
     Promo,
 )
+from content.models import Content
 
 
 class PromoInline(admin.TabularInline):
@@ -24,6 +25,13 @@ class MerchMiddleInline(admin.TabularInline):
     """Добавление отправленного мерча при редактирование амбассадора."""
 
     model = MerchMiddle
+    extra = 1
+
+
+class ContentInline(admin.TabularInline):
+    """Добавление контента при редактировании амбассадора."""
+
+    model = Content
     extra = 1
 
 
@@ -59,6 +67,7 @@ class AmbassadorAdmin(admin.ModelAdmin):
     date_hierarchy = "updated"
     inlines = (
         PromoInline,
+        ContentInline,
         MerchMiddleInline,
     )
 
