@@ -17,17 +17,27 @@ from api.v1.serializers.ambassadors_serializer import (
     list=extend_schema(
         summary=("Список амбассадоров."),
         description=(
-            "<ul><h3>Поддерживается:</h3>"
-            "<li> Фильтрация по точному совпадению даты:"
+            "<ul><h3>Фильтрация:</h3>"
+            "<li>По точному совпадению даты:"
             " <code>./?created=2023-04-25</code> </li>"
-            "<li>Фильтрация по дате старше чем: "
-            "<code>./?created__gte=2023-04-25</code></li>"
-            "Т.е. даты старше 2023-04-25<li>Множественная"
-            " фильтрация по дате: <code>./?created__gte=2023-04-25"
-            "&created__lte=2024-03-25</code></li>"
-            "Т.е. дата старше 2023-04-25 и младше 2024-03-25"
-            "<li>Фильтрация по курсу это фильтрация по id курса."
-            " id  в эндпоинте <code>./dropdowns</code></li></ul>"
+            '<li>По дате "старше чем:" '
+            "<code>./?created__gte=2023-04-25</code>"
+            "  Т.е. даты старше 2023-04-25</li>"
+            '<li>По дате "младше чем:" '
+            "<code>./?created__lte=2023-04-25</code>"
+            "  Т.е. даты младше 2023-04-25</li>"
+            "<li>Множественная "
+            "фильтрация по дате: <code>./?created__gte=2023-04-25"
+            "&created__lte=2024-03-25</code>    "
+            "Т.е. дата старше 2023-04-25 и младше 2024-03-25</li>"
+            "<li>По id курса."
+            " id берется в эндпоинте <code>./dropdowns</code></li></ul>"
+            "<br><ul><h3>Поиск:</h3>"
+            "<li>Поиск по имени: <code>./?search=Вася</code></li>"
+            "<li>Поиск по стране: <code>./?search=Россия</code></li>"
+            "<li>Поиск по городу: <code>./?search=Москва</code></li>"
+            "<li>Поиск по курсу: <code>./?search=Веб-разработка</code></li>"
+            "</ul>"
         ),
     ),
     retrieve=extend_schema(summary="Один амбассадор."),
@@ -54,7 +64,13 @@ class AmbassadorsViewSet(ModelViewSet):
         OrderingFilter,
     )
     filterset_class = AmbassadorFilter
-    search_fields = ("name", "country", "city", "course__name", "telegram")
+    search_fields = (
+        "name",
+        "country",
+        "city",
+        "telegram",
+        "course__title",
+    )
     ordering_fields = ("created",)
 
     def get_serializer_class(self):
