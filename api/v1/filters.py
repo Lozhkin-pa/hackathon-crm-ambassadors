@@ -9,6 +9,7 @@ class AmbassadorFilter(FilterSet):
     created__gte = DateFilter(field_name="created", lookup_expr="gte")
     created__lte = DateFilter(field_name="created", lookup_expr="lte")
 
+    # TODO: Сделать фильтрацию контента по времени создания.
     class Meta:
         model = Ambassador
         fields = (

@@ -1,6 +1,6 @@
 from django_filters.rest_framework import DjangoFilterBackend
 from drf_spectacular.utils import extend_schema, extend_schema_view
-from rest_framework.filters import SearchFilter
+from rest_framework.filters import SearchFilter, OrderingFilter
 from rest_framework.viewsets import ModelViewSet
 
 from ambassadors.models import Ambassador
@@ -51,9 +51,11 @@ class AmbassadorsViewSet(ModelViewSet):
     filter_backends = (
         DjangoFilterBackend,
         SearchFilter,
+        OrderingFilter,
     )
     filterset_class = AmbassadorFilter
-    search_fields = ("name",)
+    search_fields = ("name", "country", "city", "course__name", "telegram")
+    ordering_fields = ("created",)
 
     def get_serializer_class(self):
         """Выбор сериализатор в зависимости от типа запроса."""
