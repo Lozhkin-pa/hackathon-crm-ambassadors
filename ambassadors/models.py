@@ -5,6 +5,7 @@ from django.db import models
 
 from core.abstract_models import AbstractTimeModel
 from core.choices import AmbassadorStatus, ClothingSize, PromoStatus, Sex
+from merch.models import Merch
 
 
 class Ambassador(AbstractTimeModel):
@@ -104,13 +105,13 @@ class Ambassador(AbstractTimeModel):
         null=True,
         blank=True,
     )
+    merch = models.ManyToManyField(
+        Merch,
+        through="MerchMiddle",
+        verbose_name="Мерч",
+        related_name="ambassador",
+    )
     # TODO: Раскомментировать и дописать после создания этих моделей.
-    # merch = models.ManyToManyField(
-    #     "Merch",
-    #     through="MerchMiddle",
-    #     verbose_name="Мерч",
-    #     related_name="ambassador",
-    # )
     # content = models.ForeignKey(
     #     "Content",
     #     verbose_name="Контент амбассадора",
@@ -194,3 +195,28 @@ class Promo(AbstractTimeModel):
 
     def __str__(self):
         return self.value
+
+
+class MerchMiddle(models.Model):
+    """Промежуточная модель между амбассадором и мерч."""
+
+    class Sizes(models.TextChoices):
+        XS = "1", "XS"
+        S = "2", "S"
+        M = "3", "M"
+        L = "4", "L"
+        XL = "5", "XL"
+
+    ambassador = models.ForeignKey(
+        Ambassador, verbose_name="амбассадор", on_delete=models.CASCADE
+    )
+    merch = models.ForeignKey(
+        Merch, verbose_name="мерч", on_delete=models.SET_NULL, null=True
+    )
+    size = models.CharField("Размер", max_length=1, choices=Sizes.choices)
+    delivery_cost = models.IntegerField("Стоимость доставки", null=True)
+    count = models.IntegerField("Количество")
+    old_price = models.IntegerField("Архивная цена", blank=True, null=True)
+
+    def __str__(self):
+        return f"{self.merch}, {self.ambassador}"
