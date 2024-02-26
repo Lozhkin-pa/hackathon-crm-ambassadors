@@ -1,0 +1,263 @@
+[
+{
+  "model": "ambassadors.course",
+  "pk": 1,
+  "fields": {
+    "created": "2024-02-24T14:15:25.352Z",
+    "updated": "2024-02-24T14:15:25.355Z",
+    "title": "Аналитик данных"
+  }
+},
+{
+  "model": "ambassadors.course",
+  "pk": 2,
+  "fields": {
+    "created": "2024-02-24T14:15:25.352Z",
+    "updated": "2024-02-24T14:15:25.355Z",
+    "title": "Специалист по Data Science"
+  }
+},
+{
+  "model": "ambassadors.course",
+  "pk": 3,
+  "fields": {
+    "created": "2024-02-24T14:15:25.352Z",
+    "updated": "2024-02-24T14:15:25.355Z",
+    "title": "Python-разработчик"
+  }
+},
+{
+  "model": "ambassadors.course",
+  "pk": 4,
+  "fields": {
+    "created": "2024-02-24T14:15:25.352Z",
+    "updated": "2024-02-24T14:15:25.355Z",
+    "title": "Веб-разработчик"
+  }
+},
+{
+  "model": "ambassadors.course",
+  "pk": 5,
+  "fields": {
+    "created": "2024-02-24T14:15:25.352Z",
+    "updated": "2024-02-24T14:15:25.355Z",
+    "title": "Инженер по тестированию (QA)"
+  }
+},
+{
+  "model": "ambassadors.course",
+  "pk": 6,
+  "fields": {
+    "created": "2024-02-24T14:15:25.352Z",
+    "updated": "2024-02-24T14:15:25.355Z",
+    "title": "UX/UI-дизайнер"
+  }
+},
+{
+  "model": "ambassadors.course",
+  "pk": 7,
+  "fields": {
+    "created": "2024-02-24T14:15:25.352Z",
+    "updated": "2024-02-24T14:15:25.355Z",
+    "title": "Маркетинг"
+  }
+},
+{
+  "model": "ambassadors.course",
+  "pk": 8,
+  "fields": {
+    "created": "2024-02-24T14:15:25.352Z",
+    "updated": "2024-02-24T14:15:25.355Z",
+    "title": "Графический дизайнер"
+  }
+},
+{
+  "model": "ambassadors.course",
+  "pk": 9,
+  "fields": {
+    "created": "2024-02-24T14:15:25.352Z",
+    "updated": "2024-02-24T14:15:25.355Z",
+    "title": "Middle Python"
+  }
+},
+{
+  "model": "ambassadors.course",
+  "pk": 10,
+  "fields": {
+    "created": "2024-02-24T14:15:25.352Z",
+    "updated": "2024-02-24T14:15:25.355Z",
+    "title": "C++"
+  }
+},
+{
+  "model": "ambassadors.course",
+  "pk": 11,
+  "fields": {
+    "created": "2024-02-24T14:15:25.352Z",
+    "updated": "2024-02-24T14:15:25.355Z",
+    "title": "Инженер данных"
+  }
+},
+{
+  "model": "ambassadors.course",
+  "pk": 12,
+  "fields": {
+    "created": "2024-02-24T14:15:25.352Z",
+    "updated": "2024-02-24T14:15:25.355Z",
+    "title": "IT-рекрутер"
+  }
+},
+{
+  "model": "ambassadors.course",
+  "pk": 13,
+  "fields": {
+    "created": "2024-02-24T14:15:25.352Z",
+    "updated": "2024-02-24T14:15:25.355Z",
+    "title": "Управление"
+  }
+},
+{
+  "model": "ambassadors.course",
+  "pk": 14,
+  "fields": {
+    "created": "2024-02-24T14:15:25.352Z",
+    "updated": "2024-02-24T14:15:25.355Z",
+    "title": "Английский"
+  }
+},
+{
+  "model": "ambassadors.course",
+  "pk": 15,
+  "fields": {
+    "created": "2024-02-24T14:15:25.352Z",
+    "updated": "2024-02-24T14:15:25.355Z",
+    "title": "Критическое мышление"
+  }
+},
+{
+  "model": "ambassadors.course",
+  "pk": 16,
+  "fields": {
+    "created": "2024-02-24T14:15:25.352Z",
+    "updated": "2024-02-24T14:15:25.355Z",
+    "title": "Рабочая коммуникация"
+  }
+},
+{
+  "model": "ambassadors.course",
+  "pk": 17,
+  "fields": {
+    "created": "2024-02-24T14:15:25.352Z",
+    "updated": "2024-02-24T14:15:25.355Z",
+    "title": "Алгоритмы для разработчиков"
+  }
+},
+{
+  "model": "ambassadors.course",
+  "pk": 18,
+  "fields": {
+    "created": "2024-02-24T14:15:25.352Z",
+    "updated": "2024-02-24T14:15:25.355Z",
+    "title": "Продуктовый дизайн"
+  }
+},
+{
+  "model": "ambassadors.course",
+  "pk": 19,
+  "fields": {
+    "created": "2024-02-24T14:15:25.352Z",
+    "updated": "2024-02-24T14:15:25.355Z",
+    "title": "SQL для работы с данными и аналитики"
+  }
+},
+{
+  "model": "ambassadors.course",
+  "pk": 20,
+  "fields": {
+    "created": "2024-02-24T14:15:25.352Z",
+    "updated": "2024-02-24T14:15:25.355Z",
+    "title": "Java-разработчик"
+  }
+},
+{
+  "model": "ambassadors.course",
+  "pk": 21,
+  "fields": {
+    "created": "2024-02-24T14:15:25.352Z",
+    "updated": "2024-02-24T14:15:25.355Z",
+    "title": "Коммерческий иллюстратор"
+  }
+},
+{
+  "model": "ambassadors.course",
+  "pk": 22,
+  "fields": {
+    "created": "2024-02-24T14:15:25.352Z",
+    "updated": "2024-02-24T14:15:25.355Z",
+    "title": "Фулстек разработчик"
+  }
+},
+{
+  "model": "ambassadors.course",
+  "pk": 23,
+  "fields": {
+    "created": "2024-02-24T14:15:25.352Z",
+    "updated": "2024-02-24T14:15:25.355Z",
+    "title": "Продвинутый GO-разработчик"
+  }
+},
+{
+  "model": "ambassadors.course",
+  "pk": 24,
+  "fields": {
+    "created": "2024-02-24T14:15:25.352Z",
+    "updated": "2024-02-24T14:15:25.355Z",
+    "title": "DevOps для эксплуатации и разработки"
+  }
+},
+{
+  "model": "ambassadors.course",
+  "pk": 25,
+  "fields": {
+    "created": "2024-02-24T14:15:25.352Z",
+    "updated": "2024-02-24T14:15:25.355Z",
+    "title": "IOS-разработчик"
+  }
+},
+{
+  "model": "ambassadors.course",
+  "pk": 26,
+  "fields": {
+    "created": "2024-02-24T14:15:25.352Z",
+    "updated": "2024-02-24T14:15:25.355Z",
+    "title": "Бизнес-аналитик"
+  }
+},
+{
+  "model": "ambassadors.course",
+  "pk": 27,
+  "fields": {
+    "created": "2024-02-24T14:15:25.352Z",
+    "updated": "2024-02-24T14:15:25.355Z",
+    "title": "Продакт-менеджер для специалистов с опытом"
+  }
+},
+{
+  "model": "ambassadors.course",
+  "pk": 28,
+  "fields": {
+    "created": "2024-02-24T14:15:25.352Z",
+    "updated": "2024-02-24T14:15:25.355Z",
+    "title": "Android-разработчик"
+  }
+},
+{
+  "model": "ambassadors.course",
+  "pk": 29,
+  "fields": {
+    "created": "2024-02-24T14:15:25.352Z",
+    "updated": "2024-02-24T14:15:25.355Z",
+    "title": "Менеджер проектов"
+  }
+}
+]
