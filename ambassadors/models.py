@@ -95,6 +95,7 @@ class Ambassador(AbstractTimeModel):
         "AmbassadorGoal",
         verbose_name="Цели амбассадорства",
         related_name="ambassador",
+        blank=True,
     )
     course = models.ForeignKey(
         "Course",
@@ -123,7 +124,7 @@ class Ambassador(AbstractTimeModel):
         verbose_name_plural = "Амбассадоры"
 
     def __str__(self):
-        return self.name
+        return self.name if self.name else None
 
 
 class EducationGoal(AbstractTimeModel):

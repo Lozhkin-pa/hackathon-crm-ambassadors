@@ -31,4 +31,4 @@ class PromoStatus(models.TextChoices):
     """Статус промокода."""
 
     ACTIVE = "active", "Активный"
-    ARCHIVE = "archive", "Архивный"
+    ARCHIVED = "archived", "Архивный"
