@@ -12,19 +12,19 @@ from ambassadors.models import (
 class EducationGoalSerializer(serializers.ModelSerializer):
     class Meta:
         model = EducationGoal
-        fields = "__all__"
+        fields = ("id", "title")
 
 
 class AmbassadorGoalSerializer(serializers.ModelSerializer):
     class Meta:
         model = AmbassadorGoal
-        fields = "__all__"
+        fields = ("id", "title")
 
 
 class CourseSerializer(serializers.ModelSerializer):
     class Meta:
         model = Course
-        fields = "__all__"
+        fields = ("id", "title")
 
 
 class PromoSerializer(serializers.ModelSerializer):
@@ -33,12 +33,33 @@ class PromoSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
 
-class AmbassadorSerializer(serializers.ModelSerializer):
+class AmbassadorRetrieveSerializer(serializers.ModelSerializer):
+    """Один Амбассадор."""
+
     education_goal = EducationGoalSerializer(many=False, read_only=True)
     course = CourseSerializer(many=False, read_only=True)
-    ambassadors_goals = AmbassadorGoalSerializer(many=True, read_only=True)
+    ambassador_goals = AmbassadorGoalSerializer(many=True, read_only=True)
     promo = PromoSerializer(many=False, read_only=True)
 
     class Meta:
         model = Ambassador
         fields = "__all__"
+
+
+class AmbassadorListSerializer(serializers.ModelSerializer):
+    """Список амбассадоров."""
+
+    course = CourseSerializer(many=False, read_only=True)
+
+    class Meta:
+        model = Ambassador
+        fields = (
+            "name",
+            "sex",
+            "created",
+            "status",
+            "country",
+            "city",
+            "course",
+            "onboarding_status",
+        )

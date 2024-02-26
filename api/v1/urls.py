@@ -6,7 +6,7 @@ from drf_spectacular.views import (
 )
 from rest_framework import routers
 
-from api.v1.views.ambassadors import AmbassadorsViewSet
+from api.v1.views.ambassadors_view import AmbassadorsViewSet
 from api.v1.views.users_view import UserViewSet
 
 v1_router = routers.DefaultRouter()

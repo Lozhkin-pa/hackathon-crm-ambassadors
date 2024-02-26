@@ -3,8 +3,8 @@
   "model": "ambassadors.ambassadorgoal",
   "pk": 1,
   "fields": {
-    "created": "2024-02-24T14:15:25.343Z",
-    "updated": "2024-02-24T14:15:25.349Z",
+    "created": "2024-02-24",
+    "updated": "2024-02-24",
     "title": "Вести блог"
   }
 },
@@ -12,8 +12,8 @@
   "model": "ambassadors.ambassadorgoal",
   "pk": 2,
   "fields": {
-    "created": "2024-02-24T14:15:25.343Z",
-    "updated": "2024-02-24T14:15:25.349Z",
+    "created": "2024-02-24",
+    "updated": "2024-02-24",
     "title": "Развивать локальное профессиональное сообщество в своем городе"
   }
 },
@@ -21,8 +21,8 @@
   "model": "ambassadors.ambassadorgoal",
   "pk": 3,
   "fields": {
-    "created": "2024-02-24T14:15:25.343Z",
-    "updated": "2024-02-24T14:15:25.349Z",
+    "created": "2024-02-24",
+    "updated": "2024-02-24",
     "title": "Писать статьи"
   }
 },
@@ -30,8 +30,8 @@
   "model": "ambassadors.ambassadorgoal",
   "pk": 4,
   "fields": {
-    "created": "2024-02-24T14:15:25.343Z",
-    "updated": "2024-02-24T14:15:25.349Z",
+    "created": "2024-02-24",
+    "updated": "2024-02-24",
     "title": "Снимать видео или сниматься в них, если продакшн будет на нашей стороне"
   }
 },
@@ -39,8 +39,8 @@
   "model": "ambassadors.ambassadorgoal",
   "pk": 5,
   "fields": {
-    "created": "2024-02-24T14:15:25.343Z",
-    "updated": "2024-02-24T14:15:25.349Z",
+    "created": "2024-02-24",
+    "updated": "2024-02-24",
     "title": "Знакомить коллег на работе с продуктом Практикума через различные форматы"
   }
 },
@@ -48,8 +48,8 @@
   "model": "ambassadors.ambassadorgoal",
   "pk": 6,
   "fields": {
-    "created": "2024-02-24T14:15:25.343Z",
-    "updated": "2024-02-24T14:15:25.349Z",
+    "created": "2024-02-24",
+    "updated": "2024-02-24",
     "title": "Давать консультации и рассказывать всем про Практикум"
   }
 },
@@ -57,8 +57,8 @@
   "model": "ambassadors.ambassadorgoal",
   "pk": 7,
   "fields": {
-    "created": "2024-02-24T14:15:25.343Z",
-    "updated": "2024-02-24T14:15:25.349Z",
+    "created": "2024-02-24",
+    "updated": "2024-02-24",
     "title": "Выступать на мероприятиях"
   }
 }

@@ -3,8 +3,8 @@
   "model": "ambassadors.ambassador",
   "pk": "052fbdfa-6a76-47a7-ae3d-faffa9a46de8",
   "fields": {
-    "created": "2024-02-25T10:02:39.247Z",
-    "updated": "2024-02-25T10:02:47.671Z",
+    "created": "2024-02-25",
+    "updated": "2024-02-25",
     "telegram": "python_novice",
     "name": "Григорьев Павел Анатольевич",
     "status": "active",
@@ -24,7 +24,7 @@
     "comment": "Тестовый профиль с реалистичными данными, подходящими для тестирования веб-приложений и систем.",
     "education_goal": 1,
     "course": 18,
-    "ambassadors_goals": [
+    "ambassador_goals": [
       4,
       7
     ]
@@ -34,8 +34,8 @@
   "model": "ambassadors.ambassador",
   "pk": "2a6dfea2-c51d-4417-8249-9b4f5ebd71d5",
   "fields": {
-    "created": "2024-02-25T10:00:16.376Z",
-    "updated": "2024-02-25T10:00:16.377Z",
+    "created": "2024-02-25",
+    "updated": "2024-02-25",
     "telegram": "dev_tester",
     "name": "Михайлов Артем Викторович",
     "status": "active",
@@ -55,7 +55,7 @@
     "comment": "Тестовый профиль с реалистичными данными для эффективного тестирования системы.",
     "education_goal": 1,
     "course": 20,
-    "ambassadors_goals": [
+    "ambassador_goals": [
       1,
       2,
       3
@@ -66,8 +66,8 @@
   "model": "ambassadors.ambassador",
   "pk": "680e42a2-a4d2-4d8e-900b-539c36a5a303",
   "fields": {
-    "created": "2024-02-25T10:06:27.841Z",
-    "updated": "2024-02-25T10:06:27.841Z",
+    "created": "2024-02-25",
+    "updated": "2024-02-25",
     "telegram": "coding_explorer",
     "name": "Кузнецов Игорь Дмитриевич",
     "status": "active",
@@ -87,7 +87,7 @@
     "comment": "Тестовый профиль с реалистичными данными, идеально подходящий для тестирования функционала связанного с программированием.",
     "education_goal": 1,
     "course": 12,
-    "ambassadors_goals": [
+    "ambassador_goals": [
       1,
       3,
       6
@@ -98,8 +98,8 @@
   "model": "ambassadors.ambassador",
   "pk": "77a214c7-8d33-45b6-bb93-35cc65e8c02b",
   "fields": {
-    "created": "2024-02-25T09:58:44.407Z",
-    "updated": "2024-02-25T09:59:00.728Z",
+    "created": "2024-02-25",
+    "updated": "2024-02-25",
     "telegram": "code_navigator",
     "name": "Смирнова Елена Александровна",
     "status": "not_ambassador",
@@ -119,7 +119,7 @@
     "comment": "Тестовый профиль для проверки функционала, предоставляющий реалистичные данные о пользователе.",
     "education_goal": 1,
     "course": 25,
-    "ambassadors_goals": [
+    "ambassador_goals": [
       1,
       2,
       6
@@ -130,8 +130,8 @@
   "model": "ambassadors.ambassador",
   "pk": "93f18548-2da7-4c17-b7eb-6d9be4be648a",
   "fields": {
-    "created": "2024-02-25T09:56:03.568Z",
-    "updated": "2024-02-25T10:58:38.172Z",
+    "created": "2024-02-25",
+    "updated": "2024-02-25",
     "telegram": "user_tester23",
     "name": "Петрова Анна Сергеевна",
     "status": "paused",
@@ -151,7 +151,7 @@
     "comment": "Используется в тестировании как образец данных пользователя.",
     "education_goal": 2,
     "course": 10,
-    "ambassadors_goals": [
+    "ambassador_goals": [
       1,
       6
     ]
@@ -161,8 +161,8 @@
   "model": "ambassadors.ambassador",
   "pk": "e40ada25-7542-4327-9007-ef26266db60c",
   "fields": {
-    "created": "2024-02-25T10:07:28.229Z",
-    "updated": "2024-02-25T11:12:49.521Z",
+    "created": "2024-02-25",
+    "updated": "2024-02-25",
     "telegram": "testing_guru",
     "name": "Жукова Ольга Владимировна",
     "status": "active",
@@ -182,7 +182,7 @@
     "comment": "Тестовый профиль с разнообразными данными для эффективного тестирования различных аспектов системы.",
     "education_goal": 1,
     "course": 21,
-    "ambassadors_goals": [
+    "ambassador_goals": [
       1,
       3
     ]
@@ -192,8 +192,8 @@
   "model": "ambassadors.ambassador",
   "pk": "e958c1ca-64ec-46bc-b612-97364788a471",
   "fields": {
-    "created": "2024-02-25T10:05:23.140Z",
-    "updated": "2024-02-25T10:05:23.140Z",
+    "created": "2024-02-25",
+    "updated": "2024-02-25",
     "telegram": "test_engineer",
     "name": "Соколова Мария Алексеевна",
     "status": "active",
@@ -213,7 +213,7 @@
     "comment": "Тестовый профиль с разнообразными данными для проверки различных аспектов системы.",
     "education_goal": 2,
     "course": 7,
-    "ambassadors_goals": [
+    "ambassador_goals": [
       1,
       3
     ]
@@ -223,8 +223,8 @@
   "model": "ambassadors.ambassador",
   "pk": "e9e6c13f-f165-4ab5-bddb-2087179a8577",
   "fields": {
-    "created": "2024-02-25T09:57:24.537Z",
-    "updated": "2024-02-25T09:57:24.538Z",
+    "created": "2024-02-25",
+    "updated": "2024-02-25",
     "telegram": "test_guru",
     "name": "Козлов Дмитрий Валерьевич",
     "status": "active",
@@ -244,7 +244,7 @@
     "comment": "Тестовый профиль с реалистичными данными для проверки функционала системы.",
     "education_goal": 1,
     "course": 9,
-    "ambassadors_goals": [
+    "ambassador_goals": [
       1,
       2,
       3,
@@ -259,8 +259,8 @@
   "model": "ambassadors.ambassador",
   "pk": "eef48638-1356-41a4-9f2d-696a446eb1f3",
   "fields": {
-    "created": "2024-02-25T09:54:45.220Z",
-    "updated": "2024-02-25T09:56:07.300Z",
+    "created": "2024-02-25",
+    "updated": "2024-02-25",
     "telegram": "tg_nickname_1",
     "name": "Александр Иванов",
     "status": "active",
@@ -280,7 +280,7 @@
     "comment": "Тестовый пользователь для проверки функционала.",
     "education_goal": 1,
     "course": 19,
-    "ambassadors_goals": [
+    "ambassador_goals": [
       4,
       5
     ]
@@ -290,8 +290,8 @@
   "model": "ambassadors.ambassador",
   "pk": "f60300e1-7484-4e06-8a4f-51963db6a949",
   "fields": {
-    "created": "2024-02-25T10:01:28.128Z",
-    "updated": "2024-02-25T10:01:41.683Z",
+    "created": "2024-02-25",
+    "updated": "2024-02-25",
     "telegram": "test_coder",
     "name": "Лебедева Алина Игоревна",
     "status": "paused",
@@ -311,7 +311,7 @@
     "comment": "Тестовый профиль с реалистичными данными для проверки функционала системы с различными входными данными.",
     "education_goal": 2,
     "course": 4,
-    "ambassadors_goals": [
+    "ambassador_goals": [
       4,
       6
     ]
