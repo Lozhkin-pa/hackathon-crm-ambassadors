@@ -5,6 +5,7 @@ from django.db import models
 
 from core.abstract_models import AbstractTimeModel
 from core.choices import AmbassadorStatus, ClothingSize, PromoStatus, Sex
+from merch.models import Merch
 
 
 class Ambassador(AbstractTimeModel):
@@ -95,6 +96,7 @@ class Ambassador(AbstractTimeModel):
         "AmbassadorGoal",
         verbose_name="Цели амбассадорства",
         related_name="ambassador",
+        blank=True,
     )
     course = models.ForeignKey(
         "Course",
@@ -104,13 +106,13 @@ class Ambassador(AbstractTimeModel):
         null=True,
         blank=True,
     )
+    merch = models.ManyToManyField(
+        Merch,
+        through="MerchMiddle",
+        verbose_name="Мерч",
+        related_name="ambassador",
+    )
     # TODO: Раскомментировать и дописать после создания этих моделей.
-    # merch = models.ManyToManyField(
-    #     "Merch",
-    #     through="MerchMiddle",
-    #     verbose_name="Мерч",
-    #     related_name="ambassador",
-    # )
     # content = models.ForeignKey(
     #     "Content",
     #     verbose_name="Контент амбассадора",
@@ -123,7 +125,7 @@ class Ambassador(AbstractTimeModel):
         verbose_name_plural = "Амбассадоры"
 
     def __str__(self):
-        return self.name
+        return self.name if self.name else None
 
 
 class EducationGoal(AbstractTimeModel):
@@ -194,3 +196,39 @@ class Promo(AbstractTimeModel):
 
     def __str__(self):
         return self.value
+
+
+class MerchMiddle(AbstractTimeModel):
+    """Промежуточная модель между амбассадором и мерч."""
+
+    ambassador = models.ForeignKey(
+        Ambassador,
+        verbose_name="амбассадор",
+        on_delete=models.CASCADE,
+        blank=True,
+        null=True,
+    )
+    merch = models.ForeignKey(
+        Merch,
+        verbose_name="мерч",
+        on_delete=models.SET_NULL,
+        blank=True,
+        null=True,
+    )
+    size = models.CharField(
+        "Размер", max_length=settings.NAME_LENGTH, choices=ClothingSize.choices
+    )
+    delivery_cost = models.PositiveIntegerField(
+        "Стоимость доставки", blank=True, null=True
+    )
+    count = models.PositiveIntegerField("Количество", blank=True, null=True)
+    old_price = models.PositiveIntegerField(
+        "Архивная цена", blank=True, null=True
+    )
+
+    class Meta:
+        verbose_name = "Мерч амбассадора"
+        verbose_name_plural = "Мерч амбассадора"
+
+    def __str__(self):
+        return f"{self.merch}, {self.ambassador}"
