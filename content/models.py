@@ -3,6 +3,7 @@ import uuid
 from django.conf import settings
 from django.db import models
 
+from ambassadors.models import Ambassador
 from core.abstract_models import AbstractTimeModel
 
 
@@ -36,6 +37,14 @@ class Content(AbstractTimeModel):
     guide = models.BooleanField(
         "Контент в рамках гайда",
         default=False,
+    )
+    ambassador = models.ForeignKey(
+        Ambassador,
+        verbose_name="Амбассадор",
+        related_name="content",
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
     )
 
     class Meta:
