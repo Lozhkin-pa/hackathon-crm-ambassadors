@@ -3,6 +3,7 @@ import uuid
 from django.conf import settings
 from django.db import models
 
+from content.models import Content
 from core.abstract_models import AbstractTimeModel
 from core.choices import AmbassadorStatus, ClothingSize, PromoStatus, Sex
 
@@ -111,11 +112,14 @@ class Ambassador(AbstractTimeModel):
     #     verbose_name="Мерч",
     #     related_name="ambassador",
     # )
-    # content = models.ForeignKey(
-    #     "Content",
-    #     verbose_name="Контент амбассадора",
-    #     related_name="ambassador",
-    # )
+    content = models.ForeignKey(
+        Content,
+        verbose_name="Контент амбассадора",
+        related_name="ambassador",
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+    )
 
     class Meta:
         ordering = ("-created",)
