@@ -8,6 +8,7 @@ from ambassadors.models import (
     EducationGoal,
     Promo,
 )
+from content.models import Content
 from core.choices import PromoStatus
 
 
@@ -51,6 +52,14 @@ class CreatePromoSerializer(serializers.ModelSerializer):
         fields = ("value",)
 
 
+class ContentSerializer(serializers.ModelSerializer):
+    """Список контента."""
+
+    class Meta:
+        model = Content
+        fields = ("id", "link", "platform", "file")
+
+
 class AmbassadorRetrieveSerializer(serializers.ModelSerializer):
     """Чтение одного Амбассадора."""
 
@@ -58,7 +67,8 @@ class AmbassadorRetrieveSerializer(serializers.ModelSerializer):
     course = CourseSerializer(many=False, read_only=True)
     ambassador_goals = AmbassadorGoalSerializer(many=True, read_only=True)
     promo = PromoSerializer(many=True, read_only=True)
-    # TODO: Добавить content амбассадора
+    guide_content = serializers.SerializerMethodField(read_only=True)
+    content = ContentSerializer(many=True, read_only=True)
 
     class Meta:
         model = Ambassador
@@ -87,7 +97,14 @@ class AmbassadorRetrieveSerializer(serializers.ModelSerializer):
             "created",
             "updated",
             "promo",
+            "guide_content",
+            "content",
         )
+
+    def get_guide_content(self, ambassador):
+        """Возвращает количество контента в рамках гайда."""
+        content_amount = ambassador.content.filter(guide=True).count()
+        return content_amount if content_amount <= 4 else "4"
 
 
 class AmbassadorListSerializer(serializers.ModelSerializer):
