@@ -8,6 +8,7 @@ class ContentAdmin(admin.ModelAdmin):
     """Панель администратора для модели Контент."""
 
     list_display = (
+        "ambassador",
         "platform",
         "link",
         "file",
