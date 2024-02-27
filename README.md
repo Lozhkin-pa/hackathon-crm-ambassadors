@@ -2,7 +2,7 @@
 [![Code-style/tests](https://github.com/Reagent992/hackathon-crm-ambassadors/actions/workflows/code-style_and_tests.yml/badge.svg)](https://github.com/Reagent992/hackathon-crm-ambassadors/actions/workflows/code-style_and_tests.yml)
 
 - Проект команды №1 в хакатоне Яндекс-Практикума.
-  
+
 ![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54)
 ![DjangoREST](https://img.shields.io/badge/DJANGO-REST-ff1709?style=for-the-badge&logo=django&logoColor=white&color=ff1709&labelColor=gray)
 ![Docker](https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white)
@@ -37,6 +37,21 @@
 | [django-cors-headers](https://pypi.org/project/django-cors-headers/)                                                                                                               | Настройка политики безопасности HTTP Headers[CORS]                   |
 | [Flake8](https://pypi.org/project/flake8/), [black](https://pypi.org/project/black/), [isort](https://pypi.org/project/isort/), [Pre-commit](https://pypi.org/project/pre-commit/) | Инструменты для поддержания Code-Style в проекте.                    |
 
+## Запуск проекта:
+
+### Запуск проекта для локальной разработки:
+
+1. `git clone https://github.com/Reagent992/hackathon-crm-ambassadors.git`
+2. `cd hackathon-crm-ambassadors`
+3. `python -m venv .venv`
+4. `pip install -r requirements.txt`
+5. `python manage.py migrate`
+6. `python manage.py runserver`
+
+### Загрузка фикстур(ненастоящий данных) в БД.
+
+[Инструкция в соседнем readme-файле по ссылке](./docs/fixtures.md)
+
 ## developers guideline
 ### Остальное
 - Язык комментариев, докстрингов, коммитов - русский.
@@ -62,6 +77,5 @@
 ## Авторы
 
 - [Miron Sadykov](https://github.com/Reagent992)
-- [Samsonov Dmitrii](https://github.com/Samsooon)
 - [Natalia Arlazarova](https://github.com/Sic15)
 - [Pavel Lozhkin](https://github.com/Lozhkin-pa)

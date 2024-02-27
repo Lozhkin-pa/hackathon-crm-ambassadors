@@ -9,6 +9,10 @@ class ListContentSerializer(serializers.ModelSerializer):
     """Список Контента амбассадоров на чтение."""
 
     ambassador = serializers.StringRelatedField(read_only=True)
+    telegram = serializers.CharField(
+        source='ambassador.telegram',
+        read_only=True
+    )
     guide_step = serializers.SerializerMethodField(read_only=True)
     content_amount = serializers.SerializerMethodField(read_only=True)
 
@@ -27,17 +31,18 @@ class ListContentSerializer(serializers.ModelSerializer):
         content = obj.ambassador.content.filter(guide=True)
         content_amount = content.count()
         return content_amount if content_amount <= 4 else 4
-    
+
     class Meta:
         model = Content
         fields = [
             'id',
-            # 'platform',
+            'platform',
             'link',
             'file',
             'created',
             'updated',
             'ambassador',
+            'telegram',
             'guide_step',
             'content_amount'
         ]
@@ -47,12 +52,18 @@ class RetrieveContentSerializer(serializers.ModelSerializer):
     """Контент определенного амбассадора на чтение."""
 
     ambassador = serializers.StringRelatedField(read_only=True)
+    content_amount = serializers.SerializerMethodField(read_only=True)
+
+    def get_content_amount(self, obj):
+        content = obj.ambassador.content.filter(guide=True)
+        content_amount = content.count()
+        return content_amount if content_amount <= 4 else 4
 
     class Meta:
         model = Content
         fields = [
             'id',
-            # 'platform',
+            'platform',
             'link',
             'file',
             'guide',
@@ -93,12 +104,6 @@ class FormsContentSerializer(serializers.ModelSerializer):
         content.guide = True if guide == 'Да' else False
         content.save()
         return content
-    
-    # def validate_link(self, link):
-    #     """Валидация контента."""
-    #     if Content.objects.filter(link=link).exists():
-    #         raise serializers.ValidationError('Контент уже существует!')
-    #     return link
 
     class Meta:
         model = Content

@@ -15,7 +15,7 @@ from content.models import Content
 
 class ContentViewSet(viewsets.ModelViewSet):
     """Контент амбассадора."""
-    
+
     queryset = Content.objects.all()
     filter_backends = (DjangoFilterBackend,)
     filterset_class = ContentFilter
@@ -31,11 +31,14 @@ class ContentViewSet(viewsets.ModelViewSet):
     @decorators.action(
         methods=('post',),
         detail=False,
-        url_name='forms', # Полный url: .../api/v1/content/forms/
+        url_name='forms',
         permission_classes=(permissions.AllowAny,)
     )
     def get_content_from_forms(self, request):
-        """Получение контента амбассадора из Яндекс Формы."""
+        """
+        Получение контента амбассадора из Яндекс Формы.
+        Полный url: .../api/v1/content/forms/
+        """
 
         if Ambassador.objects.filter(
             telegram=request.data.get('telegram')

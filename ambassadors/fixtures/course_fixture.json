@@ -1,0 +1,263 @@
+[
+{
+  "model": "ambassadors.course",
+  "pk": 1,
+  "fields": {
+    "created": "2024-02-24",
+    "updated": "2024-02-24",
+    "title": "Аналитик данных"
+  }
+},
+{
+  "model": "ambassadors.course",
+  "pk": 2,
+  "fields": {
+    "created": "2024-02-24",
+    "updated": "2024-02-24",
+    "title": "Специалист по Data Science"
+  }
+},
+{
+  "model": "ambassadors.course",
+  "pk": 3,
+  "fields": {
+    "created": "2024-02-24",
+    "updated": "2024-02-24",
+    "title": "Python-разработчик"
+  }
+},
+{
+  "model": "ambassadors.course",
+  "pk": 4,
+  "fields": {
+    "created": "2024-02-24",
+    "updated": "2024-02-24",
+    "title": "Веб-разработчик"
+  }
+},
+{
+  "model": "ambassadors.course",
+  "pk": 5,
+  "fields": {
+    "created": "2024-02-24",
+    "updated": "2024-02-24",
+    "title": "Инженер по тестированию (QA)"
+  }
+},
+{
+  "model": "ambassadors.course",
+  "pk": 6,
+  "fields": {
+    "created": "2024-02-24",
+    "updated": "2024-02-24",
+    "title": "UX/UI-дизайнер"
+  }
+},
+{
+  "model": "ambassadors.course",
+  "pk": 7,
+  "fields": {
+    "created": "2024-02-24",
+    "updated": "2024-02-24",
+    "title": "Маркетинг"
+  }
+},
+{
+  "model": "ambassadors.course",
+  "pk": 8,
+  "fields": {
+    "created": "2024-02-24",
+    "updated": "2024-02-24",
+    "title": "Графический дизайнер"
+  }
+},
+{
+  "model": "ambassadors.course",
+  "pk": 9,
+  "fields": {
+    "created": "2024-02-24",
+    "updated": "2024-02-24",
+    "title": "Middle Python"
+  }
+},
+{
+  "model": "ambassadors.course",
+  "pk": 10,
+  "fields": {
+    "created": "2024-02-24",
+    "updated": "2024-02-24",
+    "title": "C++"
+  }
+},
+{
+  "model": "ambassadors.course",
+  "pk": 11,
+  "fields": {
+    "created": "2024-02-24",
+    "updated": "2024-02-24",
+    "title": "Инженер данных"
+  }
+},
+{
+  "model": "ambassadors.course",
+  "pk": 12,
+  "fields": {
+    "created": "2024-02-24",
+    "updated": "2024-02-24",
+    "title": "IT-рекрутер"
+  }
+},
+{
+  "model": "ambassadors.course",
+  "pk": 13,
+  "fields": {
+    "created": "2024-02-24",
+    "updated": "2024-02-24",
+    "title": "Управление"
+  }
+},
+{
+  "model": "ambassadors.course",
+  "pk": 14,
+  "fields": {
+    "created": "2024-02-24",
+    "updated": "2024-02-24",
+    "title": "Английский"
+  }
+},
+{
+  "model": "ambassadors.course",
+  "pk": 15,
+  "fields": {
+    "created": "2024-02-24",
+    "updated": "2024-02-24",
+    "title": "Критическое мышление"
+  }
+},
+{
+  "model": "ambassadors.course",
+  "pk": 16,
+  "fields": {
+    "created": "2024-02-24",
+    "updated": "2024-02-24",
+    "title": "Рабочая коммуникация"
+  }
+},
+{
+  "model": "ambassadors.course",
+  "pk": 17,
+  "fields": {
+    "created": "2024-02-24",
+    "updated": "2024-02-24",
+    "title": "Алгоритмы для разработчиков"
+  }
+},
+{
+  "model": "ambassadors.course",
+  "pk": 18,
+  "fields": {
+    "created": "2024-02-24",
+    "updated": "2024-02-24",
+    "title": "Продуктовый дизайн"
+  }
+},
+{
+  "model": "ambassadors.course",
+  "pk": 19,
+  "fields": {
+    "created": "2024-02-24",
+    "updated": "2024-02-24",
+    "title": "SQL для работы с данными и аналитики"
+  }
+},
+{
+  "model": "ambassadors.course",
+  "pk": 20,
+  "fields": {
+    "created": "2024-02-24",
+    "updated": "2024-02-24",
+    "title": "Java-разработчик"
+  }
+},
+{
+  "model": "ambassadors.course",
+  "pk": 21,
+  "fields": {
+    "created": "2024-02-24",
+    "updated": "2024-02-24",
+    "title": "Коммерческий иллюстратор"
+  }
+},
+{
+  "model": "ambassadors.course",
+  "pk": 22,
+  "fields": {
+    "created": "2024-02-24",
+    "updated": "2024-02-24",
+    "title": "Фулстек разработчик"
+  }
+},
+{
+  "model": "ambassadors.course",
+  "pk": 23,
+  "fields": {
+    "created": "2024-02-24",
+    "updated": "2024-02-24",
+    "title": "Продвинутый GO-разработчик"
+  }
+},
+{
+  "model": "ambassadors.course",
+  "pk": 24,
+  "fields": {
+    "created": "2024-02-24",
+    "updated": "2024-02-24",
+    "title": "DevOps для эксплуатации и разработки"
+  }
+},
+{
+  "model": "ambassadors.course",
+  "pk": 25,
+  "fields": {
+    "created": "2024-02-24",
+    "updated": "2024-02-24",
+    "title": "IOS-разработчик"
+  }
+},
+{
+  "model": "ambassadors.course",
+  "pk": 26,
+  "fields": {
+    "created": "2024-02-24",
+    "updated": "2024-02-24",
+    "title": "Бизнес-аналитик"
+  }
+},
+{
+  "model": "ambassadors.course",
+  "pk": 27,
+  "fields": {
+    "created": "2024-02-24",
+    "updated": "2024-02-24",
+    "title": "Продакт-менеджер для специалистов с опытом"
+  }
+},
+{
+  "model": "ambassadors.course",
+  "pk": 28,
+  "fields": {
+    "created": "2024-02-24",
+    "updated": "2024-02-24",
+    "title": "Android-разработчик"
+  }
+},
+{
+  "model": "ambassadors.course",
+  "pk": 29,
+  "fields": {
+    "created": "2024-02-24",
+    "updated": "2024-02-24",
+    "title": "Менеджер проектов"
+  }
+}
+]

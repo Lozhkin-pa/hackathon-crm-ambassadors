@@ -1,0 +1,128 @@
+[
+{
+  "model": "ambassadors.merchmiddle",
+  "pk": 1,
+  "fields": {
+    "created": "2024-02-27",
+    "updated": "2024-02-27",
+    "ambassador": "052fbdfa-6a76-47a7-ae3d-faffa9a46de8",
+    "merch": 1,
+    "size": "m",
+    "delivery_cost": 99,
+    "count": 1,
+    "old_price": 2999
+  }
+},
+{
+  "model": "ambassadors.merchmiddle",
+  "pk": 2,
+  "fields": {
+    "created": "2024-02-27",
+    "updated": "2024-02-27",
+    "ambassador": "052fbdfa-6a76-47a7-ae3d-faffa9a46de8",
+    "merch": 2,
+    "size": null,
+    "delivery_cost": 199,
+    "count": 15,
+    "old_price": 190
+  }
+},
+{
+  "model": "ambassadors.merchmiddle",
+  "pk": 3,
+  "fields": {
+    "created": "2024-02-27",
+    "updated": "2024-02-27",
+    "ambassador": "052fbdfa-6a76-47a7-ae3d-faffa9a46de8",
+    "merch": 12,
+    "size": null,
+    "delivery_cost": 999,
+    "count": 1,
+    "old_price": 6999
+  }
+},
+{
+  "model": "ambassadors.merchmiddle",
+  "pk": 4,
+  "fields": {
+    "created": "2024-02-27",
+    "updated": "2024-02-27",
+    "ambassador": "2a6dfea2-c51d-4417-8249-9b4f5ebd71d5",
+    "merch": 8,
+    "size": null,
+    "delivery_cost": 100,
+    "count": 2,
+    "old_price": 99
+  }
+},
+{
+  "model": "ambassadors.merchmiddle",
+  "pk": 5,
+  "fields": {
+    "created": "2024-02-27",
+    "updated": "2024-02-27",
+    "ambassador": "680e42a2-a4d2-4d8e-900b-539c36a5a303",
+    "merch": 7,
+    "size": null,
+    "delivery_cost": 899,
+    "count": 1,
+    "old_price": 2499
+  }
+},
+{
+  "model": "ambassadors.merchmiddle",
+  "pk": 6,
+  "fields": {
+    "created": "2024-02-27",
+    "updated": "2024-02-27",
+    "ambassador": "77a214c7-8d33-45b6-bb93-35cc65e8c02b",
+    "merch": 13,
+    "size": null,
+    "delivery_cost": null,
+    "count": 1,
+    "old_price": 0
+  }
+},
+{
+  "model": "ambassadors.merchmiddle",
+  "pk": 7,
+  "fields": {
+    "created": "2024-02-27",
+    "updated": "2024-02-27",
+    "ambassador": "93f18548-2da7-4c17-b7eb-6d9be4be648a",
+    "merch": 6,
+    "size": null,
+    "delivery_cost": 100,
+    "count": 1,
+    "old_price": 499
+  }
+},
+{
+  "model": "ambassadors.merchmiddle",
+  "pk": 8,
+  "fields": {
+    "created": "2024-02-27",
+    "updated": "2024-02-27",
+    "ambassador": "e958c1ca-64ec-46bc-b612-97364788a471",
+    "merch": 5,
+    "size": null,
+    "delivery_cost": null,
+    "count": 1,
+    "old_price": 299
+  }
+},
+{
+  "model": "ambassadors.merchmiddle",
+  "pk": 9,
+  "fields": {
+    "created": "2024-02-27",
+    "updated": "2024-02-27",
+    "ambassador": "f60300e1-7484-4e06-8a4f-51963db6a949",
+    "merch": 11,
+    "size": null,
+    "delivery_cost": 899,
+    "count": 1,
+    "old_price": 399
+  }
+}
+]

@@ -119,7 +119,7 @@ class Ambassador(AbstractTimeModel):
         verbose_name_plural = "Амбассадоры"
 
     def __str__(self):
-        return self.name if self.name else None
+        return self.name if self.name else ""
 
 
 class EducationGoal(AbstractTimeModel):
@@ -210,7 +210,11 @@ class MerchMiddle(AbstractTimeModel):
         null=True,
     )
     size = models.CharField(
-        "Размер", max_length=settings.NAME_LENGTH, choices=ClothingSize.choices
+        "Размер",
+        max_length=settings.NAME_LENGTH,
+        choices=ClothingSize.choices,
+        blank=True,
+        null=True,
     )
     delivery_cost = models.PositiveIntegerField(
         "Стоимость доставки", blank=True, null=True
