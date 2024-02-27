@@ -210,7 +210,11 @@ class MerchMiddle(AbstractTimeModel):
         null=True,
     )
     size = models.CharField(
-        "Размер", max_length=settings.NAME_LENGTH, choices=ClothingSize.choices
+        "Размер",
+        max_length=settings.NAME_LENGTH,
+        choices=ClothingSize.choices,
+        blank=True,
+        null=True,
     )
     delivery_cost = models.PositiveIntegerField(
         "Стоимость доставки", blank=True, null=True

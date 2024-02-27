@@ -63,8 +63,8 @@ class AmbassadorAdmin(admin.ModelAdmin):
         "status",
         "city",
     )
-    ordering = ("-updated",)
-    date_hierarchy = "updated"
+    ordering = ("-created",)
+    date_hierarchy = "created"
     inlines = (
         PromoInline,
         ContentInline,
