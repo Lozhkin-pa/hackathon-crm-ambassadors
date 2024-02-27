@@ -6,9 +6,11 @@ from drf_spectacular.views import (
 )
 from rest_framework import routers
 
+from api.v1.views.content_view import ContentViewSet
 from api.v1.views.users_view import UserViewSet
 
 v1_router = routers.DefaultRouter()
+v1_router.register("content", ContentViewSet, basename="content")
 v1_router.register("users", UserViewSet, basename="users")
 
 urlpatterns = [
