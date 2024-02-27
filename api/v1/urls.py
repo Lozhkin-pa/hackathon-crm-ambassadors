@@ -15,7 +15,6 @@ v1_router.register("ambassadors", AmbassadorsViewSet, basename="ambassadors")
 v1_router.register("content", ContentViewSet, basename="content")
 v1_router.register("users", UserViewSet, basename="users")
 
-
 urlpatterns = [
     path("", include(v1_router.urls)),
     path("", include("djoser.urls.authtoken")),

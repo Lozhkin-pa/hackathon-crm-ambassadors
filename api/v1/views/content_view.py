@@ -21,27 +21,24 @@ class ContentViewSet(viewsets.ModelViewSet):
     filterset_class = ContentFilter
 
     def get_serializer_class(self):
-        if self.action == 'list':
+        if self.action == "list":
             return ListContentSerializer
-        if self.action == 'retrieve':
+        if self.action == "retrieve":
             return RetrieveContentSerializer
-        if self.action in ['create', 'partial_update']:
+        if self.action in ["create", "partial_update"]:
             return CreateContentSerializer
 
     @decorators.action(
-        methods=('post',),
+        methods=("post",),
         detail=False,
-        url_name='forms',
-        permission_classes=(permissions.AllowAny,)
+        url_name="forms",
+        permission_classes=(permissions.AllowAny,),
     )
     def get_content_from_forms(self, request):
-        """
-        Получение контента амбассадора из Яндекс Формы.
-        Полный url: .../api/v1/content/forms/
-        """
+        """Получение контента амбассадора из Яндекс Формы."""
 
         if Ambassador.objects.filter(
-            telegram=request.data.get('telegram')
+            telegram=request.data.get("telegram")
         ).exists():
             serializer = FormsContentSerializer(data=request.data)
             serializer.save()

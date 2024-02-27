@@ -10,8 +10,7 @@ class ListContentSerializer(serializers.ModelSerializer):
 
     ambassador = serializers.StringRelatedField(read_only=True)
     telegram = serializers.CharField(
-        source='ambassador.telegram',
-        read_only=True
+        source="ambassador.telegram", read_only=True
     )
     guide_step = serializers.SerializerMethodField(read_only=True)
     content_amount = serializers.SerializerMethodField(read_only=True)
@@ -20,11 +19,11 @@ class ListContentSerializer(serializers.ModelSerializer):
         content = obj.ambassador.content.filter(guide=True)
         content_amount = content.count()
         if content_amount == 0:
-            guide_step = 'new'
+            guide_step = "new"
         elif content_amount < 4:
-            guide_step = 'in_progress'
+            guide_step = "in_progress"
         else:
-            guide_step = 'done'
+            guide_step = "done"
         return guide_step
 
     def get_content_amount(self, obj):
@@ -35,16 +34,16 @@ class ListContentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Content
         fields = [
-            'id',
-            'platform',
-            'link',
-            'file',
-            'created',
-            'updated',
-            'ambassador',
-            'telegram',
-            'guide_step',
-            'content_amount'
+            "id",
+            "platform",
+            "link",
+            "file",
+            "created",
+            "updated",
+            "ambassador",
+            "telegram",
+            "guide_step",
+            "content_amount",
         ]
 
 
@@ -62,15 +61,15 @@ class RetrieveContentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Content
         fields = [
-            'id',
-            'platform',
-            'link',
-            'file',
-            'guide',
-            'created',
-            'updated',
-            'ambassador',
-            'content_amount'
+            "id",
+            "platform",
+            "link",
+            "file",
+            "guide",
+            "created",
+            "updated",
+            "ambassador",
+            "content_amount",
         ]
 
 
@@ -81,12 +80,12 @@ class CreateContentSerializer(serializers.ModelSerializer):
         model = Content
         fields = [
             # 'platform',
-            'link',
-            'file',
-            'guide',
-            'created',
-            'updated',
-            'ambassador',
+            "link",
+            "file",
+            "guide",
+            "created",
+            "updated",
+            "ambassador",
         ]
 
 
@@ -95,23 +94,23 @@ class FormsContentSerializer(serializers.ModelSerializer):
 
     @transaction.atomic
     def create(self, validated_data):
-        telegram = validated_data.pop('telegram')
-        _ = validated_data.pop('name')
-        guide = validated_data.pop('guide')
+        telegram = validated_data.pop("telegram")
+        _ = validated_data.pop("name")
+        guide = validated_data.pop("guide")
         ambassador = Ambassador.objects.filter(telegram=telegram)
         content = Content.objects.create(**validated_data)
         content.ambassador = ambassador
-        content.guide = True if guide == 'Да' else False
+        content.guide = True if guide == "Да" else False
         content.save()
         return content
 
     class Meta:
         model = Content
         fields = [
-            # 'platform',
-            'link',
-            'file',
-            'guide',
-            'created',
-            'ambassador',
+            "platform",
+            "link",
+            "file",
+            "guide",
+            "created",
+            "ambassador",
         ]

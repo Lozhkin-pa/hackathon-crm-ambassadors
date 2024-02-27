@@ -31,14 +31,15 @@ class AmbassadorFilter(FilterSet):
 class ContentFilter(FilterSet):
     """
     Фильтр контента по дате и имени амбасадора:
-    /content/?ambassador__name=Жукова%20Ольга%20Владимировна
-    /content/?created_after=2024-02-23&created_before=2024-02-26
+    content/?ambassador__name=Жукова%20Ольга%20Владимировна
+    content/?created_after=2024-02-23&created_before=2024-02-26
     """
+
     created = DateFromToRangeFilter()
 
     class Meta:
         model = Content
         fields = (
-            'ambassador__name',
-            'created',
+            "ambassador__name",
+            "created",
         )
