@@ -119,7 +119,7 @@ class Ambassador(AbstractTimeModel):
         verbose_name_plural = "Амбассадоры"
 
     def __str__(self):
-        return self.name if self.name else None
+        return self.name if self.name else ""
 
 
 class EducationGoal(AbstractTimeModel):

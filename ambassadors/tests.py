@@ -16,7 +16,7 @@ from core.choices import AmbassadorStatus, ClothingSize, PromoStatus, Sex
 class AmbassadorTestCase(TestCase):
     fixtures = [
         "ambassadors/fixtures/ambassador_goal_fixture.json",
-        "ambassadors/fixtures/course_goal_fixture.json",
+        "ambassadors/fixtures/course_fixture.json",
         "ambassadors/fixtures/education_goal_fixture.json",
     ]
 
