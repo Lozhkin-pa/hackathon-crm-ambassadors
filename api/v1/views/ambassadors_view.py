@@ -6,7 +6,7 @@ from rest_framework.viewsets import ModelViewSet
 from ambassadors.models import Ambassador
 from api.v1.filters import AmbassadorFilter
 from api.v1.serializers.ambassadors_serializer import (
-    AmbassadorCreateSerializer,
+    AmbassadorCreateEditSerializer,
     AmbassadorListSerializer,
     AmbassadorRetrieveSerializer,
 )
@@ -74,9 +74,9 @@ class AmbassadorsViewSet(ModelViewSet):
     ordering_fields = ("created",)
 
     def get_serializer_class(self):
-        """Выбор сериализатор в зависимости от типа запроса."""
+        """Выбор сериализатора в зависимости от типа запроса."""
         if self.action == "retrieve":
             return AmbassadorRetrieveSerializer
         if self.action == "list":
             return AmbassadorListSerializer
-        return AmbassadorCreateSerializer
+        return AmbassadorCreateEditSerializer

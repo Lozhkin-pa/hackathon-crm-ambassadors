@@ -19,6 +19,8 @@ class Sex(models.TextChoices):
 
 
 class ClothingSize(models.TextChoices):
+    """Размер одежды."""
+
     XS = "xs", "XS - Экстра-маленький"
     S = "s", "S - Маленький"
     M = "m", "M - Средний"

@@ -98,6 +98,7 @@ class AmbassadorListSerializer(serializers.ModelSerializer):
     class Meta:
         model = Ambassador
         fields = (
+            "id",
             "name",
             "sex",
             "created",
@@ -109,7 +110,7 @@ class AmbassadorListSerializer(serializers.ModelSerializer):
         )
 
 
-class AmbassadorCreateSerializer(serializers.ModelSerializer):
+class AmbassadorCreateEditSerializer(serializers.ModelSerializer):
     """Создание Амбассадора."""
 
     promo = serializers.CharField(write_only=True)
@@ -165,9 +166,15 @@ class AmbassadorCreateSerializer(serializers.ModelSerializer):
         new_promo = validated_data.pop("promo", None)
 
         if new_promo:
-            # Старый промо уходит в архив.
+            # Старый промокод уходит в архив.
             promos = instance.promos.filter(status=PromoStatus.ACTIVE)
             promos.update(status=PromoStatus.ARCHIVED)
-            # Создается новый промо.
+            # Создается новый промокод.
             Promo.objects.create(value=new_promo, ambassador=instance)
         return super().update(instance, validated_data)
+
+    def validate_promo(self, value):
+        """Валидация промокода."""
+        if Promo.objects.filter(value=value).exists():
+            raise serializers.ValidationError("Промокод уже существует.")
+        return value
