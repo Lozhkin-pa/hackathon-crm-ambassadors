@@ -8,79 +8,69 @@ from api.v1.serializers.merch_serializer import MerchSerializer
 
 
 class MerchViewSet(viewsets.ReadOnlyModelViewSet):
-    #  queryset = Ambassador.objects.all()
     serializer_class = MerchSerializer
+    current_year = datetime.now().year
+
+    def sum_per_month(self, month, date_start, date_finish):
+        return Sum(
+            F("ambassador__old_price") * F("ambassador__count"),
+            filter=Q(ambassador__created__month=month)
+            & Q(ambassador__created__gte=date_start)
+            & Q(ambassador__created__lte=date_finish)
+            & Q(ambassador__created__year=type(self).current_year),
+        )
+
+    def sum_per_year(self, date_start, date_finish):
+        return Sum(
+            "ambassador__delivery_cost",
+            filter=Q(ambassador__created__year=type(self).current_year)
+            & Q(ambassador__created__gte=date_start)
+            & Q(ambassador__created__lte=date_finish),
+        )
 
     def get_queryset(self):
-        current_year = datetime.now().year
+        date_start = self.request.GET.get("start")
+        if not date_start:
+            date_start = "1990-1-1"
+        date_finish = self.request.GET.get("finish")
+        if not date_finish:
+            date_finish = datetime.now()
+        date_start = datetime.strptime(date_start, "%Y-%m-%d").date()
+        date_finish = datetime.strptime(date_finish, "%Y-%m-%d").date()
         queryset = Ambassador.objects.all().annotate(
-            total_1=Sum(
-                F("ambassador__old_price") * F("ambassador__count"),
-                filter=Q(ambassador__created__month=1)
-                & Q(ambassador__created__year=current_year),
-            ),
-            total_2=Sum(
-                F("ambassador__old_price") * F("ambassador__count"),
-                filter=Q(ambassador__created__month=2)
-                & Q(ambassador__created__year=current_year),
-            ),
-            total_3=Sum(
-                F("ambassador__old_price") * F("ambassador__count"),
-                filter=Q(ambassador__created__month=3)
-                & Q(ambassador__created__year=current_year),
-            ),
-            total_4=Sum(
-                F("ambassador__old_price") * F("ambassador__count"),
-                filter=Q(ambassador__created__month=4)
-                & Q(ambassador__created__year=current_year),
-            ),
-            total_5=Sum(
-                F("ambassador__old_price") * F("ambassador__count"),
-                filter=Q(ambassador__created__month=5)
-                & Q(ambassador__created__year=current_year),
-            ),
-            total_6=Sum(
-                F("ambassador__old_price") * F("ambassador__count"),
-                filter=Q(ambassador__created__month=6)
-                & Q(ambassador__created__year=current_year),
-            ),
-            total_7=Sum(
-                F("ambassador__old_price") * F("ambassador__count"),
-                filter=Q(ambassador__created__month=7)
-                & Q(ambassador__created__year=current_year),
-            ),
-            total_8=Sum(
-                F("ambassador__old_price") * F("ambassador__count"),
-                filter=Q(ambassador__created__month=8)
-                & Q(ambassador__created__year=current_year),
-            ),
-            total_9=Sum(
-                F("ambassador__old_price") * F("ambassador__count"),
-                filter=Q(ambassador__created__month=9)
-                & Q(ambassador__created__year=current_year),
-            ),
-            total_10=Sum(
-                F("ambassador__old_price") * F("ambassador__count"),
-                filter=Q(ambassador__created__month=10)
-                & Q(ambassador__created__year=current_year),
-            ),
-            total_11=Sum(
-                F("ambassador__old_price") * F("ambassador__count"),
-                filter=Q(ambassador__created__month=11)
-                & Q(ambassador__created__year=current_year),
-            ),
-            total_12=Sum(
-                F("ambassador__old_price") * F("ambassador__count"),
-                filter=Q(ambassador__created__month=12)
-                & Q(ambassador__created__year=current_year),
-            ),
-            total_delivery=Sum(
-                "ambassador__delivery_cost",
-                filter=Q(ambassador__created__year=current_year),
-            ),
+            total_1=self.sum_per_month(1, date_start, date_finish),
+            total_2=self.sum_per_month(2, date_start, date_finish),
+            total_3=self.sum_per_month(3, date_start, date_finish),
+            total_4=self.sum_per_month(4, date_start, date_finish),
+            total_5=self.sum_per_month(5, date_start, date_finish),
+            total_6=self.sum_per_month(6, date_start, date_finish),
+            total_7=self.sum_per_month(7, date_start, date_finish),
+            total_8=self.sum_per_month(8, date_start, date_finish),
+            total_9=self.sum_per_month(9, date_start, date_finish),
+            total_10=self.sum_per_month(10, date_start, date_finish),
+            total_11=self.sum_per_month(11, date_start, date_finish),
+            total_12=self.sum_per_month(12, date_start, date_finish),
+            total_delivery=self.sum_per_year(date_start, date_finish),
             grand_total=Sum(
                 F("ambassador__old_price") * F("ambassador__count"),
-                filter=Q(ambassador__created__year=current_year),
-            ),
+                filter=Q(ambassador__created__year=type(self).current_year)
+                & Q(ambassador__created__gte=date_start)
+                & Q(ambassador__created__lte=date_finish),
+            )
+            + self.sum_per_year(date_start, date_finish),
         )
         return queryset
+
+
+"""    def dispatch(self, request, *args, **kwargs):
+            # TODO: Удалить.
+            from django.db import connection
+            res = super().dispatch(request, *args, **kwargs)
+            print("--------------------------------------------------------------")
+            print("Запрос:    ", request)
+            print("--------------------------------------------------------------")
+            print("Количество запросов в БД:  ", len(connection.queries))
+            print("--------------------------------------------------------------")
+            for q in connection.queries:
+                print(">>>>", q["sql"])
+            return res  # noqa R504"""
