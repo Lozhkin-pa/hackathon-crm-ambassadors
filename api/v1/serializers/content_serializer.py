@@ -5,19 +5,55 @@ from ambassadors.models import Ambassador
 from content.models import Content
 
 
-class ListContentSerializer(serializers.ModelSerializer):
-    """Список Контента амбассадоров на чтение."""
+class ContentSerializer(serializers.ModelSerializer):
+    """Список Контента амбассадора на чтение."""
 
-    ambassador = serializers.StringRelatedField(read_only=True)
-    telegram = serializers.CharField(
-        source="ambassador.telegram", read_only=True
-    )
+    class Meta:
+        model = Content
+        fields = [
+            "id",
+            "link",
+            "file",
+            "guide",
+            "created",
+            "updated",
+        ]
+
+
+class LastContentSerializer(serializers.ModelSerializer):
+    """Последний контент амбассадора на чтение."""
+
+    link = serializers.SerializerMethodField(read_only=True)
+    file = serializers.SerializerMethodField(read_only=True)
+
+    def get_link(self, obj):
+        if obj.all().count() > 0:
+            content = obj.all().order_by("created")
+            return content.last().link
+
+    def get_file(self, obj):
+        if obj.all().count() > 0:
+            content = obj.all().order_by("created")
+            return content.last().file
+
+    class Meta:
+        model = Content
+        fields = [
+            "link",
+            "file",
+        ]
+
+
+class ListContentSerializer(serializers.ModelSerializer):
+    """Список амбассадоров с контентом на чтение."""
+
+    content = ContentSerializer(read_only=True, many=True)
+    content_last = LastContentSerializer(source="content", read_only=True)
     guide_step = serializers.SerializerMethodField(read_only=True)
-    content_amount = serializers.SerializerMethodField(read_only=True)
+    content_guide_amount = serializers.SerializerMethodField(read_only=True)
 
     def get_guide_step(self, obj):
-        content = obj.ambassador.content.filter(guide=True)
-        content_amount = content.count()
+        content_amount = obj.content.filter(guide=True).count()
         if content_amount == 0:
             guide_step = "new"
         elif content_amount < 4:
@@ -26,50 +62,39 @@ class ListContentSerializer(serializers.ModelSerializer):
             guide_step = "done"
         return guide_step
 
-    def get_content_amount(self, obj):
-        content = obj.ambassador.content.filter(guide=True)
-        content_amount = content.count()
+    def get_content_guide_amount(self, obj):
+        content_amount = obj.content.filter(guide=True).count()
         return content_amount if content_amount <= 4 else 4
 
     class Meta:
-        model = Content
-        fields = [
-            "id",
-            "platform",
-            "link",
-            "file",
-            "created",
-            "updated",
-            "ambassador",
+        model = Ambassador
+        fields = (
+            "name",
             "telegram",
             "guide_step",
-            "content_amount",
-        ]
+            "created",
+            "updated",
+            "content_guide_amount",
+            "content",
+            "content_last",
+        )
 
 
 class RetrieveContentSerializer(serializers.ModelSerializer):
-    """Контент определенного амбассадора на чтение."""
+    """Единица контента определенного амбассадора на чтение."""
 
     ambassador = serializers.StringRelatedField(read_only=True)
-    content_amount = serializers.SerializerMethodField(read_only=True)
-
-    def get_content_amount(self, obj):
-        content = obj.ambassador.content.filter(guide=True)
-        content_amount = content.count()
-        return content_amount if content_amount <= 4 else 4
 
     class Meta:
         model = Content
         fields = [
             "id",
-            "platform",
             "link",
             "file",
             "guide",
             "created",
             "updated",
             "ambassador",
-            "content_amount",
         ]
 
 
@@ -79,7 +104,6 @@ class CreateContentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Content
         fields = [
-            # 'platform',
             "link",
             "file",
             "guide",
@@ -107,7 +131,6 @@ class FormsContentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Content
         fields = [
-            "platform",
             "link",
             "file",
             "guide",

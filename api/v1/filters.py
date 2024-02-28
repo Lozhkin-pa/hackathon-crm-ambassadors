@@ -1,11 +1,12 @@
+from django.db.models import Case, Count, When
 from django_filters.rest_framework import (
+    CharFilter,
     DateFilter,
     DateFromToRangeFilter,
     FilterSet,
 )
 
 from ambassadors.models import Ambassador
-from content.models import Content
 
 
 class AmbassadorFilter(FilterSet):
@@ -30,16 +31,31 @@ class AmbassadorFilter(FilterSet):
 
 class ContentFilter(FilterSet):
     """
-    Фильтр контента по дате и имени амбасадора:
-    content/?ambassador__name=Жукова%20Ольга%20Владимировна
+    Фильтр контента по дате и статусу амбасадора:
     content/?created_after=2024-02-23&created_before=2024-02-26
+    content/?guide_step=new
     """
 
     created = DateFromToRangeFilter()
+    guide_step = CharFilter(method="get_guide_step")
+
+    def get_guide_step(self, queryset, name, value):
+        content = Ambassador.objects.all().annotate(
+            guide_step=Count(Case(When(content__guide=True, then=1)))
+        )
+        match value:
+            case "new":
+                return content.filter(guide_step=0).order_by("-created")
+            case "in_progress":
+                return content.filter(
+                    guide_step__gte=1, guide_step__lte=4
+                ).order_by("-created")
+            case "done":
+                return content.filter(guide_step__gte=4).order_by("-created")
 
     class Meta:
-        model = Content
+        model = Ambassador
         fields = (
-            "ambassador__name",
-            "created",
+            "content__created",
+            "guide_step",
         )
