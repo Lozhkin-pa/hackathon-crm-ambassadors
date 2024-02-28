@@ -1,7 +1,7 @@
 from django.apps import AppConfig
 
 
-class MerchConfig(AppConfig):
+class ContentConfig(AppConfig):
     default_auto_field = "django.db.models.BigAutoField"
-    name = "merch"
-    verbose_name = "Мерч"
+    name = "content"
+    verbose_name = "Контент"

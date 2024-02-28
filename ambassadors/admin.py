@@ -11,6 +11,7 @@ from ambassadors.models import (
     MerchMiddle,
     Promo,
 )
+from content.models import Content
 
 
 class PromoInline(admin.TabularInline):
@@ -24,6 +25,13 @@ class MerchMiddleInline(admin.TabularInline):
     """Добавление отправленного мерча при редактирование амбассадора."""
 
     model = MerchMiddle
+    extra = 1
+
+
+class ContentInline(admin.TabularInline):
+    """Добавление контента при редактировании амбассадора."""
+
+    model = Content
     extra = 1
 
 
@@ -55,9 +63,13 @@ class AmbassadorAdmin(admin.ModelAdmin):
         "status",
         "city",
     )
-    ordering = ("-updated",)
-    date_hierarchy = "updated"
-    inlines = [PromoInline, MerchMiddleInline]
+    ordering = ("-created",)
+    date_hierarchy = "created"
+    inlines = (
+        PromoInline,
+        ContentInline,
+        MerchMiddleInline,
+    )
 
     @admin.display(description="Телеграм")
     def link_telegram(self, obj):
@@ -118,4 +130,18 @@ class PromoAdmin(admin.ModelAdmin):
     ordering = ("-updated",)
 
 
-admin.site.register(MerchMiddle)
+@admin.register(MerchMiddle)
+class MerchMiddleAdmin(admin.ModelAdmin):
+    """Панель администратора для Мерча амбассадора."""
+
+    list_display = (
+        "merch",
+        "ambassador",
+        "size",
+        "delivery_cost",
+        "count",
+        "created",
+    )
+    search_fields = ("merch", "ambassador")
+    list_filter = ("merch",)
+    ordering = ("-updated",)

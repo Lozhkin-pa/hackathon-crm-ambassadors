@@ -10,7 +10,6 @@ admin.site.unregister(Group)
 
 @admin.register(ExtendedUser)
 class CustomUserAdmin(UserAdmin):
-
     fieldsets = (
         (None, {"fields": ("email", "password")}),
         (

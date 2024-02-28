@@ -1,5 +1,17 @@
 from django.contrib import admin
 
-from ambassadors.models import Merch
+from merch.models import Merch
 
-admin.site.register(Merch)
+
+@admin.register(Merch)
+class MerchAdmin(admin.ModelAdmin):
+    """Панель администратора для Мерча."""
+
+    list_display = (
+        "title",
+        "article",
+        "price",
+        "created",
+    )
+    search_fields = ("title", "article")
+    ordering = ("-updated",)

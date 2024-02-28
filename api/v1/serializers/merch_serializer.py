@@ -4,12 +4,6 @@ from ambassadors.models import Ambassador
 
 
 class MerchSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Ambassador
-        fields = "__all__"
-
-
-class Merch1Serializer(serializers.ModelSerializer):
     total_1 = serializers.IntegerField()
     total_2 = serializers.IntegerField()
     total_3 = serializers.IntegerField()

@@ -12,6 +12,7 @@ load_fixtures.bat    # Для загрузки фикстур в бд через
 chmod +x load_fixtures.sh  # Назначить скрипт исполняемым
 ./load_fixtures.sh         # Запустить
 ```
+- Аккаунт суперпользователя из фикстур: login: user@user.com  password: user
 
 ## Ручная загрузка
 
