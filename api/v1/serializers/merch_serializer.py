@@ -17,7 +17,7 @@ class MerchSerializer(serializers.ModelSerializer):
     total_11 = serializers.IntegerField()
     total_12 = serializers.IntegerField()
     total_delivery = serializers.IntegerField()
-    grand_total = serializers.IntegerField()
+    total_per_amb = serializers.IntegerField()
 
     class Meta:
         model = Ambassador
@@ -36,17 +36,5 @@ class MerchSerializer(serializers.ModelSerializer):
             "total_11",
             "total_12",
             "total_delivery",
-            "grand_total",
+            "total_per_amb",
         )
-
-
-#   def get_total (self, object):
-#  res = {}
-#  for month in range(1,4):
-#      amb_merch =
-# MerchMiddle.objects.filter(ambassador=object, created__month=month)
-#      res[month] = sum(i.old_price for i in amb_merch)
-#  res['delivery'] = sum(item.delivery_cost for item in
-# MerchMiddle.objects.filter(ambassador=object))
-#  res['grand_total'] = sum(res.values())
-#  return res

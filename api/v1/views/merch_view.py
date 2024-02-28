@@ -29,13 +29,15 @@ class MerchViewSet(viewsets.ReadOnlyModelViewSet):
     def get_queryset(self):
         date_start = self.request.GET.get("start")
         date_finish = self.request.GET.get("finish")
+
         if not date_start and not date_finish:
             date_start = f"{type(self).current_year}-1-1"
             date_finish = f"{type(self).current_year}-12-31"
         elif not date_finish:
-            date_finish = date_start[4] + "-12-31"
+            date_finish = date_start[:4] + "-12-31"
         elif not date_start:
-            date_start = date_finish[4] + "-1-1"
+            date_start = date_finish[:4] + "-1-1"
+
         date_start = datetime.strptime(date_start, "%Y-%m-%d").date()
         date_finish = datetime.strptime(date_finish, "%Y-%m-%d").date()
 
@@ -53,7 +55,7 @@ class MerchViewSet(viewsets.ReadOnlyModelViewSet):
             total_11=self.sum_per_month(11, date_start, date_finish),
             total_12=self.sum_per_month(12, date_start, date_finish),
             total_delivery=self.sum_per_year(date_start, date_finish),
-            grand_total=Sum(
+            total_per_amb=Sum(
                 F("ambassador__old_price") * F("ambassador__count"),
                 filter=Q(ambassador__created__gte=date_start)
                 & Q(ambassador__created__lte=date_finish),
