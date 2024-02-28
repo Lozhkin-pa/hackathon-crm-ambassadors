@@ -7,11 +7,13 @@ from drf_spectacular.views import (
 from rest_framework import routers
 
 from api.v1.views.ambassadors_view import AmbassadorsViewSet
+from api.v1.views.dropdowns_view import DropdownsViewSet
 from api.v1.views.users_view import UserViewSet
 
 v1_router = routers.DefaultRouter()
 v1_router.register("ambassadors", AmbassadorsViewSet, basename="ambassadors")
 v1_router.register("users", UserViewSet, basename="users")
+v1_router.register("dropdowns", DropdownsViewSet, basename="dropdowns")
 
 
 urlpatterns = [
