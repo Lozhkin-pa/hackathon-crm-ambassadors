@@ -109,7 +109,7 @@ class Ambassador(AbstractTimeModel):
         Merch,
         through="MerchMiddle",
         verbose_name="Мерч",
-        related_name="ambassador",
+        #    related_name="ambassador",
     )
     # TODO: Раскомментировать и дописать после создания этих моделей.
     # content = models.ForeignKey(
@@ -208,7 +208,10 @@ class MerchMiddle(models.Model):
         XL = "5", "XL"
 
     ambassador = models.ForeignKey(
-        Ambassador, verbose_name="амбассадор", on_delete=models.CASCADE
+        Ambassador,
+        verbose_name="амбассадор",
+        related_name="ambassador",
+        on_delete=models.CASCADE,
     )
     merch = models.ForeignKey(
         Merch, verbose_name="мерч", on_delete=models.SET_NULL, null=True
