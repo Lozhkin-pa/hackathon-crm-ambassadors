@@ -52,6 +52,8 @@ class ContentFilter(FilterSet):
                 ).order_by("-created")
             case "done":
                 return content.filter(guide_step__gte=4).order_by("-created")
+            case _:
+                return queryset
 
     class Meta:
         model = Ambassador
