@@ -16,27 +16,29 @@ class MerchViewSet(viewsets.ReadOnlyModelViewSet):
             F("ambassador__old_price") * F("ambassador__count"),
             filter=Q(ambassador__created__month=month)
             & Q(ambassador__created__gte=date_start)
-            & Q(ambassador__created__lte=date_finish)
-            & Q(ambassador__created__year=type(self).current_year),
+            & Q(ambassador__created__lte=date_finish),
         )
 
     def sum_per_year(self, date_start, date_finish):
         return Sum(
             "ambassador__delivery_cost",
-            filter=Q(ambassador__created__year=type(self).current_year)
-            & Q(ambassador__created__gte=date_start)
+            filter=Q(ambassador__created__gte=date_start)
             & Q(ambassador__created__lte=date_finish),
         )
 
     def get_queryset(self):
         date_start = self.request.GET.get("start")
-        if not date_start:
-            date_start = "1990-1-1"
         date_finish = self.request.GET.get("finish")
-        if not date_finish:
-            date_finish = datetime.now()
+        if not date_start and not date_finish:
+            date_start = f"{type(self).current_year}-1-1"
+            date_finish = f"{type(self).current_year}-12-31"
+        elif not date_finish:
+            date_finish = date_start[4] + "-12-31"
+        elif not date_start:
+            date_start = date_finish[4] + "-1-1"
         date_start = datetime.strptime(date_start, "%Y-%m-%d").date()
         date_finish = datetime.strptime(date_finish, "%Y-%m-%d").date()
+
         queryset = Ambassador.objects.all().annotate(
             total_1=self.sum_per_month(1, date_start, date_finish),
             total_2=self.sum_per_month(2, date_start, date_finish),
@@ -53,8 +55,7 @@ class MerchViewSet(viewsets.ReadOnlyModelViewSet):
             total_delivery=self.sum_per_year(date_start, date_finish),
             grand_total=Sum(
                 F("ambassador__old_price") * F("ambassador__count"),
-                filter=Q(ambassador__created__year=type(self).current_year)
-                & Q(ambassador__created__gte=date_start)
+                filter=Q(ambassador__created__gte=date_start)
                 & Q(ambassador__created__lte=date_finish),
             )
             + self.sum_per_year(date_start, date_finish),
