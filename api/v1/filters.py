@@ -7,9 +7,7 @@ class AmbassadorFilter(FilterSet):
     """Фильтр амбассадоров."""
 
     created = DateFromToRangeFilter()
-    content = DateFromToRangeFilter()  # TODO: проверить этот фильтр
 
-    # TODO: Сделать фильтрацию контента по времени создания.
     class Meta:
         model = Ambassador
         fields = (
