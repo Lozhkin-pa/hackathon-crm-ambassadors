@@ -20,35 +20,13 @@ class ContentSerializer(serializers.ModelSerializer):
         ]
 
 
-class LastContentSerializer(serializers.ModelSerializer):
-    """Последний контент амбассадора на чтение."""
-
-    link = serializers.SerializerMethodField(read_only=True)
-    file = serializers.SerializerMethodField(read_only=True)
-
-    def get_link(self, obj):
-        if obj.all().count() > 0:
-            content = obj.all().order_by("created")
-            return content.last().link
-
-    def get_file(self, obj):
-        if obj.all().count() > 0:
-            content = obj.all().order_by("created")
-            return content.last().file
-
-    class Meta:
-        model = Content
-        fields = [
-            "link",
-            "file",
-        ]
-
-
 class ListContentSerializer(serializers.ModelSerializer):
     """Список амбассадоров с контентом на чтение."""
 
     content = ContentSerializer(read_only=True, many=True)
-    content_last = LastContentSerializer(source="content", read_only=True)
+    content_last = ContentSerializer(
+        source="content.first", read_only=True, many=False
+    )
     guide_step = serializers.SerializerMethodField(read_only=True)
     content_guide_amount = serializers.SerializerMethodField(read_only=True)
 
