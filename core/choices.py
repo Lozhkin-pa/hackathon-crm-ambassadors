@@ -21,12 +21,12 @@ class Sex(models.TextChoices):
 class ClothingSize(models.TextChoices):
     """Размер одежды."""
 
-    XS = "xs", "XS - Экстра-маленький"
-    S = "s", "S - Маленький"
-    M = "m", "M - Средний"
-    L = "l", "L - Большой"
-    XL = "xl", "XL - Очень большой"
-    UNKNOWN = "Unknown", "Размер не указан"
+    XS = "XS", "XS - Экстра-маленький"
+    S = "S", "S - Маленький"
+    M = "M", "M - Средний"
+    L = "L", "L - Большой"
+    XL = "XL", "XL - Очень большой"
+    UNKNOWN = "UNKNOWN", "Размер не указан"
 
 
 class PromoStatus(models.TextChoices):

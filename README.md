@@ -21,6 +21,11 @@
 </a>
 </div>
 
+## [Miro-проекта](https://miro.com/app/board/uXjVNrJFAZc=/?share_link_id=934438081083)
+
+- Там нарисована Архитектура БД
+- и Kanban task tracker
+
 ## Используемые библиотеки и зависимости
 
 | Библиотека                                                                                                                                                                         | Описание                                                             |
@@ -79,3 +84,4 @@
 - [Miron Sadykov](https://github.com/Reagent992)
 - [Natalia Arlazarova](https://github.com/Sic15)
 - [Pavel Lozhkin](https://github.com/Lozhkin-pa)
+- [Vladislav Kondrashov](https://github.com/thehallowedfire)

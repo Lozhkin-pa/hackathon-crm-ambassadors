@@ -1,4 +1,4 @@
-from django_filters.rest_framework import DateFilter, FilterSet
+from django_filters.rest_framework import DateFromToRangeFilter, FilterSet
 
 from ambassadors.models import Ambassador
 
@@ -6,8 +6,8 @@ from ambassadors.models import Ambassador
 class AmbassadorFilter(FilterSet):
     """Фильтр амбассадоров."""
 
-    created__gte = DateFilter(field_name="created", lookup_expr="gte")
-    created__lte = DateFilter(field_name="created", lookup_expr="lte")
+    created = DateFromToRangeFilter()
+    content = DateFromToRangeFilter()  # TODO: проверить этот фильтр
 
     # TODO: Сделать фильтрацию контента по времени создания.
     class Meta:
@@ -20,4 +20,5 @@ class AmbassadorFilter(FilterSet):
             "country",
             "city",
             "created",
+            "content",
         )

@@ -10,6 +10,9 @@ from api.v1.serializers.ambassadors_serializer import (
     AmbassadorListSerializer,
     AmbassadorRetrieveSerializer,
 )
+from api.v1.serializers.yandex_form_ambassador_create_serializer import (
+    YandexFormAmbassadorCreateSerializer,
+)
 
 
 @extend_schema(tags=["Амбассадоры"])
@@ -56,7 +59,7 @@ from api.v1.serializers.ambassadors_serializer import (
 class AmbassadorsViewSet(ModelViewSet):
     """Амбассадоры."""
 
-    queryset = Ambassador.objects.all()
+    queryset = Ambassador.objects.select_related("course", "education_goal")
     http_method_names = ("get", "head", "options", "post", "patch")
     filter_backends = (
         DjangoFilterBackend,
@@ -79,4 +82,6 @@ class AmbassadorsViewSet(ModelViewSet):
             return AmbassadorRetrieveSerializer
         if self.action == "list":
             return AmbassadorListSerializer
+        if self.action == "create" and self.request.headers.get("Yandex"):
+            return YandexFormAmbassadorCreateSerializer
         return AmbassadorCreateEditSerializer
