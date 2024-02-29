@@ -21,8 +21,6 @@ class DropdownsViewSet(viewsets.ReadOnlyModelViewSet):
     """Выпадающие списки."""
 
     def list(self, request):
-        ambassadors = Ambassador.objects.values("country", "city").distinct()
-
         courses_queryset = Course.objects.all()
         courses_serializer = CourseSerializer(courses_queryset, many=True)
 
@@ -39,8 +37,18 @@ class DropdownsViewSet(viewsets.ReadOnlyModelViewSet):
         merch_queryset = Merch.objects.all()
         merch_serializer = MerchSerializer(merch_queryset, many=True)
 
-        countries = list(set([i["country"] for i in ambassadors]))
-        cities = list(set([i["city"] for i in ambassadors]))
+        countries = (
+            Ambassador.objects.values_list("country", flat=True)
+            .exclude(country=None)
+            .distinct()
+            .order_by("country")
+        )
+        cities = (
+            Ambassador.objects.values_list("city", flat=True)
+            .exclude(city=None)
+            .distinct()
+            .order_by("city")
+        )
 
         data = {
             "courses": courses_serializer.data,
