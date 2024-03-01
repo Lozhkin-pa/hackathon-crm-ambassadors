@@ -5,6 +5,7 @@ from django_filters.rest_framework import (
     DateFromToRangeFilter,
     FilterSet,
 )
+from notifications.models import Notification
 
 from ambassadors.models import Ambassador
 
@@ -61,3 +62,14 @@ class ContentFilter(FilterSet):
             "content__created",
             "guide_step",
         )
+
+
+class NotificationFilter(FilterSet):
+    """Фильтр уведомлений."""
+
+    class Meta:
+        model = Notification
+        fields = {
+            "timestamp": ("exact", "lte", "gte"),
+            "unread": ("exact",),
+        }

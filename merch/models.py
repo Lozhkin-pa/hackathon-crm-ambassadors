@@ -1,10 +1,10 @@
 from django.conf import settings
 from django.db import models
 
-from core.abstract_models import AbstractTimeModel
+from core.abstract_models import AbstractDateModel
 
 
-class Merch(AbstractTimeModel):
+class Merch(AbstractDateModel):
     """Модель мерч."""
 
     title = models.CharField(

@@ -55,6 +55,7 @@ THIRD_PARTY_APPS = [
     "django_filters",
     "drf_spectacular",
     "corsheaders",
+    "notifications",
 ]
 LOCAL_APPS = [
     "api.v1.apps.ApiConfig",
