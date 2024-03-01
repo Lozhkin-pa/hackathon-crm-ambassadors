@@ -4,28 +4,8 @@ from django_filters.rest_framework import (
     DateFromToRangeFilter,
     FilterSet,
 )
-from notifications.models import Notification
 
 from ambassadors.models import Ambassador
-
-
-class AmbassadorFilter(FilterSet):
-    """Фильтр амбассадоров."""
-
-    created = DateFromToRangeFilter()
-
-    class Meta:
-        model = Ambassador
-        fields = (
-            "course",
-            "sex",
-            "status",
-            "onboarding_status",
-            "country",
-            "city",
-            "created",
-            "content",
-        )
 
 
 class ContentFilter(FilterSet):
@@ -60,14 +40,3 @@ class ContentFilter(FilterSet):
             "content__created",
             "guide_step",
         )
-
-
-class NotificationFilter(FilterSet):
-    """Фильтр уведомлений."""
-
-    class Meta:
-        model = Notification
-        fields = {
-            "timestamp": ("exact", "lte", "gte"),
-            "unread": ("exact",),
-        }

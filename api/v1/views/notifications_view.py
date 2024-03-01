@@ -12,7 +12,6 @@ from rest_framework.filters import OrderingFilter
 from rest_framework.response import Response
 
 from ambassadors.models import Ambassador
-from api.v1.filters import NotificationFilter
 from api.v1.serializers.notifications_serializer import (
     MarkAllAsReadSerializer,
     NotificationSerializer,
@@ -88,7 +87,10 @@ class NotificationViewSet(viewsets.ModelViewSet):
         OrderingFilter,
     )
     ordering_fields = ("timestamp",)
-    filterset_class = NotificationFilter
+    filterset_fields = {
+        "timestamp": ("exact", "lte", "gte"),
+        "unread": ("exact",),
+    }
 
     def get_queryset(self):
         """Получение уведомлений с поиском по имени амбассадора."""

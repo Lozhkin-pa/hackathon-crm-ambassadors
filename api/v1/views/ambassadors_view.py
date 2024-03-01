@@ -11,7 +11,6 @@ from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 
 from ambassadors.models import Ambassador
-from api.v1.filters import AmbassadorFilter
 from api.v1.serializers.ambassadors_serializer import (
     AmbassadorCreateEditSerializer,
     AmbassadorListSerializer,
@@ -74,7 +73,6 @@ class AmbassadorsViewSet(ModelViewSet):
         SearchFilter,
         OrderingFilter,
     )
-    filterset_class = AmbassadorFilter
     search_fields = (
         "name",
         "country",
@@ -83,6 +81,16 @@ class AmbassadorsViewSet(ModelViewSet):
         "course__title",
     )
     ordering_fields = ("created",)
+    filterset_fields = {
+        "created": ["exact", "gte", "lte"],
+        "course": ["exact"],
+        "sex": ["exact"],
+        "status": ["exact"],
+        "onboarding_status": ["exact"],
+        "country": ["exact"],
+        "city": ["exact"],
+        "content": ["exact"],
+    }
 
     def get_serializer_class(self):
         """Выбор сериализатора в зависимости от типа запроса."""

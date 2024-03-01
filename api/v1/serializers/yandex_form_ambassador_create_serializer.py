@@ -88,5 +88,6 @@ class YandexFormAmbassadorCreateSerializer(serializers.ModelSerializer):
                 ambassador.sex = Sex.M
             elif sex == "Ж":
                 ambassador.sex = Sex.W
+        ambassador.yandex_form = True
         ambassador.save()
         return ambassador
