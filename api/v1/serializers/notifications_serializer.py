@@ -8,7 +8,7 @@ class NotificationSerializer(serializers.ModelSerializer):
     """Сериализатор уведомлений."""
 
     actor_content_type = serializers.CharField(
-        source="target.__class__.__name__", read_only=True
+        source="actor.__class__.__name__", read_only=True
     )
     time_since = serializers.SerializerMethodField()
 
