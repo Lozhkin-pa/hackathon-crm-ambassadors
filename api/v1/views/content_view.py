@@ -19,10 +19,10 @@ from content.models import Content
         summary=("Список амбассадоров с контентом."),
         description=(
             "<ul><h3>Фильтрация:</h3>"
-            "<li>Фильтрация по дате: <code>./?created__gte=2023-04-25"
-            "&created__lte=2024-03-25</code>    "
+            "<li>Фильтрация по дате: <code>./?created_after=2023-04-25"
+            "&created_before=2024-03-25</code>    "
             "т.е. дата старше 2023-04-25 и младше 2024-03-25</li>"
-            "<li>Фильтрация по статусу гайда: <code>./?guide_step=new   "
+            "<li>Фильтрация по статусу гайда: <code>./?guide_step=new</code> "
             "т.е. new(новенький)/in_progress(в процессе)/done(выполнено)</li>"
             "<br><ul><h3>Поиск:</h3>"
             "<li>Поиск по имени: <code>./?search=Вася</code></li>"
@@ -48,17 +48,29 @@ class ContentViewSet(viewsets.ModelViewSet):
             return CreateContentSerializer
 
     def list(self, request):
+        """
+        Получение списка амбассадоров с контентом.
+        Фильтрация по статусу гайда (/?guide_step=new).
+        Фильтр по дате (/?created_after=2024-02-23&created_before=2024-02-26).
+        Поиск по имени (/?name=Смирнова).
+        """
         guide_step = self.request.query_params.get("guide_step")
         created_after = self.request.query_params.get("created_after")
         created_before = self.request.query_params.get("created_before")
+        name = self.request.query_params.get("name")
+
         queryset = Ambassador.objects.all().annotate(
             guide_step=Count(Case(When(content__guide=True, then=1)))
         )
-        # Фильтр по дате /?created_after=2024-02-23&created_before=2024-02-26:
-        if created_after and created_before is not None:
-            queryset = queryset.filter(
-                created__range=(created_after, created_before)
-            )
+        # Поиск по имени:
+        if name:
+            queryset = queryset.filter(name__icontains=name)
+        # Фильтрация по дате:
+        if created_after:
+            queryset = queryset.filter(created__gte=created_after)
+        if created_before:
+            queryset = queryset.filter(created__lte=created_before)
+        # Фильтрация по статусу гайда:
         serializer_new = ListContentSerializer(
             queryset.filter(guide_step=0).order_by("-created"), many=True
         )
@@ -71,7 +83,6 @@ class ContentViewSet(viewsets.ModelViewSet):
         serializer_done = ListContentSerializer(
             queryset.filter(guide_step__gte=4).order_by("-created"), many=True
         )
-        # Фильтр по статусу гайда (/?guide_step=new):
         match guide_step:
             case "new":
                 data = serializer_new.data
@@ -85,13 +96,6 @@ class ContentViewSet(viewsets.ModelViewSet):
                     "in_progress": serializer_in_prog.data,
                     "done": serializer_done.data,
                 }
-        # Поиск по имени (/?name=Смирнова):
-        name = self.request.query_params.get("name")
-        if name is not None:
-            data = ListContentSerializer(
-                queryset.filter(name__icontains=name).order_by("-created"),
-                many=True,
-            ).data
         return Response(data)
 
     @decorators.action(
