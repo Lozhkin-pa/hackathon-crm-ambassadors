@@ -13,12 +13,12 @@ from api.v1.views.users_view import UserViewSet
 v1_router = routers.DefaultRouter()
 v1_router.register("ambassadors", AmbassadorsViewSet, basename="ambassadors")
 v1_router.register("users", UserViewSet, basename="users")
-
+v1_router.register("merch", MerchViewSet, basename="merch")
 
 urlpatterns = [
     path("", include(v1_router.urls)),
     path("", include("djoser.urls.authtoken")),
-    path("merch/", MerchViewSet.as_view({"get": "list"})),
+    #    path("merch/", MerchViewSet.as_view({"get": "list"})),
 ]
 
 #  ------------------------------------------------------------Spectacular_urls

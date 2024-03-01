@@ -1,7 +1,11 @@
 from datetime import datetime
 
+import openpyxl
+import pandas as pd
 from django.db.models import F, Q, Sum
+from django.http import HttpResponse
 from rest_framework import viewsets
+from rest_framework.decorators import action
 
 from ambassadors.models import Ambassador
 from api.v1.serializers.merch_serializer import MerchSerializer
@@ -26,7 +30,7 @@ class MerchViewSet(viewsets.ReadOnlyModelViewSet):
             & Q(ambassador__created__lte=date_finish),
         )
 
-    def get_queryset(self):
+    def get_period(self):
         date_start = self.request.GET.get("start")
         date_finish = self.request.GET.get("finish")
 
@@ -40,20 +44,12 @@ class MerchViewSet(viewsets.ReadOnlyModelViewSet):
 
         date_start = datetime.strptime(date_start, "%Y-%m-%d").date()
         date_finish = datetime.strptime(date_finish, "%Y-%m-%d").date()
+        return date_start, date_finish
+
+    def get_queryset(self):
+        date_start, date_finish = self.get_period()
 
         queryset = Ambassador.objects.all().annotate(
-            total_1=self.sum_per_month(1, date_start, date_finish),
-            total_2=self.sum_per_month(2, date_start, date_finish),
-            total_3=self.sum_per_month(3, date_start, date_finish),
-            total_4=self.sum_per_month(4, date_start, date_finish),
-            total_5=self.sum_per_month(5, date_start, date_finish),
-            total_6=self.sum_per_month(6, date_start, date_finish),
-            total_7=self.sum_per_month(7, date_start, date_finish),
-            total_8=self.sum_per_month(8, date_start, date_finish),
-            total_9=self.sum_per_month(9, date_start, date_finish),
-            total_10=self.sum_per_month(10, date_start, date_finish),
-            total_11=self.sum_per_month(11, date_start, date_finish),
-            total_12=self.sum_per_month(12, date_start, date_finish),
             total_delivery=self.sum_per_year(date_start, date_finish),
             total_per_amb=Sum(
                 F("ambassador__old_price") * F("ambassador__count"),
@@ -62,7 +58,62 @@ class MerchViewSet(viewsets.ReadOnlyModelViewSet):
             )
             + self.sum_per_year(date_start, date_finish),
         )
+
+        for month in range(1, 13):
+            queryset = queryset.annotate(
+                **{
+                    f"total_{month}": self.sum_per_month(
+                        month, date_start, date_finish
+                    )
+                }
+            )
+
         return queryset
+
+    @action(detail=False, methods=["get"])
+    def download(self, request, **kwargs):
+        file_headers = [
+            "Имя",
+            "Январь",
+            "Февраль",
+            "Март",
+            "Апрель",
+            "Май",
+            "Июнь",
+            "Июль",
+            "Август",
+            "Сентябрь",
+            "Октябрь",
+            "Ноябрь",
+            "Декабрь",
+            "Доставка",
+            "Сумма",
+        ]
+        file_data = {i: [] for i in file_headers}
+        for j in range(len(self.get_queryset())):
+            file_data["Имя"].append(str(self.get_queryset()[j].name))
+            for i in range(1, 13):
+                file_data[file_headers[i]].append(
+                    str(self.get_queryset()[j].__dict__[f"total_{i}"])
+                )
+            file_data[file_headers[13]].append(
+                str(self.get_queryset()[j].__dict__["total_delivery"])
+            )
+            file_data[file_headers[14]].append(
+                str(self.get_queryset()[j].__dict__["total_per_amb"])
+            )
+        df = pd.DataFrame(file_data)
+
+        response = HttpResponse(content_type="application/vnd.ms-excel")
+        response["Content-Disposition"] = 'attachment;filename="test.xlsx"'
+        fname = "test.xlsx"
+        writer = pd.ExcelWriter(fname)
+        with pd.ExcelWriter(fname) as writer:
+            df.to_excel(writer, index=False)
+
+        wb = openpyxl.load_workbook(fname)
+        wb.save(response)
+        return response
 
 
 """    def dispatch(self, request, *args, **kwargs):
