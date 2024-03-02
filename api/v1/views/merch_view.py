@@ -1,5 +1,3 @@
-from datetime import datetime
-
 import openpyxl
 import pandas as pd
 from django.db.models import F, Q, Sum
@@ -8,12 +6,12 @@ from rest_framework import viewsets
 from rest_framework.decorators import action
 
 from ambassadors.models import Ambassador
+from api.v1.filters import get_period
 from api.v1.serializers.merch_serializer import MerchSerializer
 
 
 class MerchViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = MerchSerializer
-    current_year = datetime.now().year
 
     def sum_per_month(self, month, date_start, date_finish):
         return Sum(
@@ -30,24 +28,8 @@ class MerchViewSet(viewsets.ReadOnlyModelViewSet):
             & Q(ambassador__created__lte=date_finish),
         )
 
-    def get_period(self):
-        date_start = self.request.GET.get("start")
-        date_finish = self.request.GET.get("finish")
-
-        if not date_start and not date_finish:
-            date_start = f"{type(self).current_year}-1-1"
-            date_finish = f"{type(self).current_year}-12-31"
-        elif not date_finish:
-            date_finish = date_start[:4] + "-12-31"
-        elif not date_start:
-            date_start = date_finish[:4] + "-1-1"
-
-        date_start = datetime.strptime(date_start, "%Y-%m-%d").date()
-        date_finish = datetime.strptime(date_finish, "%Y-%m-%d").date()
-        return date_start, date_finish
-
     def get_queryset(self):
-        date_start, date_finish = self.get_period()
+        date_start, date_finish = get_period(self.request)
 
         queryset = Ambassador.objects.all().annotate(
             total_delivery=self.sum_per_year(date_start, date_finish),
@@ -96,35 +78,35 @@ class MerchViewSet(viewsets.ReadOnlyModelViewSet):
                 file_data[file_headers[i]].append(
                     str(self.get_queryset()[j].__dict__[f"total_{i}"])
                 )
-            file_data[file_headers[13]].append(
+            file_data["Доставка"].append(
                 str(self.get_queryset()[j].__dict__["total_delivery"])
             )
-            file_data[file_headers[14]].append(
+            file_data["Сумма"].append(
                 str(self.get_queryset()[j].__dict__["total_per_amb"])
             )
-        df = pd.DataFrame(file_data)
 
+        df = pd.DataFrame(file_data)
         response = HttpResponse(content_type="application/vnd.ms-excel")
-        response["Content-Disposition"] = 'attachment;filename="test.xlsx"'
-        fname = "test.xlsx"
+        response["Content-Disposition"] = (
+            'attachment;filename="amb_total.xlsx"'
+        )
+        fname = "amb_total.xlsx"
         writer = pd.ExcelWriter(fname)
         with pd.ExcelWriter(fname) as writer:
             df.to_excel(writer, index=False)
-
         wb = openpyxl.load_workbook(fname)
         wb.save(response)
         return response
 
-
-"""    def dispatch(self, request, *args, **kwargs):
+    """def dispatch(self, request, *args, **kwargs):
             # TODO: Удалить.
             from django.db import connection
             res = super().dispatch(request, *args, **kwargs)
             print("--------------------------------------------------------------")
-            print("Запрос:    ", request)
+          #  print("Запрос:    ", request)
             print("--------------------------------------------------------------")
             print("Количество запросов в БД:  ", len(connection.queries))
             print("--------------------------------------------------------------")
-            for q in connection.queries:
-                print(">>>>", q["sql"])
+          #  for q in connection.queries:
+          #      print(">>>>", q["sql"])
             return res  # noqa R504"""
