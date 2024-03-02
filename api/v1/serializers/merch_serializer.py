@@ -1,6 +1,7 @@
 from rest_framework import serializers
 
 from ambassadors.models import Ambassador, MerchMiddle
+from merch.models import Merch
 from api.v1.filters import get_period
 
 GRAND_TOTAL = 0
@@ -42,3 +43,11 @@ class MerchSerializer(serializers.ModelSerializer):
         if GRAND_TOTAL:
             return GRAND_TOTAL
         return calculate_grand_total(*get_period(self.context["request"]))
+
+
+class MerchSerializer(serializers.ModelSerializer):
+    """Варианты мерча."""
+
+    class Meta:
+        model = Merch
+        fields = ("id", "title", "price")
