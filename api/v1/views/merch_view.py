@@ -59,6 +59,7 @@ class MerchViewSet(viewsets.ReadOnlyModelViewSet):
     @action(detail=False, methods=["get"])
     def download(self, _):
         """Формирование файла отчета по мерчу."""
+
         file_headers = [
             "Январь",
             "Февраль",
@@ -94,6 +95,7 @@ class MerchViewSet(viewsets.ReadOnlyModelViewSet):
             file_data["Сумма"].append(
                 str(queryset[j].__dict__["total_per_amb"])
             )
+
         df = pd.DataFrame(file_data)
         response = HttpResponse(content_type="application/vnd.ms-excel")
         response["Content-Disposition"] = (

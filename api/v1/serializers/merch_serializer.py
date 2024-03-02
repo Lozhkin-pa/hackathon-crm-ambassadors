@@ -8,6 +8,7 @@ GRAND_TOTAL = 0
 
 def calculate_grand_total(date_start, date_finish):
     """Вычисление суммарных затрат на мерч."""
+
     global GRAND_TOTAL
     queryset = MerchMiddle.objects.filter(
         created__gte=date_start, created__lte=date_finish
