@@ -11,9 +11,12 @@ from api.v1.serializers.merch_serializer import MerchSerializer
 
 
 class MerchViewSet(viewsets.ReadOnlyModelViewSet):
+    """Вьюсет мерча."""
+
     serializer_class = MerchSerializer
 
     def sum_per_month(self, month, date_start, date_finish):
+        """Вычисление суммы, потраченной на мерч амбассадору за месяц."""
         return Sum(
             F("ambassador__old_price") * F("ambassador__count"),
             filter=Q(ambassador__created__month=month)
@@ -22,6 +25,7 @@ class MerchViewSet(viewsets.ReadOnlyModelViewSet):
         )
 
     def sum_per_year(self, date_start, date_finish):
+        """Вычисление суммы, потраченной на мерч амбассадору за год."""
         return Sum(
             "ambassador__delivery_cost",
             filter=Q(ambassador__created__gte=date_start)
@@ -29,6 +33,7 @@ class MerchViewSet(viewsets.ReadOnlyModelViewSet):
         )
 
     def get_queryset(self):
+        global date_start, date_finish
         date_start, date_finish = get_period(self.request)
 
         queryset = Ambassador.objects.all().annotate(
@@ -49,13 +54,12 @@ class MerchViewSet(viewsets.ReadOnlyModelViewSet):
                     )
                 }
             )
-
         return queryset
 
     @action(detail=False, methods=["get"])
-    def download(self, request, **kwargs):
+    def download(self, _):
+        """Формирование файла отчета по мерчу."""
         file_headers = [
-            "Имя",
             "Январь",
             "Февраль",
             "Март",
@@ -68,45 +72,37 @@ class MerchViewSet(viewsets.ReadOnlyModelViewSet):
             "Октябрь",
             "Ноябрь",
             "Декабрь",
-            "Доставка",
-            "Сумма",
         ]
-        file_data = {i: [] for i in file_headers}
-        for j in range(len(self.get_queryset())):
-            file_data["Имя"].append(str(self.get_queryset()[j].name))
-            for i in range(1, 13):
+
+        queryset = self.get_queryset()
+        file_data = {
+            i: []
+            for i in file_headers[date_start.month - 1 : date_finish.month]
+        }
+        file_data = {"Имя": []} | file_data
+        file_data["Доставка"] = []
+        file_data["Сумма"] = []
+        for j in range(len(queryset)):
+            file_data["Имя"].append(str(queryset[j].name))
+            for i in range(date_start.month - 1, date_finish.month):
                 file_data[file_headers[i]].append(
-                    str(self.get_queryset()[j].__dict__[f"total_{i}"])
+                    str(queryset[j].__dict__[f"total_{i+1}"])
                 )
             file_data["Доставка"].append(
-                str(self.get_queryset()[j].__dict__["total_delivery"])
+                str(queryset[j].__dict__["total_delivery"])
             )
             file_data["Сумма"].append(
-                str(self.get_queryset()[j].__dict__["total_per_amb"])
+                str(queryset[j].__dict__["total_per_amb"])
             )
-
         df = pd.DataFrame(file_data)
         response = HttpResponse(content_type="application/vnd.ms-excel")
         response["Content-Disposition"] = (
-            'attachment;filename="amb_total.xlsx"'
+            'attachment;filename="merch_total.xlsx"'
         )
-        fname = "amb_total.xlsx"
+        fname = "merch_total.xlsx"
         writer = pd.ExcelWriter(fname)
         with pd.ExcelWriter(fname) as writer:
             df.to_excel(writer, index=False)
         wb = openpyxl.load_workbook(fname)
         wb.save(response)
         return response
-
-    """def dispatch(self, request, *args, **kwargs):
-            # TODO: Удалить.
-            from django.db import connection
-            res = super().dispatch(request, *args, **kwargs)
-            print("--------------------------------------------------------------")
-          #  print("Запрос:    ", request)
-            print("--------------------------------------------------------------")
-            print("Количество запросов в БД:  ", len(connection.queries))
-            print("--------------------------------------------------------------")
-          #  for q in connection.queries:
-          #      print(">>>>", q["sql"])
-            return res  # noqa R504"""

@@ -26,6 +26,7 @@ class AmbassadorFilter(FilterSet):
 
 
 def get_period(request):
+    """Получение периода за который необходимо получить информацию о мерче."""
     date_start = request.GET.get("start")
     date_finish = request.GET.get("finish")
     current_year = datetime.now().year
