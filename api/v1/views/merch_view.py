@@ -7,13 +7,13 @@ from rest_framework.decorators import action
 
 from ambassadors.models import Ambassador
 from api.v1.filters import get_period
-from api.v1.serializers.merch_serializer import MerchSerializer
+from api.v1.serializers.merch_serializer import MerchBudgetSerializer
 
 
-class MerchViewSet(viewsets.ReadOnlyModelViewSet):
-    """Вьюсет мерча."""
+class MerchBudgetViewSet(viewsets.ReadOnlyModelViewSet):
+    """Вьюсет бюджета мерча."""
 
-    serializer_class = MerchSerializer
+    serializer_class = MerchBudgetSerializer
 
     def sum_per_month(self, month, date_start, date_finish):
         """Вычисление суммы, потраченной на мерч амбассадору за месяц."""

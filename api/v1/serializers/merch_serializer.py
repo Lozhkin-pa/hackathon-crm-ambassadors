@@ -1,8 +1,8 @@
 from rest_framework import serializers
 
 from ambassadors.models import Ambassador, MerchMiddle
-from merch.models import Merch
 from api.v1.filters import get_period
+from merch.models import Merch
 
 GRAND_TOTAL = 0
 
@@ -20,7 +20,7 @@ def calculate_grand_total(date_start, date_finish):
     return GRAND_TOTAL
 
 
-class MerchSerializer(serializers.ModelSerializer):
+class MerchBudgetSerializer(serializers.ModelSerializer):
     """Сериализатор мерча."""
 
     for i in range(1, 13):

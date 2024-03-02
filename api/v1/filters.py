@@ -1,6 +1,5 @@
 from datetime import datetime
 
-from django_filters.rest_framework import DateFilter, FilterSet
 from django.db.models import Case, Count, When
 from django_filters.rest_framework import (
     CharFilter,
@@ -31,7 +30,7 @@ class AmbassadorFilter(FilterSet):
             "created",
         )
 
-  
+
 class ContentFilter(FilterSet):
     """
     Фильтр контента по дате и статусу амбасадора:
@@ -65,7 +64,7 @@ class ContentFilter(FilterSet):
             "guide_step",
         )
 
-        
+
 def get_period(request):
     """Получение периода за который необходимо получить информацию о мерче."""
 
