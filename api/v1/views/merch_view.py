@@ -2,10 +2,13 @@ import openpyxl
 import pandas as pd
 from django.db.models import F, Q, Sum
 from django.http import HttpResponse
+from django.utils.decorators import method_decorator
+from django.views.decorators.cache import cache_page
+from django.views.decorators.vary import vary_on_cookie
 from rest_framework import viewsets
 from rest_framework.decorators import action
 
-from ambassadors.models import Ambassador
+from ambassadors.models import Ambassador, MerchMiddle
 from api.v1.filters import get_period
 from api.v1.serializers.merch_serializer import MerchBudgetSerializer
 
@@ -56,6 +59,27 @@ class MerchBudgetViewSet(viewsets.ReadOnlyModelViewSet):
             )
         return queryset
 
+    @method_decorator(cache_page(60))
+    @method_decorator(vary_on_cookie)
+    def list(self, request, *args, **kwargs):
+        queryset = self.filter_queryset(self.get_queryset())
+
+        # page = self.paginate_queryset(queryset)
+        # if page is not None:
+        #     serializer = self.get_serializer(page, many=True)
+
+        main_q = MerchBudgetSerializer(queryset, many=True)
+        queryset_t = MerchMiddle.objects.filter(
+            created__gte=date_start, created__lte=date_finish
+        )
+        grand_total = sum(
+            item.old_price * item.count + item.delivery_cost
+            for item in queryset_t
+        )
+        return self.get_paginated_response(
+            {"grand_total": grand_total, "data": main_q.data}
+        )
+
     @action(detail=False, methods=["get"])
     def download(self, _):
         """Формирование файла отчета по мерчу."""
@@ -87,14 +111,12 @@ class MerchBudgetViewSet(viewsets.ReadOnlyModelViewSet):
             file_data["Имя"].append(str(queryset[j].name))
             for i in range(date_start.month - 1, date_finish.month):
                 file_data[file_headers[i]].append(
-                    str(queryset[j].__dict__[f"total_{i+1}"])
+                    getattr(queryset[j], f"total_{i+1}")
                 )
             file_data["Доставка"].append(
-                str(queryset[j].__dict__["total_delivery"])
+                getattr(queryset[j], "total_delivery")
             )
-            file_data["Сумма"].append(
-                str(queryset[j].__dict__["total_per_amb"])
-            )
+            file_data["Сумма"].append(getattr(queryset[j], "total_per_amb"))
 
         df = pd.DataFrame(file_data)
         response = HttpResponse(content_type="application/vnd.ms-excel")

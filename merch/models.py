@@ -8,12 +8,12 @@ class Merch(AbstractTimeModel):
     """Модель мерч."""
 
     title = models.CharField(
-        "Название", max_length=settings.NAME_LENGTH, blank=True, null=True
+        "Название", max_length=settings.NAME_LENGTH, default="", blank=True
     )
     article = models.CharField(
-        "Артикул", max_length=settings.NAME_LENGTH, blank=True, null=True
+        "Артикул", max_length=settings.NAME_LENGTH, default="", blank=True
     )
-    price = models.PositiveIntegerField("Цена", blank=True, null=True)
+    price = models.PositiveIntegerField("Цена", default=0, blank=True)
 
     class Meta:
         ordering = ("title",)

@@ -200,29 +200,30 @@ class MerchMiddle(AbstractTimeModel):
         verbose_name="амбассадор",
         on_delete=models.CASCADE,
         related_name="ambassador",
+        default=0,
         blank=True,
-        null=True,
     )
     merch = models.ForeignKey(
         Merch,
         verbose_name="мерч",
-        on_delete=models.SET_NULL,
+        related_name="merch",
+        on_delete=models.CASCADE,
+        default=0,
         blank=True,
-        null=True,
     )
     size = models.CharField(
         "Размер",
         max_length=settings.NAME_LENGTH,
         choices=ClothingSize.choices,
+        default="",
         blank=True,
-        null=True,
     )
     delivery_cost = models.PositiveIntegerField(
-        "Стоимость доставки", blank=True, null=True
+        "Стоимость доставки", default=0, blank=True
     )
     count = models.PositiveIntegerField("Количество", blank=True, null=True)
     old_price = models.PositiveIntegerField(
-        "Архивная цена", blank=True, null=True
+        "Архивная цена", default=0, blank=True
     )
 
     class Meta:

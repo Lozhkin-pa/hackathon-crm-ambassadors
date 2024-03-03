@@ -70,17 +70,15 @@ def get_period(request):
 
     date_start = request.GET.get("start")
     date_finish = request.GET.get("finish")
-    current_year = datetime.now().year
 
-    if not date_start and not date_finish:
-        date_start = f"{current_year}-1-1"
-        date_finish = f"{current_year}-12-31"
-    elif not date_finish:
-        date_finish = date_start[:4] + "-12-31"
-    elif not date_start:
-        date_start = date_finish[:4] + "-1-1"
-
-    date_start = datetime.strptime(date_start, "%Y-%m-%d").date()
-    date_finish = datetime.strptime(date_finish, "%Y-%m-%d").date()
-
+    try:
+        date_start = datetime.strptime(date_start, "%Y-%m-%d").date()
+        date_finish = datetime.strptime(date_finish, "%Y-%m-%d").date()
+        if date_finish < date_start:
+            date_start, date_finish = date_finish, date_start
+    except Exception:
+        date_start = datetime.strptime(
+            str(datetime.now().year) + "-01-01", "%Y-%m-%d"
+        ).date()
+        date_finish = datetime.now().date()
     return date_start, date_finish
