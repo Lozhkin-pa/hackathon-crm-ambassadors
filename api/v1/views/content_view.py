@@ -20,7 +20,7 @@ from content.models import Content
         description=(
             "<ul><h3>Фильтрация:</h3>"
             "<li>Фильтрация по дате: <code>./?created_after=2023-04-25"
-            "&created_before=2024-03-25</code>    "
+            "&created_before=2024-03-25</code>   "
             "т.е. дата старше 2023-04-25 и младше 2024-03-25</li>"
             "<li>Фильтрация по статусу гайда: <code>./?guide_step=new</code> "
             "т.е. new(новенький)/in_progress(в процессе)/done(выполнено)</li>"
