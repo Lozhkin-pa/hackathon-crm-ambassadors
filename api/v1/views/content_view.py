@@ -63,6 +63,7 @@ class ContentViewSet(viewsets.ModelViewSet):
     """Контент амбассадора."""
 
     queryset = Content.objects.all()
+    http_method_names = ("get", "head", "options", "post", "patch")
 
     def get_serializer_class(self):
         if self.action == "retrieve":
@@ -125,14 +126,14 @@ class ContentViewSet(viewsets.ModelViewSet):
     @decorators.action(
         methods=("post",),
         detail=False,
-        url_name="forms",
+        url_path="forms",
     )
     def get_content_from_forms(self, request):
         """Получение контента амбассадора из Яндекс Формы."""
-
-        if Ambassador.objects.filter(
-            telegram=request.data.get("telegram")
-        ).exists():
+        telegram = request.data.get("telegram")
+        if Ambassador.objects.filter(telegram=telegram).exists():
+            ambassador = Ambassador.objects.filter(telegram=telegram).first()
+            request.data["ambassador"] = ambassador.id
             serializer = FormsContentSerializer(data=request.data)
             if serializer.is_valid():
                 serializer.save()
