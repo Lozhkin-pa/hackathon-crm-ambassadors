@@ -71,18 +71,20 @@ class ContentViewSet(viewsets.ModelViewSet):
         if created_before:
             queryset = queryset.filter(created__lte=created_before)
         # Фильтрация по статусу гайда:
-        serializer_new = ListContentSerializer(
-            queryset.filter(guide_step=0).order_by("-created"), many=True
-        )
-        serializer_in_prog = ListContentSerializer(
-            queryset.filter(guide_step__gte=1, guide_step__lte=4).order_by(
-                "-created"
-            ),
-            many=True,
-        )
-        serializer_done = ListContentSerializer(
-            queryset.filter(guide_step__gte=4).order_by("-created"), many=True
-        )
+        # /?guide_step=new
+        queryset_new = queryset.filter(guide_step=0).order_by("-created")
+        page_new = self.paginate_queryset(queryset_new)
+        serializer_new = ListContentSerializer(page_new, many=True)
+        # /?guide_step=in_progress
+        queryset_in_prog = queryset.filter(
+            guide_step__gte=1, guide_step__lte=4
+        ).order_by("-created")
+        page_in_prog = self.paginate_queryset(queryset_in_prog)
+        serializer_in_prog = ListContentSerializer(page_in_prog, many=True)
+        # /?guide_step=done
+        queryset_done = queryset.filter(guide_step__gte=4).order_by("-created")
+        page_done = self.paginate_queryset(queryset_done)
+        serializer_done = ListContentSerializer(page_done, many=True)
         match guide_step:
             case "new":
                 data = serializer_new.data
@@ -96,7 +98,7 @@ class ContentViewSet(viewsets.ModelViewSet):
                     "in_progress": serializer_in_prog.data,
                     "done": serializer_done.data,
                 }
-        return Response(data)
+        return self.get_paginated_response(data)
 
     @decorators.action(
         methods=("post",),
