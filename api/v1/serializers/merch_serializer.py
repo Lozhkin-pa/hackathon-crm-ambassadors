@@ -16,6 +16,7 @@ class MerchBudgetSerializer(serializers.ModelSerializer):
         model = Ambassador
         fields = (
             "id",
+            "name",
             *[f"total_{i}" for i in range(1, 13)],
             "total_delivery",
             "total_per_amb",

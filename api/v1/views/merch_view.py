@@ -20,18 +20,18 @@ class MerchBudgetViewSet(viewsets.ReadOnlyModelViewSet):
     def sum_per_month(self, month, date_start, date_finish):
         """Вычисление суммы, потраченной на мерч амбассадору за месяц."""
         return Sum(
-            F("ambassador__old_price") * F("ambassador__count"),
-            filter=Q(ambassador__created__month=month)
-            & Q(ambassador__created__gte=date_start)
-            & Q(ambassador__created__lte=date_finish),
+            F("sent_merch__old_price") * F("sent_merch__count"),
+            filter=Q(sent_merch__created__month=month)
+            & Q(sent_merch__created__gte=date_start)
+            & Q(sent_merch__created__lte=date_finish),
         )
 
     def sum_per_year(self, date_start, date_finish):
         """Вычисление суммы, потраченной на доставку амбассадору за год."""
         return Sum(
-            "ambassador__delivery_cost",
-            filter=Q(ambassador__created__gte=date_start)
-            & Q(ambassador__created__lte=date_finish),
+            "sent_merch__delivery_cost",
+            filter=Q(sent_merch__created__gte=date_start)
+            & Q(sent_merch__created__lte=date_finish),
         )
 
     def get_queryset(self):
@@ -42,9 +42,9 @@ class MerchBudgetViewSet(viewsets.ReadOnlyModelViewSet):
                 self.date_start, self.date_finish
             ),
             total_per_amb=Sum(
-                F("ambassador__old_price") * F("ambassador__count"),
-                filter=Q(ambassador__created__gte=self.date_start)
-                & Q(ambassador__created__lte=self.date_finish),
+                F("sent_merch__old_price") * F("sent_merch__count"),
+                filter=Q(sent_merch__created__gte=self.date_start)
+                & Q(sent_merch__created__lte=self.date_finish),
             )
             + self.sum_per_year(self.date_start, self.date_finish),
         )
@@ -61,22 +61,16 @@ class MerchBudgetViewSet(viewsets.ReadOnlyModelViewSet):
 
     @method_decorator(cache_page(60))
     def list(self, request, *args, **kwargs):
-        queryset = self.filter_queryset(self.get_queryset())
+        queryset = self.paginate_queryset(self.get_queryset())
 
-        # page = self.paginate_queryset(queryset)
-        # if page is not None:
-        #    serializer = self.get_serializer(page, many=True)
-
-        main_q = MerchBudgetSerializer(queryset, many=True)
-        queryset_t = MerchMiddle.objects.filter(
+        serializer = MerchBudgetSerializer(queryset, many=True)
+        grand_total = MerchMiddle.objects.filter(
             created__gte=self.date_start, created__lte=self.date_finish
-        )
-        grand_total = sum(
-            item.old_price * item.count + item.delivery_cost
-            for item in queryset_t
+        ).aggregate(
+            grand_total=Sum(F("old_price") * F("count") + F("delivery_cost"))
         )
         return self.get_paginated_response(
-            {"grand_total": grand_total, "data": main_q.data}
+            {**grand_total, "data": serializer.data}
         )
 
     @action(detail=False, methods=["get"])
@@ -124,7 +118,7 @@ class MerchBudgetViewSet(viewsets.ReadOnlyModelViewSet):
         response["Content-Disposition"] = (
             'attachment;filename="merch_total.xlsx"'
         )
-        fname = "merch_total.xlsx"
+        fname = "media/docs/merch_total.xlsx"
         writer = pd.ExcelWriter(fname)
         with pd.ExcelWriter(fname) as writer:
             df.to_excel(writer, index=False)

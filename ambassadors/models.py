@@ -202,7 +202,7 @@ class MerchMiddle(AbstractDateModel):
         Ambassador,
         verbose_name="амбассадор",
         on_delete=models.CASCADE,
-        related_name="ambassador",
+        related_name="sent_merch",
         null=True,
         blank=True,
     )
@@ -230,6 +230,7 @@ class MerchMiddle(AbstractDateModel):
     )
 
     class Meta:
+        ordering = ("-created",)
         verbose_name = "Мерч амбассадора"
         verbose_name_plural = "Мерч амбассадора"
 

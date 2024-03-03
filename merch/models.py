@@ -14,7 +14,7 @@ class Merch(AbstractDateModel):
         blank=True,
     )
     article = models.CharField(
-        "Артикул", max_length=settings.NAME_LENGTH, null=True, blank=True
+        "Артикул", max_length=settings.NAME_LENGTH, default="", blank=True
     )
     price = models.PositiveIntegerField("Цена", default=0, blank=True)
 
