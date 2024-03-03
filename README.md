@@ -21,6 +21,11 @@
 </a>
 </div>
 
+## [Miro-проекта](https://miro.com/app/board/uXjVNrJFAZc=/?share_link_id=934438081083)
+
+- Там нарисована Архитектура БД
+- и Kanban task tracker
+
 ## Используемые библиотеки и зависимости
 
 | Библиотека                                                                                                                                                                         | Описание                                                             |
@@ -33,6 +38,7 @@
 | [Environs[django]](https://pypi.org/project/environs/)                                                                                                                             | Библиотека для управления переменными окружения и хранения секретов. |
 | [drf-spectacular](https://drf-spectacular.readthedocs.io/en/latest/index.html)                                                                                                     | Генератор документации и Swagger для API в Django.                   |
 | [Pillow](https://pypi.org/project/pillow/)                                                                                                                                         | Библиотека для обработки изображений в Python.                       |
+| [Django Notifications](https://github.com/django-notifications/django-notifications) | Уведомления. |
 | [Django filter](https://pypi.org/project/django-filter/)                                                                                                                           | Библиотека для фильтрации данных в приложениях Django.               |
 | [django-cors-headers](https://pypi.org/project/django-cors-headers/)                                                                                                               | Настройка политики безопасности HTTP Headers[CORS]                   |
 | [Flake8](https://pypi.org/project/flake8/), [black](https://pypi.org/project/black/), [isort](https://pypi.org/project/isort/), [Pre-commit](https://pypi.org/project/pre-commit/) | Инструменты для поддержания Code-Style в проекте.                    |
@@ -64,7 +70,7 @@
 ### Инструкция по вкладу в проект:
 1. На вашем компьютере создается новая ветка(от ветки `develop`) с названием например `feature/ambassadors` или `fix/ambassadors`.
    - Пример: находясь в ветке `develop`: `git checkout -b feature/ambassadors`
-2. `git push --set-upstream origin develop` Для отправки своей новой ветки на GitHub.
+2. `git push --set-upstream origin <название_своей_ветки>` Для отправки своей новой ветки на GitHub.
 3. Далее разработка ведется в вашей новой ветке.
 4. После каждого `git commit` у вас запускается `pre-commit` с линтерами и тестами.
 5. Перед созданием PR на GitGub вам нужно подтянуть изменения с основной ветки(`develop`) в свою, локальную.
@@ -79,3 +85,4 @@
 - [Miron Sadykov](https://github.com/Reagent992)
 - [Natalia Arlazarova](https://github.com/Sic15)
 - [Pavel Lozhkin](https://github.com/Lozhkin-pa)
+- [Vladislav Kondrashov](https://github.com/thehallowedfire)
