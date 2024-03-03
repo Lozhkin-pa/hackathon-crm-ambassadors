@@ -1,14 +1,24 @@
 from django_filters.rest_framework import DjangoFilterBackend
-from drf_spectacular.utils import extend_schema, extend_schema_view
+from drf_spectacular.types import OpenApiTypes
+from drf_spectacular.utils import (
+    OpenApiParameter,
+    extend_schema,
+    extend_schema_view,
+)
+from rest_framework.decorators import action
 from rest_framework.filters import OrderingFilter, SearchFilter
+from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 
 from ambassadors.models import Ambassador
-from api.v1.filters import AmbassadorFilter
 from api.v1.serializers.ambassadors_serializer import (
     AmbassadorCreateEditSerializer,
     AmbassadorListSerializer,
     AmbassadorRetrieveSerializer,
+    ContentSerializer,
+)
+from api.v1.serializers.yandex_form_ambassador_create_serializer import (
+    YandexFormAmbassadorCreateSerializer,
 )
 
 
@@ -56,14 +66,13 @@ from api.v1.serializers.ambassadors_serializer import (
 class AmbassadorsViewSet(ModelViewSet):
     """Амбассадоры."""
 
-    queryset = Ambassador.objects.all()
+    queryset = Ambassador.objects.select_related("course", "education_goal")
     http_method_names = ("get", "head", "options", "post", "patch")
     filter_backends = (
         DjangoFilterBackend,
         SearchFilter,
         OrderingFilter,
     )
-    filterset_class = AmbassadorFilter
     search_fields = (
         "name",
         "country",
@@ -72,6 +81,16 @@ class AmbassadorsViewSet(ModelViewSet):
         "course__title",
     )
     ordering_fields = ("created",)
+    filterset_fields = {
+        "created": ["exact", "gte", "lte"],
+        "course": ["exact"],
+        "sex": ["exact"],
+        "status": ["exact"],
+        "onboarding_status": ["exact"],
+        "country": ["exact"],
+        "city": ["exact"],
+        "content": ["exact"],
+    }
 
     def get_serializer_class(self):
         """Выбор сериализатора в зависимости от типа запроса."""
@@ -79,4 +98,45 @@ class AmbassadorsViewSet(ModelViewSet):
             return AmbassadorRetrieveSerializer
         if self.action == "list":
             return AmbassadorListSerializer
+        if self.action == "create" and self.request.headers.get("Yandex"):
+            return YandexFormAmbassadorCreateSerializer
         return AmbassadorCreateEditSerializer
+
+    @extend_schema(
+        summary="Контент одного амбассадора.",
+        description=(
+            "Контент конкретного амбассадора"
+            " с возможностью фильтрации по дате."
+        ),
+        request=ContentSerializer,
+        responses={200: ContentSerializer},
+        parameters=[
+            OpenApiParameter(
+                name="content_after",
+                type=OpenApiTypes.DATE,
+                description="Дата после",
+            ),
+            OpenApiParameter(
+                name="content_before",
+                type=OpenApiTypes.DATE,
+                description="Дата до",
+            ),
+        ],
+    )
+    @action(
+        methods=["get"],
+        detail=False,
+        url_path="(?P<pk>[^/.]+)/content",
+    )
+    def content(self, request, pk):
+        content_after = request.query_params.get("content_after")
+        content_before = request.query_params.get("content_before")
+        queryset = Ambassador.objects.get(id=pk).content.all()
+
+        if content_after:
+            queryset = queryset.filter(created__gte=content_after)
+        if content_before:
+            queryset = queryset.filter(created__lte=content_before)
+
+        serializer = ContentSerializer(queryset, many=True)
+        return Response(serializer.data)

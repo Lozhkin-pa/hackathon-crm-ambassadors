@@ -1,7 +1,6 @@
 from django.db.models import Case, Count, When
 from django_filters.rest_framework import (
     CharFilter,
-    DateFilter,
     DateFromToRangeFilter,
     FilterSet,
 )
@@ -9,29 +8,9 @@ from django_filters.rest_framework import (
 from ambassadors.models import Ambassador
 
 
-class AmbassadorFilter(FilterSet):
-    """Фильтр амбассадоров."""
-
-    created__gte = DateFilter(field_name="created", lookup_expr="gte")
-    created__lte = DateFilter(field_name="created", lookup_expr="lte")
-
-    # TODO: Сделать фильтрацию контента по времени создания.
-    class Meta:
-        model = Ambassador
-        fields = (
-            "course",
-            "sex",
-            "status",
-            "onboarding_status",
-            "country",
-            "city",
-            "created",
-        )
-
-
 class ContentFilter(FilterSet):
     """
-    Фильтр контента по дате и статусу амбасадора:
+    Фильтр контента по дате и статусу амбассадора:
     content/?created_after=2024-02-23&created_before=2024-02-26
     content/?guide_step=new
     """
