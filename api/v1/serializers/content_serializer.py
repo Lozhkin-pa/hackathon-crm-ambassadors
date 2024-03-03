@@ -103,6 +103,7 @@ class FormsContentSerializer(serializers.ModelSerializer):
         content = Content.objects.create(**validated_data)
         content.ambassador = ambassador
         content.guide = True if guide == "Да" else False
+        content.yandex_form = True
         content.save()
         return content
 

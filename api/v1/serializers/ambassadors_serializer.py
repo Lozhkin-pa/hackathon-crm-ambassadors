@@ -57,7 +57,13 @@ class ContentSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Content
-        fields = ("id", "link", "platform", "file")
+        fields = (
+            "id",
+            "link",
+            "file",
+            "created",
+            "updated",
+        )
 
 
 class AmbassadorRetrieveSerializer(serializers.ModelSerializer):
@@ -130,7 +136,7 @@ class AmbassadorListSerializer(serializers.ModelSerializer):
 class AmbassadorCreateEditSerializer(serializers.ModelSerializer):
     """Создание Амбассадора."""
 
-    promo = serializers.CharField(write_only=True)
+    promo = serializers.CharField(write_only=True, required=False)
 
     class Meta:
         model = Ambassador

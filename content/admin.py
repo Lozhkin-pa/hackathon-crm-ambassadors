@@ -22,5 +22,6 @@ class ContentAdmin(admin.ModelAdmin):
     list_filter = (
         "platform",
         "guide",
+        "ambassador",
     )
     ordering = ("-created",)
