@@ -4,6 +4,12 @@ from django.db.models import F, Q, Sum
 from django.http import HttpResponse
 from django.utils.decorators import method_decorator
 from django.views.decorators.cache import cache_page
+from drf_spectacular.types import OpenApiTypes
+from drf_spectacular.utils import (
+    OpenApiParameter,
+    extend_schema,
+    extend_schema_view,
+)
 from rest_framework import viewsets
 from rest_framework.decorators import action
 
@@ -12,6 +18,39 @@ from api.v1.filters import get_period
 from api.v1.serializers.merch_serializer import MerchBudgetSerializer
 
 
+@extend_schema(tags=["Бюджета на мерч"])
+@extend_schema_view(
+    list=extend_schema(
+        summary="Бюджет отправленного мерча.",
+        parameters=[
+            OpenApiParameter(
+                name="start",
+                description="Фильтрация по дате начала",
+                type=OpenApiTypes.DATE,
+            ),
+            OpenApiParameter(
+                name="finish",
+                description="Фильтрация по дате окончания",
+                type=OpenApiTypes.DATE,
+            ),
+        ],
+    ),
+    download=extend_schema(
+        summary="Загрузка exel-файла бюджета отправленного мерча.",
+        parameters=[
+            OpenApiParameter(
+                name="start",
+                description="Фильтрация по дате начала",
+                type=OpenApiTypes.DATE,
+            ),
+            OpenApiParameter(
+                name="finish",
+                description="Фильтрация по дате окончания",
+                type=OpenApiTypes.DATE,
+            ),
+        ],
+    ),
+)
 class MerchBudgetViewSet(viewsets.ReadOnlyModelViewSet):
     """Вьюсет бюджета мерча."""
 
