@@ -4,7 +4,6 @@ from django.db.models import F, Q, Sum
 from django.http import HttpResponse
 from django.utils.decorators import method_decorator
 from django.views.decorators.cache import cache_page
-from django.views.decorators.vary import vary_on_cookie
 from rest_framework import viewsets
 from rest_framework.decorators import action
 
@@ -28,7 +27,7 @@ class MerchBudgetViewSet(viewsets.ReadOnlyModelViewSet):
         )
 
     def sum_per_year(self, date_start, date_finish):
-        """Вычисление суммы, потраченной на мерч амбассадору за год."""
+        """Вычисление суммы, потраченной на доставку амбассадору за год."""
         return Sum(
             "ambassador__delivery_cost",
             filter=Q(ambassador__created__gte=date_start)
@@ -36,41 +35,41 @@ class MerchBudgetViewSet(viewsets.ReadOnlyModelViewSet):
         )
 
     def get_queryset(self):
-        global date_start, date_finish
-        date_start, date_finish = get_period(self.request)
+        self.date_start, self.date_finish = get_period(self.request)
 
         queryset = Ambassador.objects.all().annotate(
-            total_delivery=self.sum_per_year(date_start, date_finish),
+            total_delivery=self.sum_per_year(
+                self.date_start, self.date_finish
+            ),
             total_per_amb=Sum(
                 F("ambassador__old_price") * F("ambassador__count"),
-                filter=Q(ambassador__created__gte=date_start)
-                & Q(ambassador__created__lte=date_finish),
+                filter=Q(ambassador__created__gte=self.date_start)
+                & Q(ambassador__created__lte=self.date_finish),
             )
-            + self.sum_per_year(date_start, date_finish),
+            + self.sum_per_year(self.date_start, self.date_finish),
         )
 
         for month in range(1, 13):
             queryset = queryset.annotate(
                 **{
                     f"total_{month}": self.sum_per_month(
-                        month, date_start, date_finish
+                        month, self.date_start, self.date_finish
                     )
                 }
             )
         return queryset
 
     @method_decorator(cache_page(60))
-    @method_decorator(vary_on_cookie)
     def list(self, request, *args, **kwargs):
         queryset = self.filter_queryset(self.get_queryset())
 
         # page = self.paginate_queryset(queryset)
         # if page is not None:
-        #     serializer = self.get_serializer(page, many=True)
+        #    serializer = self.get_serializer(page, many=True)
 
         main_q = MerchBudgetSerializer(queryset, many=True)
         queryset_t = MerchMiddle.objects.filter(
-            created__gte=date_start, created__lte=date_finish
+            created__gte=self.date_start, created__lte=self.date_finish
         )
         grand_total = sum(
             item.old_price * item.count + item.delivery_cost
@@ -102,14 +101,16 @@ class MerchBudgetViewSet(viewsets.ReadOnlyModelViewSet):
         queryset = self.get_queryset()
         file_data = {
             i: []
-            for i in file_headers[date_start.month - 1 : date_finish.month]
+            for i in file_headers[
+                self.date_start.month - 1 : self.date_finish.month
+            ]
         }
         file_data = {"Имя": []} | file_data
         file_data["Доставка"] = []
         file_data["Сумма"] = []
         for j in range(len(queryset)):
             file_data["Имя"].append(str(queryset[j].name))
-            for i in range(date_start.month - 1, date_finish.month):
+            for i in range(self.date_start.month - 1, self.date_finish.month):
                 file_data[file_headers[i]].append(
                     getattr(queryset[j], f"total_{i+1}")
                 )

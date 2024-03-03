@@ -40,8 +40,8 @@ class MerchTestCase(TestCase):
     def test_merch_defaults(self):
         """Значения по умолчанию для Мерча."""
         obj = Merch.objects.create()
-        self.assertEqual(obj.title, "")
-        self.assertEqual(obj.article, "")
+        self.assertEqual(obj.title, "Без названия")
+        self.assertIsNone(obj.article)
         self.assertEqual(obj.price, 0)
 
     def test_string_representation(self):

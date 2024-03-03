@@ -76,7 +76,7 @@ def get_period(request):
         date_finish = datetime.strptime(date_finish, "%Y-%m-%d").date()
         if date_finish < date_start:
             date_start, date_finish = date_finish, date_start
-    except Exception:
+    except (TypeError, ValueError):
         date_start = datetime.strptime(
             str(datetime.now().year) + "-01-01", "%Y-%m-%d"
         ).date()
