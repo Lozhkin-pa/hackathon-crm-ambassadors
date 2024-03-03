@@ -36,29 +36,6 @@ from content.models import Content
     ),
     forms=extend_schema(summary="Получение контента из Яндекс Формы"),
 )
-@extend_schema(tags=["Контент"])
-@extend_schema_view(
-    list=extend_schema(
-        summary=("Список амбассадоров с контентом."),
-        description=(
-            "<ul><h3>Фильтрация:</h3>"
-            "<li>Фильтрация по дате: <code>./?created_after=2023-04-25"
-            "&created_before=2024-03-25</code>    "
-            "т.е. дата старше 2023-04-25 и младше 2024-03-25</li>"
-            "<li>Фильтрация по статусу гайда: <code>./?guide_step=new</code> "
-            "т.е. new(новенький)/in_progress(в процессе)/done(выполнено)</li>"
-            "<br><ul><h3>Поиск:</h3>"
-            "<li>Поиск по имени: <code>./?search=Вася</code></li>"
-            "</ul>"
-        ),
-    ),
-    retrieve=extend_schema(summary="Единица контента амбассадора."),
-    create=extend_schema(summary="Создание контента."),
-    partial_update=extend_schema(
-        summary="Редактирование контента амбассадора.",
-    ),
-    forms=extend_schema(summary="Получение контента из Яндекс Формы"),
-)
 class ContentViewSet(viewsets.ModelViewSet):
     """Контент амбассадора."""
 
