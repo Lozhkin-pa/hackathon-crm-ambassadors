@@ -20,7 +20,7 @@ from content.models import Content
         description=(
             "<ul><h3>Фильтрация:</h3>"
             "<li>Фильтрация по дате: <code>./?created_after=2023-04-25"
-            "&created_before=2024-03-25</code>    "
+            "&created_before=2024-03-25</code>   "
             "т.е. дата старше 2023-04-25 и младше 2024-03-25</li>"
             "<li>Фильтрация по статусу гайда: <code>./?guide_step=new</code> "
             "т.е. new(новенький)/in_progress(в процессе)/done(выполнено)</li>"
@@ -71,20 +71,18 @@ class ContentViewSet(viewsets.ModelViewSet):
         if created_before:
             queryset = queryset.filter(created__lte=created_before)
         # Фильтрация по статусу гайда:
-        # /?guide_step=new
-        queryset_new = queryset.filter(guide_step=0).order_by("-created")
-        page_new = self.paginate_queryset(queryset_new)
-        serializer_new = ListContentSerializer(page_new, many=True)
-        # /?guide_step=in_progress
-        queryset_in_prog = queryset.filter(
-            guide_step__gte=1, guide_step__lte=4
-        ).order_by("-created")
-        page_in_prog = self.paginate_queryset(queryset_in_prog)
-        serializer_in_prog = ListContentSerializer(page_in_prog, many=True)
-        # /?guide_step=done
-        queryset_done = queryset.filter(guide_step__gte=4).order_by("-created")
-        page_done = self.paginate_queryset(queryset_done)
-        serializer_done = ListContentSerializer(page_done, many=True)
+        serializer_new = ListContentSerializer(
+            queryset.filter(guide_step=0).order_by("-created"), many=True
+        )
+        serializer_in_prog = ListContentSerializer(
+            queryset.filter(guide_step__gte=1, guide_step__lte=4).order_by(
+                "-created"
+            ),
+            many=True,
+        )
+        serializer_done = ListContentSerializer(
+            queryset.filter(guide_step__gte=4).order_by("-created"), many=True
+        )
         match guide_step:
             case "new":
                 data = serializer_new.data
@@ -98,7 +96,7 @@ class ContentViewSet(viewsets.ModelViewSet):
                     "in_progress": serializer_in_prog.data,
                     "done": serializer_done.data,
                 }
-        return self.get_paginated_response(data)
+        return Response(data)
 
     @decorators.action(
         methods=("post",),
