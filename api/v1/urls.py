@@ -11,8 +11,8 @@ from api.v1.views.content_view import ContentViewSet
 from api.v1.views.dropdowns_view import DropdownsViewSet
 from api.v1.views.merch_view import MerchBudgetViewSet
 from api.v1.views.notifications_view import NotificationViewSet
-from api.v1.views.send_view import SendViewSet
 from api.v1.views.promos_view import PromosViewSet
+from api.v1.views.send_view import SendViewSet
 from api.v1.views.users_view import UserViewSet
 
 v1_router = routers.DefaultRouter()

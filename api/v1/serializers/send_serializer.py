@@ -20,6 +20,7 @@ class SendSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError(
                 {"error": "Добавьте амбассадора."}
             )
+
         if "merch" not in data:
             raise serializers.ValidationError({"error": "Добавьте мерч."})
         return data
