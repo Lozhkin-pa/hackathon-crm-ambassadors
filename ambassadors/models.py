@@ -202,32 +202,35 @@ class MerchMiddle(AbstractDateModel):
         Ambassador,
         verbose_name="амбассадор",
         on_delete=models.CASCADE,
-        blank=True,
+        related_name="sent_merch",
         null=True,
+        blank=True,
     )
     merch = models.ForeignKey(
         Merch,
         verbose_name="мерч",
+        related_name="sent",
         on_delete=models.SET_NULL,
-        blank=True,
         null=True,
+        blank=True,
     )
     size = models.CharField(
         "Размер",
         max_length=settings.NAME_LENGTH,
         choices=ClothingSize.choices,
+        default=ClothingSize.UNKNOWN,
         blank=True,
-        null=True,
     )
     delivery_cost = models.PositiveIntegerField(
-        "Стоимость доставки", blank=True, null=True
+        "Стоимость доставки", default=0, blank=True
     )
-    count = models.PositiveIntegerField("Количество", blank=True, null=True)
+    count = models.PositiveIntegerField("Количество", default=1, blank=True)
     old_price = models.PositiveIntegerField(
-        "Архивная цена", blank=True, null=True
+        "Архивная цена", default=0, blank=True
     )
 
     class Meta:
+        ordering = ("-created",)
         verbose_name = "Мерч амбассадора"
         verbose_name_plural = "Мерч амбассадора"
 
