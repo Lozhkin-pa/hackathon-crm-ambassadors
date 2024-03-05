@@ -3,12 +3,12 @@ import uuid
 from django.conf import settings
 from django.db import models
 
-from core.abstract_models import AbstractTimeModel
+from core.abstract_models import AbstractDateModel, AbstractDateTimeModel
 from core.choices import AmbassadorStatus, ClothingSize, PromoStatus, Sex
 from merch.models import Merch
 
 
-class Ambassador(AbstractTimeModel):
+class Ambassador(AbstractDateTimeModel):
     """Амбассадоры."""
 
     id = models.UUIDField(
@@ -112,6 +112,9 @@ class Ambassador(AbstractTimeModel):
         verbose_name="Мерч",
         related_name="ambassador",
     )
+    yandex_form = models.BooleanField(
+        "Создан через Яндекс Форму", default=False
+    )
 
     class Meta:
         ordering = ("-created",)
@@ -122,7 +125,7 @@ class Ambassador(AbstractTimeModel):
         return self.name if self.name else ""
 
 
-class EducationGoal(AbstractTimeModel):
+class EducationGoal(AbstractDateModel):
     """Цель обучения в Яндекс Практикуме."""
 
     title = models.CharField(
@@ -137,7 +140,7 @@ class EducationGoal(AbstractTimeModel):
         return self.title
 
 
-class AmbassadorGoal(AbstractTimeModel):
+class AmbassadorGoal(AbstractDateModel):
     """Цель амбассадорства."""
 
     title = models.CharField(
@@ -152,7 +155,7 @@ class AmbassadorGoal(AbstractTimeModel):
         return self.title
 
 
-class Course(AbstractTimeModel):
+class Course(AbstractDateModel):
     """Курс Яндекс Практикума."""
 
     title = models.CharField("Название курса", max_length=settings.NAME_LENGTH)
@@ -165,7 +168,7 @@ class Course(AbstractTimeModel):
         return self.title
 
 
-class Promo(AbstractTimeModel):
+class Promo(AbstractDateModel):
     """Промокод."""
 
     value = models.CharField("Промокод", max_length=settings.NAME_LENGTH)
@@ -192,39 +195,42 @@ class Promo(AbstractTimeModel):
         return self.value
 
 
-class MerchMiddle(AbstractTimeModel):
+class MerchMiddle(AbstractDateModel):
     """Промежуточная модель между амбассадором и мерч."""
 
     ambassador = models.ForeignKey(
         Ambassador,
         verbose_name="амбассадор",
         on_delete=models.CASCADE,
-        blank=True,
+        related_name="sent_merch",
         null=True,
+        blank=True,
     )
     merch = models.ForeignKey(
         Merch,
         verbose_name="мерч",
+        related_name="sent",
         on_delete=models.SET_NULL,
-        blank=True,
         null=True,
+        blank=True,
     )
     size = models.CharField(
         "Размер",
         max_length=settings.NAME_LENGTH,
         choices=ClothingSize.choices,
+        default=ClothingSize.UNKNOWN,
         blank=True,
-        null=True,
     )
     delivery_cost = models.PositiveIntegerField(
-        "Стоимость доставки", blank=True, null=True
+        "Стоимость доставки", default=0, blank=True
     )
-    count = models.PositiveIntegerField("Количество", blank=True, null=True)
+    count = models.PositiveIntegerField("Количество", default=1, blank=True)
     old_price = models.PositiveIntegerField(
-        "Архивная цена", blank=True, null=True
+        "Архивная цена", default=0, blank=True
     )
 
     class Meta:
+        ordering = ("-created",)
         verbose_name = "Мерч амбассадора"
         verbose_name_plural = "Мерч амбассадора"
 

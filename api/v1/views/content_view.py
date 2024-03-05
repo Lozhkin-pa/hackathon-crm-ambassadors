@@ -20,7 +20,7 @@ from content.models import Content
         description=(
             "<ul><h3>Фильтрация:</h3>"
             "<li>Фильтрация по дате: <code>./?created_after=2023-04-25"
-            "&created_before=2024-03-25</code>    "
+            "&created_before=2024-03-25</code>   "
             "т.е. дата старше 2023-04-25 и младше 2024-03-25</li>"
             "<li>Фильтрация по статусу гайда: <code>./?guide_step=new</code> "
             "т.е. new(новенький)/in_progress(в процессе)/done(выполнено)</li>"
@@ -40,6 +40,7 @@ class ContentViewSet(viewsets.ModelViewSet):
     """Контент амбассадора."""
 
     queryset = Content.objects.all()
+    http_method_names = ("get", "head", "options", "post", "patch")
 
     def get_serializer_class(self):
         if self.action == "retrieve":
@@ -58,7 +59,6 @@ class ContentViewSet(viewsets.ModelViewSet):
         created_after = self.request.query_params.get("created_after")
         created_before = self.request.query_params.get("created_before")
         name = self.request.query_params.get("name")
-
         queryset = Ambassador.objects.all().annotate(
             guide_step=Count(Case(When(content__guide=True, then=1)))
         )
@@ -101,14 +101,14 @@ class ContentViewSet(viewsets.ModelViewSet):
     @decorators.action(
         methods=("post",),
         detail=False,
-        url_name="forms",
+        url_path="forms",
     )
     def get_content_from_forms(self, request):
         """Получение контента амбассадора из Яндекс Формы."""
-
-        if Ambassador.objects.filter(
-            telegram=request.data.get("telegram")
-        ).exists():
+        telegram = request.data.get("telegram")
+        if Ambassador.objects.filter(telegram=telegram).exists():
+            ambassador = Ambassador.objects.filter(telegram=telegram).first()
+            request.data["ambassador"] = ambassador.id
             serializer = FormsContentSerializer(data=request.data)
             if serializer.is_valid():
                 serializer.save()

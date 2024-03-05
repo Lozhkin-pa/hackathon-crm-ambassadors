@@ -8,19 +8,21 @@ class ContentAdmin(admin.ModelAdmin):
     """Панель администратора для модели Контент."""
 
     list_display = (
+        "id",
         "ambassador",
-        "platform",
+        # "platform",
         "link",
         "file",
         "guide",
         "created",
     )
     search_fields = (
-        "platform",
+        # "platform",
         "guide",
     )
     list_filter = (
-        "platform",
+        # "platform",
         "guide",
+        "ambassador",
     )
     ordering = ("-created",)

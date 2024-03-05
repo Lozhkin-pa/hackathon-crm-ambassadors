@@ -5,7 +5,6 @@
   "fields": {
     "created": "2024-02-27",
     "updated": "2024-02-27",
-    "platform": "instagram reels",
     "link": "https://www.instagram.com/reel/C3M-TlGAREg/",
     "file": null,
     "guide": true,
@@ -18,7 +17,6 @@
   "fields": {
     "created": "2024-02-27",
     "updated": "2024-02-27",
-    "platform": null,
     "link": "https://habr.com/ru/companies/xeovo/articles/787510/",
     "file": null,
     "guide": false,
@@ -31,7 +29,6 @@
   "fields": {
     "created": "2024-02-27",
     "updated": "2024-02-27",
-    "platform": "dev.to",
     "link": "https://dev.to/emminex/how-to-use-python-lambda-functions-5gac",
     "file": null,
     "guide": true,
@@ -44,7 +41,6 @@
   "fields": {
     "created": "2024-02-27",
     "updated": "2024-02-27",
-    "platform": null,
     "link": "https://habr.com/ru/news/788132/",
     "file": null,
     "guide": true,
@@ -57,7 +53,6 @@
   "fields": {
     "created": "2024-02-27",
     "updated": "2024-02-27",
-    "platform": null,
     "link": "https://habr.com/ru/companies/xeovo/articles/787510/",
     "file": null,
     "guide": false,
@@ -70,7 +65,6 @@
   "fields": {
     "created": "2024-02-27",
     "updated": "2024-02-27",
-    "platform": null,
     "link": "https://habr.com/ru/articles/788434/",
     "file": null,
     "guide": true,
@@ -83,7 +77,6 @@
   "fields": {
     "created": "2024-02-27",
     "updated": "2024-02-27",
-    "platform": "twitter",
     "link": "https://x.com/github/status/1762427957295939705?s=20",
     "file": "https://x.com/github/status/1762427957295939705?s=20",
     "guide": false,
@@ -96,7 +89,6 @@
   "fields": {
     "created": "2024-02-27",
     "updated": "2024-02-27",
-    "platform": "habr",
     "link": "https://habr.com/ru/articles/794556/",
     "file": null,
     "guide": true,
@@ -109,7 +101,6 @@
   "fields": {
     "created": "2024-02-27",
     "updated": "2024-02-27",
-    "platform": null,
     "link": "https://www.instagram.com/p/C30QXBNrVk3/",
     "file": null,
     "guide": true,
@@ -122,7 +113,6 @@
   "fields": {
     "created": "2024-02-27",
     "updated": "2024-02-27",
-    "platform": null,
     "link": "https://dev.to/voidzxl/build-user-loginsignup-restful-apis-in-100-lines-of-python-2h8c",
     "file": null,
     "guide": true,
@@ -135,7 +125,6 @@
   "fields": {
     "created": "2024-02-27",
     "updated": "2024-02-27",
-    "platform": null,
     "link": "https://habr.com/ru/articles/786276/",
     "file": null,
     "guide": false,
@@ -148,7 +137,6 @@
   "fields": {
     "created": "2024-02-27",
     "updated": "2024-02-27",
-    "platform": "instagram",
     "link": "https://www.instagram.com/p/C2r6BaQo0NH/",
     "file": null,
     "guide": true,
@@ -161,7 +149,6 @@
   "fields": {
     "created": "2024-02-27",
     "updated": "2024-02-27",
-    "platform": null,
     "link": "https://habr.com/ru/companies/ruvds/articles/792052/",
     "file": null,
     "guide": true,
@@ -174,7 +161,6 @@
   "fields": {
     "created": "2024-02-27",
     "updated": "2024-02-27",
-    "platform": null,
     "link": "https://habr.com/ru/articles/792630/",
     "file": null,
     "guide": true,
@@ -187,7 +173,6 @@
   "fields": {
     "created": "2024-02-27",
     "updated": "2024-02-27",
-    "platform": null,
     "link": "https://habr.com/ru/articles/789550/",
     "file": null,
     "guide": true,
@@ -200,7 +185,6 @@
   "fields": {
     "created": "2024-02-27",
     "updated": "2024-02-27",
-    "platform": null,
     "link": "https://habr.com/ru/articles/792790/",
     "file": null,
     "guide": true,
@@ -213,7 +197,6 @@
   "fields": {
     "created": "2024-02-27",
     "updated": "2024-02-27",
-    "platform": "twitter",
     "link": "https://x.com/jetbrains/status/1762430749406306638?s=20",
     "file": null,
     "guide": true,
@@ -226,7 +209,6 @@
   "fields": {
     "created": "2024-02-27",
     "updated": "2024-02-27",
-    "platform": null,
     "link": "https://www.instagram.com/p/C2AXrJiITq7/",
     "file": "https://www.instagram.com/p/C2AXrJiITq7/",
     "guide": true,
@@ -239,7 +221,6 @@
   "fields": {
     "created": "2024-02-27",
     "updated": "2024-02-27",
-    "platform": "habr",
     "link": "https://habr.com/ru/articles/793968/",
     "file": null,
     "guide": true,
@@ -252,7 +233,6 @@
   "fields": {
     "created": "2024-02-27",
     "updated": "2024-02-27",
-    "platform": null,
     "link": "https://habr.com/ru/companies/raft/articles/786738/",
     "file": null,
     "guide": true,

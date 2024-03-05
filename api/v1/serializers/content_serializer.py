@@ -96,13 +96,10 @@ class FormsContentSerializer(serializers.ModelSerializer):
 
     @transaction.atomic
     def create(self, validated_data):
-        telegram = validated_data.pop("telegram")
-        _ = validated_data.pop("name")
         guide = validated_data.pop("guide")
-        ambassador = Ambassador.objects.filter(telegram=telegram)
         content = Content.objects.create(**validated_data)
-        content.ambassador = ambassador
         content.guide = True if guide == "Да" else False
+        content.yandex_form = True
         content.save()
         return content
 
