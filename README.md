@@ -47,7 +47,7 @@
 
 ### Запуск проекта для локальной разработки:
 
-1. `git clone https://github.com/Lozhkin-pa/hackathon-crm-ambassadors.git`
+1. `git clone git@github.com:Lozhkin-pa/hackathon-crm-ambassadors.git`
 2. `cd hackathon-crm-ambassadors`
 3. `python -m venv venv` - на винде
    `python3 -m venv venv` - на линуксе
