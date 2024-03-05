@@ -47,12 +47,15 @@
 
 ### Запуск проекта для локальной разработки:
 
-1. `git clone https://github.com/Reagent992/hackathon-crm-ambassadors.git`
+1. `git clone https://github.com/Lozhkin-pa/hackathon-crm-ambassadors.git`
 2. `cd hackathon-crm-ambassadors`
-3. `python -m venv .venv`
-4. `pip install -r requirements.txt`
-5. `python manage.py migrate`
-6. `python manage.py runserver`
+3. `python -m venv venv` - на винде
+   `python3 -m venv venv` - на линуксе
+5. `. venv/scripts/activate` - на винде
+   `. venv/bin/activate` - на линуксе
+6. `pip install -r requirements.txt`
+7. `python manage.py migrate`
+8. `python manage.py runserver`
 
 ### Загрузка фикстур(ненастоящий данных) в БД.
 
