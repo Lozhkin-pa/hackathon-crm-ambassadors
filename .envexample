@@ -1,0 +1,13 @@
+SECRET_KEY=django-insecure-pp6rzgeb5sjtbhfs(d-3*ibq67#0c-8jsd82@65!+=
+DEBUG=False
+TIME_ZONE=Europe/Moscow
+LANGUAGE_CODE=ru-RU
+ALLOWED_HOSTS=localhost,127.0.0.1,5.35.89.44,
+CORS_ALLOWED_ORIGINS=http://localhost:8000,http://127.0.0.1:8000,http://localhost:3000,http://127.0.0.1:3000,http://5.35.89.44:8000,http://5.35.89.44:3000
+USE_POSTGRESQL=True
+DB_NAME=amb
+DB_HOST=db
+DB_PORT=5432
+POSTGRES_DB=amb
+POSTGRES_USER=amb_user
+POSTGRES_PASSWORD=amb_password
