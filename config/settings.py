@@ -19,7 +19,7 @@ ALLOWED_HOSTS = env.list(
         "localhost",
         "127.0.0.1",
         "[::1]",
-        "testserver",
+        "testserver"
     ],
 )
 DB_NAME = env.str("DB_NAME", default="DB_NAME")
@@ -27,13 +27,18 @@ DB_USER = env.str("POSTGRES_USER", default="username")
 DB_PASSWORD = env.str("POSTGRES_PASSWORD", default="smart-password123")
 DB_HOST = env.str("DB_HOST", default="db")
 DB_PORT = env.int("DB_PORT", default=5432)
-CORS_ALLOWED_ORIGINS = env.list(
-    "CORS_ALLOWED_ORIGINS",
-    default=["http://localhost:8000", "http://127.0.0.1:8000"],
-)
-CSRF_TRUSTED_ORIGINS = CORS_ORIGINS_WHITELIST = CORS_ALLOWED_ORIGINS
-if DEBUG:
-    CORS_ALLOW_ALL_ORIGINS = True
+
+# CORS_ALLOWED_ORIGINS = env.list(
+#     "CORS_ALLOWED_ORIGINS",
+#     default=["http://localhost:8000", "http://127.0.0.1:8000", "http://5.35.89.44:8000", "http://5.35.89.44:3000"],
+# )
+# CSRF_TRUSTED_ORIGINS = CORS_ORIGINS_WHITELIST = CORS_ALLOWED_ORIGINS
+# if DEBUG:
+#     CORS_ALLOW_ALL_ORIGINS = True
+CSRF_TRUSTED_ORIGINS = ['https://crm-ambassadors.hopto.org']
+CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOW_CREDENTIALS = True
+
 LANGUAGE_CODE = env.str("LANGUAGE_CODE", default="ru-RU")
 TIME_ZONE = env.str("TIME_ZONE", default="Europe/Moscow")
 # -----------------------------------------------------------------------------
@@ -138,8 +143,10 @@ USE_I18N = True
 
 USE_TZ = True
 
-STATIC_URL = "static/"
-STATIC_ROOT = os.path.join(BASE_DIR, "static/")
+# STATIC_URL = "static/"
+# STATIC_ROOT = os.path.join(BASE_DIR, "static/")
+STATIC_URL = '/static/'
+STATIC_ROOT = BASE_DIR / 'collected_static'
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 MEDIA_URL = "/media/"
