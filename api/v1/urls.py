@@ -16,7 +16,7 @@ v1_router = routers.DefaultRouter()
 v1_router.register("ambassadors", AmbassadorsViewSet, basename="ambassadors")
 v1_router.register("content", ContentViewSet, basename="content")
 v1_router.register("dropdowns", DropdownsViewSet, basename="dropdowns")
-v1_router.register("loayalty", LoyaltyViewSet, basename="loyalty")
+v1_router.register("loyalty", LoyaltyViewSet, basename="loyalty")
 v1_router.register("users", UserViewSet, basename="users")
 
 urlpatterns = [
