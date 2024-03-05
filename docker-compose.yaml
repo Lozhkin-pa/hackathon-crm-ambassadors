@@ -19,7 +19,7 @@ services:
       - .env
     volumes:
       - media_value:/app/media/
-      - static_value:/app/static/
+      - static_value:/backend_static/
     depends_on:
       - db
 
@@ -33,7 +33,7 @@ services:
       - "8000:80"
     volumes:
       - media_value:/var/html/media/
-      - static_value:/var/html/static/
+      - static_value:/staticfiles/
       
     depends_on:
       - backend
