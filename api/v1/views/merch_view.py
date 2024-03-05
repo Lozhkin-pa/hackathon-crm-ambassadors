@@ -145,7 +145,7 @@ class MerchBudgetViewSet(viewsets.ReadOnlyModelViewSet):
             file_data["Имя"].append(str(queryset[j].name))
             for i in range(self.date_start.month - 1, self.date_finish.month):
                 file_data[file_headers[i]].append(
-                    getattr(queryset[j], f"total_{i+1}")
+                    getattr(queryset[j], f"total_{i + 1}")
                 )
             file_data["Доставка"].append(
                 getattr(queryset[j], "total_delivery")
