@@ -35,6 +35,7 @@ class CustomUserAdmin(UserAdmin):
         ),
     )
     list_display = (
+        "id",
         "email",
         "first_name",
         "last_name",

@@ -8,6 +8,7 @@ class MerchAdmin(admin.ModelAdmin):
     """Панель администратора для Мерча."""
 
     list_display = (
+        "id",
         "title",
         "article",
         "price",
