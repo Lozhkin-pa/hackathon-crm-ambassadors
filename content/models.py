@@ -16,12 +16,12 @@ class Content(AbstractDateTimeModel):
         default=uuid.uuid4,
         editable=False,
     )
-    platform = models.CharField(
-        "Площадка размещения контента",
-        max_length=settings.NAME_LENGTH,
-        null=True,
-        blank=True,
-    )
+    # platform = models.CharField(
+    #     "Площадка размещения контента",
+    #     max_length=settings.NAME_LENGTH,
+    #     null=True,
+    #     blank=True,
+    # )
     link = models.CharField(
         "Ссылка на контент",
         max_length=settings.NAME_LENGTH,

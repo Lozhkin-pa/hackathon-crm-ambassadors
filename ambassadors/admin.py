@@ -15,14 +15,14 @@ from content.models import Content
 
 
 class PromoInline(admin.TabularInline):
-    """Добавление промокодов при редактирование амбассадора."""
+    """Добавление промокодов при редактировании амбассадора."""
 
     model = Promo
     extra = 1
 
 
 class MerchMiddleInline(admin.TabularInline):
-    """Добавление отправленного мерча при редактирование амбассадора."""
+    """Добавление отправленного мерча при редактировании амбассадора."""
 
     model = MerchMiddle
     extra = 1
@@ -40,6 +40,7 @@ class AmbassadorAdmin(admin.ModelAdmin):
     """Панель администратора для модели Амбассадор."""
 
     list_display = (
+        "id",
         "name",
         "link_telegram",
         "link_email",
@@ -64,7 +65,7 @@ class AmbassadorAdmin(admin.ModelAdmin):
         "city",
     )
     ordering = ("-created",)
-    date_hierarchy = "created"
+    # date_hierarchy = "created"
     inlines = (
         PromoInline,
         ContentInline,
@@ -97,7 +98,7 @@ class AmbassadorAdmin(admin.ModelAdmin):
 class EducationGoalAdmin(admin.ModelAdmin):
     """Панель администратора для модели Цель обучения в ЯП."""
 
-    list_display = ("title", "created", "updated")
+    list_display = ("id", "title", "created", "updated")
     search_fields = ("title",)
     ordering = ("-updated",)
 
@@ -106,7 +107,7 @@ class EducationGoalAdmin(admin.ModelAdmin):
 class AmbassadorGoalAdmin(admin.ModelAdmin):
     """Панель администратора для модели Цель амбассадорства."""
 
-    list_display = ("title", "created", "updated")
+    list_display = ("id", "title", "created", "updated")
     search_fields = ("title",)
     ordering = ("-updated",)
 
@@ -115,7 +116,7 @@ class AmbassadorGoalAdmin(admin.ModelAdmin):
 class CourseAdmin(admin.ModelAdmin):
     """Панель администратора для модели Курс Яндекс Практикума."""
 
-    list_display = ("title", "created", "updated")
+    list_display = ("id", "title", "created", "updated")
     search_fields = ("title",)
     ordering = ("-updated",)
 
@@ -124,7 +125,14 @@ class CourseAdmin(admin.ModelAdmin):
 class PromoAdmin(admin.ModelAdmin):
     """Панель администратора для модели Курс Яндекс Практикума."""
 
-    list_display = ("value", "ambassador", "status", "created", "updated")
+    list_display = (
+        "id",
+        "value",
+        "ambassador",
+        "status",
+        "created",
+        "updated",
+    )
     search_fields = ("value",)
     list_filter = ("status",)
     ordering = ("-updated",)
@@ -135,6 +143,7 @@ class MerchMiddleAdmin(admin.ModelAdmin):
     """Панель администратора для Мерча амбассадора."""
 
     list_display = (
+        "id",
         "merch",
         "ambassador",
         "size",
