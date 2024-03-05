@@ -6,10 +6,13 @@ from ambassadors.models import (
     AmbassadorGoal,
     Course,
     EducationGoal,
+    MerchMiddle,
     Promo,
 )
+from api.v1.serializers.merch_serializer import MerchLoyaltySerializer
 from content.models import Content
 from core.choices import PromoStatus
+from merch.models import Merch
 
 
 class EducationGoalSerializer(serializers.ModelSerializer):
@@ -201,3 +204,26 @@ class AmbassadorCreateEditSerializer(serializers.ModelSerializer):
         if Promo.objects.filter(value=value).exists():
             raise serializers.ValidationError("Промокод уже существует.")
         return value
+
+
+class AmbassadorLoyaltySerializer(serializers.ModelSerializer):
+    """Отправленный амбассадору мерч."""
+
+    merch = serializers.SerializerMethodField()
+    dispatch_date = serializers.SerializerMethodField()
+    course = serializers.CharField(source="course.title")
+
+    class Meta:
+        model = Ambassador
+        fields = ("id", "name", "course", "merch", "dispatch_date")
+
+    def get_merch(self, ambassador):
+        merch = Merch.objects.all()
+        return MerchLoyaltySerializer(
+            merch, many=True, context={"ambassador": ambassador}
+        ).data
+
+    def get_dispatch_date(self, ambassador):
+        queryset = MerchMiddle.objects.filter(ambassador=ambassador)
+        if queryset.count() >= 1:
+            return queryset.latest("created").created
