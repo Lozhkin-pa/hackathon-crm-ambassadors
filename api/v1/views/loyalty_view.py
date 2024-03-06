@@ -30,5 +30,5 @@ class LoyaltyViewSet(viewsets.ReadOnlyModelViewSet):
         queryset = Ambassador.objects.filter(
             merch__created__gte=self.date_start,
             merch__created__lte=self.date_finish,
-        )
+        ).distinct()
         return queryset
