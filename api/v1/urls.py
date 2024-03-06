@@ -10,10 +10,10 @@ from api.v1.views.ambassadors_view import AmbassadorsViewSet
 from api.v1.views.content_view import ContentViewSet
 from api.v1.views.dropdowns_view import DropdownsViewSet
 from api.v1.views.loyalty_view import LoyaltyViewSet
-from api.v1.views.merch_view import MerchBudgetViewSet
+from api.v1.views.merch_view import MerchBudgetViewSet, MerchInfoViewSet
 from api.v1.views.notifications_view import NotificationViewSet
 from api.v1.views.promos_view import PromosViewSet
-from api.v1.views.send_view import SendViewSet
+from api.v1.views.send_view import SendInfoViewSet, SendViewSet
 from api.v1.views.users_view import UserViewSet
 
 v1_router = routers.DefaultRouter()
@@ -27,6 +27,8 @@ v1_router.register("merch", MerchBudgetViewSet, basename="merch")
 v1_router.register(
     "notifications", NotificationViewSet, basename="notifications"
 )
+v1_router.register("sendinfo", SendInfoViewSet, basename="sendinfo")
+v1_router.register("merchinfo", MerchInfoViewSet, basename="merchinfo")
 
 urlpatterns = [
     path("", include(v1_router.urls)),

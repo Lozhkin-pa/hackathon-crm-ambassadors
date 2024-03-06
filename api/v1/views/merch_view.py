@@ -15,7 +15,11 @@ from rest_framework.decorators import action
 
 from ambassadors.models import Ambassador, MerchMiddle
 from api.v1.filters import get_period
-from api.v1.serializers.merch_serializer import MerchBudgetSerializer
+from api.v1.serializers.merch_serializer import (
+    MerchBudgetSerializer,
+    MerchSerializer,
+)
+from merch.models import Merch
 
 
 @extend_schema(tags=["Бюджета на мерч"])
@@ -164,3 +168,10 @@ class MerchBudgetViewSet(viewsets.ReadOnlyModelViewSet):
         wb = openpyxl.load_workbook(fname)
         wb.save(response)
         return response
+
+
+class MerchInfoViewSet(viewsets.ReadOnlyModelViewSet):
+    """Вьюсет мерча."""
+
+    serializer_class = MerchSerializer
+    queryset = Merch.objects.all()
