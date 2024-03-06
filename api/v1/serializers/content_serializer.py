@@ -24,6 +24,7 @@ class ListContentSerializer(serializers.ModelSerializer):
     """Список амбассадоров с контентом на чтение."""
 
     content = ContentSerializer(read_only=True, many=True)
+    course = serializers.StringRelatedField(read_only=True)
     content_last = ContentSerializer(
         source="content.first", read_only=True, many=False
     )
@@ -49,6 +50,7 @@ class ListContentSerializer(serializers.ModelSerializer):
         fields = (
             "name",
             "telegram",
+            "course",
             "guide_step",
             "created",
             "updated",
