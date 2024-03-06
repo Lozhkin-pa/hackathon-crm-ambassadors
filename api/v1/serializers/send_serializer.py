@@ -24,3 +24,27 @@ class SendSerializer(serializers.ModelSerializer):
         if "merch" not in data:
             raise serializers.ValidationError({"error": "Добавьте мерч."})
         return data
+
+
+class SendInfoSerializer(serializers.ModelSerializer):
+    ambassador = serializers.CharField(source="ambassador.name")
+    merch = serializers.CharField(source="merch.title")
+    country = serializers.CharField(source="ambassador.country")
+    city = serializers.CharField(source="ambassador.city")
+    address = serializers.CharField(source="ambassador.address")
+    index = serializers.CharField(source="ambassador.index")
+    phone = serializers.CharField(source="ambassador.phone")
+
+    class Meta:
+        model = MerchMiddle
+        fields = (
+            "ambassador",
+            "merch",
+            "created",
+            "size",
+            "country",
+            "city",
+            "address",
+            "index",
+            "phone",
+        )
