@@ -47,4 +47,3 @@ class MerchLoyaltySerializer(serializers.ModelSerializer):
         )
         if sent_merch.exists():
             return getattr(sent_merch.first(), "count")
-        return 0
