@@ -21,7 +21,7 @@ from core.choices import PromoStatus
             "<code>./?ambassador__status=active</code> "
             "т.е. active(активный)/paused(на паузе)/"
             "not_ambassador(не амбассадор)/pending(уточняется)</li>"
-            "<br><ul><h3>Поиск:</h3>"
+            "<h3>Поиск:</h3>"
             "<li>Поиск по имени: <code>./?search=Вася</code></li>"
             "</ul>"
         ),
@@ -46,7 +46,7 @@ class PromosViewSet(viewsets.ModelViewSet):
     search_fields = ("ambassador__name",)
     ordering_fields = ("ambassador__created",)
     ordering = ("ambassador__created",)
-    http_method_names = ("get", "head", "options", "post", "patch")
+    http_method_names = ("get", "head", "options", "patch")
     serializer_class = PromoSerializer
 
     def get_queryset(self):
@@ -59,6 +59,7 @@ class PromosViewSet(viewsets.ModelViewSet):
             queryset = queryset.filter(ambassador__created__lte=created_before)
         return queryset
 
+    @extend_schema(summary="Архивные промокоды амбассадоров")
     @decorators.action(
         methods=("get",),
         detail=False,

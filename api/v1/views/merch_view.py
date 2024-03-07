@@ -22,7 +22,7 @@ from api.v1.serializers.merch_serializer import (
 from merch.models import Merch
 
 
-@extend_schema(tags=["Бюджета на мерч"])
+@extend_schema(tags=["Бюджет на мерч"])
 @extend_schema_view(
     list=extend_schema(
         summary="Бюджет отправленного мерча.",
@@ -56,7 +56,7 @@ from merch.models import Merch
     ),
 )
 class MerchBudgetViewSet(viewsets.ReadOnlyModelViewSet):
-    """Вьюсет бюджета мерча."""
+    """Бюджет мерча."""
 
     serializer_class = MerchBudgetSerializer
 
@@ -170,8 +170,15 @@ class MerchBudgetViewSet(viewsets.ReadOnlyModelViewSet):
         return response
 
 
+@extend_schema(tags=["Доступный мерч"])
+@extend_schema_view(
+    list=extend_schema(
+        summary=("Список доступного мерча."),
+    ),
+    retrieve=extend_schema(summary="Единица доступного мерча."),
+)
 class MerchInfoViewSet(viewsets.ReadOnlyModelViewSet):
-    """Вьюсет мерча."""
+    """Доступный мерч."""
 
     serializer_class = MerchSerializer
     queryset = Merch.objects.all()

@@ -1,3 +1,4 @@
+from drf_spectacular.utils import extend_schema, extend_schema_view
 from rest_framework import viewsets
 from rest_framework.response import Response
 
@@ -17,8 +18,29 @@ from core.choices import AmbassadorStatus, ClothingSize, PromoStatus, Sex
 from merch.models import Merch
 
 
+@extend_schema(tags=["Выпадающие списки"])
+@extend_schema_view(
+    list=extend_schema(
+        summary=("Выпадающие списки."),
+    ),
+    retrieve=extend_schema(
+        summary="Отключает метод получения индивидуальных объектов."
+    ),
+)
 class DropdownsViewSet(viewsets.ReadOnlyModelViewSet):
-    """Выпадающие списки."""
+    """
+    Выпадающие списки для полей:
+        "courses",
+        "educational_goals",
+        "ambassador_goals",
+        "merch",
+        "countries",
+        "cities",
+        "ambassador_status",
+        "clothing_size",
+        "promo_status",
+        "sex".
+    """
 
     def list(self, request):
         courses_queryset = Course.objects.all()

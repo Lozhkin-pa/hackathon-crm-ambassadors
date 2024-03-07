@@ -24,7 +24,7 @@ from content.models import Content
             "т.е. дата старше 2023-04-25 и младше 2024-03-25</li>"
             "<li>Фильтрация по статусу гайда: <code>./?guide_step=new</code> "
             "т.е. new(новенький)/in_progress(в процессе)/done(выполнено)</li>"
-            "<br><ul><h3>Поиск:</h3>"
+            "<h3>Поиск:</h3>"
             "<li>Поиск по имени: <code>./?search=Вася</code></li>"
             "</ul>"
         ),
@@ -34,7 +34,6 @@ from content.models import Content
     partial_update=extend_schema(
         summary="Редактирование контента амбассадора.",
     ),
-    forms=extend_schema(summary="Получение контента из Яндекс Формы"),
 )
 class ContentViewSet(viewsets.ModelViewSet):
     """Контент амбассадора."""
@@ -98,6 +97,7 @@ class ContentViewSet(viewsets.ModelViewSet):
                 }
         return Response(data)
 
+    @extend_schema(summary="Получение контента из Яндекс Формы")
     @decorators.action(
         methods=("post",),
         detail=False,
