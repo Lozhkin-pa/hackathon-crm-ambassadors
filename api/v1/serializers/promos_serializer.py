@@ -8,6 +8,7 @@ class PromoSerializer(serializers.ModelSerializer):
 
     name = serializers.CharField(source="ambassador.name")
     telegram = serializers.CharField(source="ambassador.telegram")
+    course = serializers.CharField(source="ambassador.course")
     created = serializers.CharField(source="ambassador.created")
     status = serializers.CharField(source="ambassador.status")
 
@@ -28,6 +29,7 @@ class PromoSerializer(serializers.ModelSerializer):
             "id",
             "name",
             "telegram",
+            "course",
             "value",
             "created",
             "status",
