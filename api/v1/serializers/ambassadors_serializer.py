@@ -140,7 +140,7 @@ class AmbassadorListSerializer(serializers.ModelSerializer):
             "current_user",
         )
 
-    def get_current_user(self, object):
+    def get_current_user(self, _):
         current_user = self.context.get("request").user
         return current_user.first_name + " " + current_user.last_name
 

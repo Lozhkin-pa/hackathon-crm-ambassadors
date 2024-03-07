@@ -1,3 +1,4 @@
+from django.db.models import Case, Count, When
 from django_filters.rest_framework import DjangoFilterBackend
 from drf_spectacular.types import OpenApiTypes
 from drf_spectacular.utils import (
@@ -66,7 +67,7 @@ from api.v1.serializers.yandex_form_ambassador_create_serializer import (
 class AmbassadorsViewSet(ModelViewSet):
     """Амбассадоры."""
 
-    queryset = Ambassador.objects.select_related("course", "education_goal")
+    # queryset = Ambassador.objects.select_related("course", "education_goal")
     http_method_names = ("get", "head", "options", "post", "patch")
     filter_backends = (
         DjangoFilterBackend,
@@ -92,6 +93,27 @@ class AmbassadorsViewSet(ModelViewSet):
         "city": ["exact"],
         "content": ["exact"],
     }
+
+    def get_queryset(self):
+        guide_step = self.request.query_params.get("guide_step")
+        queryset = Ambassador.objects.all().annotate(
+            guide_step=Count(Case(When(content__guide=True, then=1)))
+        )
+        # Фильтрация по статусу гайда:
+        match guide_step:
+            case "new":
+                queryset = queryset.filter(guide_step=0).order_by("-created")
+            case "in_progress":
+                queryset = queryset.filter(
+                    guide_step__gte=1, guide_step__lte=4
+                ).order_by("-created")
+            case "done":
+                queryset = queryset.filter(guide_step__gte=4).order_by(
+                    "-created"
+                )
+            case _:
+                return queryset
+        return queryset
 
     def get_serializer_class(self):
         """Выбор сериализатора в зависимости от типа запроса."""
