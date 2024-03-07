@@ -119,6 +119,7 @@ class AmbassadorRetrieveSerializer(serializers.ModelSerializer):
 class AmbassadorListSerializer(serializers.ModelSerializer):
     """Список амбассадоров."""
 
+    current_user = serializers.SerializerMethodField()
     course = CourseSerializer(many=False, read_only=True)
 
     class Meta:
@@ -136,7 +137,12 @@ class AmbassadorListSerializer(serializers.ModelSerializer):
             "address",
             "index",
             "phone",
+            "current_user",
         )
+
+    def get_current_user(self, object):
+        current_user = self.context.get("request").user
+        return current_user.first_name + " " + current_user.last_name
 
 
 class AmbassadorCreateEditSerializer(serializers.ModelSerializer):
