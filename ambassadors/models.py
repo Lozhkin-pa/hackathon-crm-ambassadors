@@ -220,6 +220,7 @@ class MerchMiddle(AbstractDateModel):
         choices=ClothingSize.choices,
         default=ClothingSize.UNKNOWN,
         blank=True,
+        null=True,
     )
     delivery_cost = models.PositiveIntegerField(
         "Стоимость доставки", default=0, blank=True

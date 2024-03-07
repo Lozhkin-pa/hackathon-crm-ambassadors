@@ -7,7 +7,7 @@
     "updated": "2024-02-27",
     "ambassador": "052fbdfa-6a76-47a7-ae3d-faffa9a46de8",
     "merch": 1,
-    "size": "m",
+    "size": "M",
     "delivery_cost": 99,
     "count": 1,
     "old_price": 2999
@@ -78,7 +78,7 @@
     "ambassador": "77a214c7-8d33-45b6-bb93-35cc65e8c02b",
     "merch": 13,
     "size": null,
-    "delivery_cost": null,
+    "delivery_cost": 0,
     "count": 1,
     "old_price": 0
   }
@@ -106,7 +106,7 @@
     "ambassador": "e958c1ca-64ec-46bc-b612-97364788a471",
     "merch": 5,
     "size": null,
-    "delivery_cost": null,
+    "delivery_cost": 0,
     "count": 1,
     "old_price": 299
   }
