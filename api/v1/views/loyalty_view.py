@@ -1,4 +1,5 @@
 from django_filters.rest_framework import DjangoFilterBackend
+from drf_spectacular.utils import extend_schema, extend_schema_view
 from rest_framework import viewsets
 from rest_framework.filters import OrderingFilter, SearchFilter
 
@@ -9,10 +10,16 @@ from api.v1.serializers.ambassadors_serializer import (
 )
 
 
+@extend_schema(tags=["Программа лояльности"])
+@extend_schema_view(
+    list=extend_schema(summary=("Список амбассадоров c отправленным мерчем.")),
+    retrieve=extend_schema(summary="Амбассадор c отправленным мерчем."),
+)
 class LoyaltyViewSet(viewsets.ReadOnlyModelViewSet):
     """
-    Программа лояльности. Выводит информацию про мерч,
-    предоставленный амбассадорам.
+    Выводит информацию про мерч, предоставленный амбассадорам.
+    Фильтрация по дате /?finish=<date>&start=<date>.
+    Поиск по имени /?search=Мария.
     """
 
     serializer_class = AmbassadorLoyaltySerializer
