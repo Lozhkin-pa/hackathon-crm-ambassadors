@@ -79,6 +79,7 @@ class AmbassadorsViewSet(ModelViewSet):
         "city",
         "telegram",
         "course__title",
+        "onboarding_status",
     )
     ordering_fields = ("created",)
     filterset_fields = {

@@ -133,6 +133,9 @@ class AmbassadorListSerializer(serializers.ModelSerializer):
             "city",
             "course",
             "onboarding_status",
+            "address",
+            "index",
+            "phone",
         )
 
 
