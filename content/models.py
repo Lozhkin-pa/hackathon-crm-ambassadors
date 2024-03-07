@@ -34,9 +34,8 @@ class Content(AbstractDateTimeModel):
         null=True,
         blank=True,
     )
-    guide = models.BooleanField(
-        "Контент в рамках гайда",
-        default=False,
+    guide = models.CharField(
+        "Контент в рамках гайда", default=False, max_length=4
     )
     ambassador = models.ForeignKey(
         Ambassador,
