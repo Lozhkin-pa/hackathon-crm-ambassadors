@@ -1,10 +1,6 @@
-from rest_framework import generics, viewsets
+from rest_framework import generics
 
-from ambassadors.models import MerchMiddle
-from api.v1.serializers.send_serializer import (
-    SendInfoSerializer,
-    SendSerializer,
-)
+from api.v1.serializers.send_serializer import SendSerializer
 
 
 class SendViewSet(generics.CreateAPIView):
@@ -15,8 +11,3 @@ class SendViewSet(generics.CreateAPIView):
             kwargs["many"] = True
 
         return super(SendViewSet, self).get_serializer(*args, **kwargs)
-
-
-class SendInfoViewSet(viewsets.ReadOnlyModelViewSet):
-    serializer_class = SendInfoSerializer
-    queryset = MerchMiddle.objects.all()
