@@ -106,9 +106,11 @@ class ContentViewSet(viewsets.ModelViewSet):
     def get_content_from_forms(self, request):
         """Получение контента амбассадора из Яндекс Формы."""
         telegram = request.data.get("telegram")
+        guide_check = request.data.pop("guide")
         if Ambassador.objects.filter(telegram=telegram).exists():
             ambassador = Ambassador.objects.filter(telegram=telegram).first()
             request.data["ambassador"] = ambassador.id
+            request.data["guide"] = True if guide_check == "Да" else False
             serializer = FormsContentSerializer(data=request.data)
             if serializer.is_valid():
                 serializer.save()
