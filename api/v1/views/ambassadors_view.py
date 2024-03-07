@@ -11,7 +11,13 @@ from rest_framework.filters import OrderingFilter, SearchFilter
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 
-from ambassadors.models import Ambassador
+from ambassadors.models import (
+    Ambassador,
+    AmbassadorGoal,
+    Course,
+    EducationGoal,
+    Promo,
+)
 from api.v1.serializers.ambassadors_serializer import (
     AmbassadorCreateEditSerializer,
     AmbassadorListSerializer,
@@ -21,6 +27,7 @@ from api.v1.serializers.ambassadors_serializer import (
 from api.v1.serializers.yandex_form_ambassador_create_serializer import (
     YandexFormAmbassadorCreateSerializer,
 )
+from core.choices import Sex
 
 
 @extend_schema(tags=["Амбассадоры"])
@@ -111,7 +118,7 @@ class AmbassadorsViewSet(ModelViewSet):
                     "-created"
                 )
             case _:
-                return queryset
+                return queryset.order_by("-created")
         return queryset
 
     def get_serializer_class(self):
@@ -123,6 +130,54 @@ class AmbassadorsViewSet(ModelViewSet):
         if self.action == "create" and self.request.headers.get("Yandex"):
             return YandexFormAmbassadorCreateSerializer
         return AmbassadorCreateEditSerializer
+
+    def create(self, request):
+        """Определение инициатора создания амбассадора."""
+        if self.request.headers.get("Yandex"):
+            sex = request.data.pop("sex")
+            new_promo = request.data.pop("promo", None)
+            education_goal_data = request.data.pop("education_goal", None)
+            ambassador_goals_data = request.data.pop("ambassador_goals", None)
+            custom_goal = request.data.pop("custom_goal", None)
+            course = request.data.pop("course", None)
+
+            ambassador = Ambassador.objects.create(**request.data)
+
+            if course:
+                exist_course = Course.objects.get(title=course)
+                ambassador.course = exist_course
+            if new_promo:
+                Promo.objects.create(value=new_promo, ambassador=ambassador)
+            if ambassador_goals_data:
+                try:
+                    ambassador.ambassador_goals.set(
+                        AmbassadorGoal.objects.filter(
+                            title__in=ambassador_goals_data.split("., ")
+                        )
+                    )
+                except AmbassadorGoal.DoesNotExist:
+                    pass
+            if education_goal_data != "Свой вариант":
+                ambassador.education_goal = EducationGoal.objects.get(
+                    title=education_goal_data
+                )
+            elif custom_goal:
+                ambassador.education_goal = EducationGoal.objects.create(
+                    title=custom_goal
+                )
+            if sex:
+                if sex == "М":
+                    ambassador.sex = Sex.M
+                elif sex == "Ж":
+                    ambassador.sex = Sex.W
+            ambassador.yandex_form = True
+            serializer = YandexFormAmbassadorCreateSerializer(
+                data=request.data
+            )
+            if serializer.is_valid():
+                serializer.save()
+                return Response(serializer.data)
+        return super(AmbassadorsViewSet, self).create(request)
 
     @extend_schema(
         summary="Контент одного амбассадора.",
