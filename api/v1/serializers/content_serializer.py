@@ -98,9 +98,7 @@ class FormsContentSerializer(serializers.ModelSerializer):
 
     @transaction.atomic
     def create(self, validated_data):
-        guide = validated_data.pop("guide")
         content = Content.objects.create(**validated_data)
-        content.guide = True if guide == "Да" else False
         content.yandex_form = True
         content.save()
         return content
