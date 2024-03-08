@@ -134,6 +134,7 @@ class AmbassadorsViewSet(ModelViewSet):
     def create(self, request):
         """Определение инициатора создания амбассадора."""
         if self.request.headers.get("Yandex"):
+
             sex = request.data.pop("sex")
             new_promo = request.data.pop("promo", None)
             education_goal_data = request.data.pop("education_goal", None)
@@ -175,7 +176,6 @@ class AmbassadorsViewSet(ModelViewSet):
                 data=request.data
             )
             if serializer.is_valid():
-                serializer.save()
                 return Response(serializer.data)
         return super(AmbassadorsViewSet, self).create(request)
 
