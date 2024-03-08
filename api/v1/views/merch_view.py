@@ -181,4 +181,4 @@ class MerchInfoViewSet(viewsets.ReadOnlyModelViewSet):
     """Доступный мерч."""
 
     serializer_class = MerchSerializer
-    queryset = Merch.objects.all()
+    queryset = Merch.objects.all().order_by("id")

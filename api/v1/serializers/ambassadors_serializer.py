@@ -227,7 +227,7 @@ class AmbassadorLoyaltySerializer(serializers.ModelSerializer):
         fields = ("id", "name", "course", "merch", "dispatch_date")
 
     def get_merch(self, ambassador):
-        merch = Merch.objects.all()
+        merch = Merch.objects.all().order_by("id")
         return MerchLoyaltySerializer(
             merch, many=True, context={"ambassador": ambassador}
         ).data

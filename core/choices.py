@@ -34,3 +34,20 @@ class PromoStatus(models.TextChoices):
 
     ACTIVE = "active", "Активный"
     ARCHIVED = "archived", "Архивный"
+
+
+class MonthChoices(models.TextChoices):
+    """Месяцы для дропдаунов."""
+
+    JANUARY = "january", "Январь"
+    FEBRUARY = "february", "Февраль"
+    MARCH = "march", "Март"
+    APRIL = "april", "Апрель"
+    MAY = "may", "Май"
+    JUNE = "june", "Июнь"
+    JULY = "july", "Июль"
+    AUGUST = "august", "Август"
+    SEPTEMBER = "september", "Сентябрь"
+    OCTOBER = "october", "Октябрь"
+    NOVEMBER = "november", "Ноябрь"
+    DECEMBER = "december", "Декабрь"
