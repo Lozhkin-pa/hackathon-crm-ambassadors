@@ -13,7 +13,13 @@ from api.v1.serializers.ambassadors_serializer import (
     EducationGoalSerializer,
 )
 from api.v1.serializers.merch_serializer import MerchSerializer
-from core.choices import AmbassadorStatus, ClothingSize, PromoStatus, Sex
+from core.choices import (
+    AmbassadorStatus,
+    ClothingSize,
+    MonthChoices,
+    PromoStatus,
+    Sex,
+)
 from merch.models import Merch
 
 
@@ -34,7 +40,7 @@ class DropdownsViewSet(viewsets.ReadOnlyModelViewSet):
             ambassador_goal_queryset, many=True
         )
 
-        merch_queryset = Merch.objects.all()
+        merch_queryset = Merch.objects.all().order_by("id")
         merch_serializer = MerchSerializer(merch_queryset, many=True)
 
         countries = (
@@ -61,6 +67,7 @@ class DropdownsViewSet(viewsets.ReadOnlyModelViewSet):
             "clothing_size": {i.value: i.label for i in ClothingSize},
             "promo_status": {i.value: i.label for i in PromoStatus},
             "sex": {i.value: i.label for i in Sex},
+            "months": [i.label for i in MonthChoices],
         }
         return Response(data)
 
