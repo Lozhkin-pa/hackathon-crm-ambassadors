@@ -161,7 +161,7 @@ class MerchBudgetViewSet(viewsets.ReadOnlyModelViewSet):
         response["Content-Disposition"] = (
             'attachment;filename="merch_total.xlsx"'
         )
-        fname = "media/docs/merch_total.xlsx"
+        fname = "merch_total.xlsx"
         writer = pd.ExcelWriter(fname)
         with pd.ExcelWriter(fname) as writer:
             df.to_excel(writer, index=False)
