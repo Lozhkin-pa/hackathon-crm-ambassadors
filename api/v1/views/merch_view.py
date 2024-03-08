@@ -117,7 +117,7 @@ class MerchBudgetViewSet(viewsets.ReadOnlyModelViewSet):
         )
 
     @action(detail=False, methods=["get"])
-    def download(self, _):
+    def download(self, request):
         """Формирование файла отчета по мерчу."""
 
         file_headers = [
