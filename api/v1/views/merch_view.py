@@ -10,7 +10,7 @@ from drf_spectacular.utils import (
     extend_schema,
     extend_schema_view,
 )
-from rest_framework import viewsets
+from rest_framework import mixins, viewsets
 from rest_framework.decorators import action
 
 from ambassadors.models import Ambassador, MerchMiddle
@@ -55,7 +55,7 @@ from merch.models import Merch
         ],
     ),
 )
-class MerchBudgetViewSet(viewsets.ReadOnlyModelViewSet):
+class MerchBudgetViewSet(viewsets.GenericViewSet, mixins.ListModelMixin):
     """Бюджет мерча."""
 
     serializer_class = MerchBudgetSerializer
@@ -175,9 +175,8 @@ class MerchBudgetViewSet(viewsets.ReadOnlyModelViewSet):
     list=extend_schema(
         summary=("Список доступного мерча."),
     ),
-    retrieve=extend_schema(summary="Единица доступного мерча."),
 )
-class MerchInfoViewSet(viewsets.ReadOnlyModelViewSet):
+class MerchInfoViewSet(viewsets.GenericViewSet, mixins.ListModelMixin):
     """Доступный мерч."""
 
     serializer_class = MerchSerializer

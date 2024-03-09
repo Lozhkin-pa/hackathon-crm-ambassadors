@@ -1,6 +1,6 @@
 from django_filters.rest_framework import DjangoFilterBackend
 from drf_spectacular.utils import extend_schema, extend_schema_view
-from rest_framework import decorators, viewsets
+from rest_framework import decorators, mixins, viewsets
 from rest_framework.filters import OrderingFilter, SearchFilter
 
 from ambassadors.models import Promo
@@ -32,7 +32,9 @@ from core.choices import PromoStatus
     ),
     archive=extend_schema(summary="Список архивных промокодов"),
 )
-class PromosViewSet(viewsets.ModelViewSet):
+class PromosViewSet(
+    viewsets.GenericViewSet, mixins.ListModelMixin, mixins.UpdateModelMixin
+):
     """
     Промокоды амбассадоров.
     Фильтрация по статусу амбассадора (/?ambassador__status=active).
