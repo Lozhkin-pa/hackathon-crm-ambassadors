@@ -11,6 +11,7 @@ class PromoSerializer(serializers.ModelSerializer):
     course = serializers.CharField(source="ambassador.course")
     created = serializers.CharField(source="ambassador.created")
     status = serializers.CharField(source="ambassador.status")
+    ambassador_id = serializers.CharField(source="ambassador.id")
 
     def update(self, instance, validated_data):
         instance.value = validated_data.get("value", instance.value)
@@ -27,6 +28,7 @@ class PromoSerializer(serializers.ModelSerializer):
         model = Promo
         fields = (
             "id",
+            "ambassador_id",
             "name",
             "telegram",
             "course",
