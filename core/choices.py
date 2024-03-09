@@ -29,6 +29,23 @@ class ClothingSize(models.TextChoices):
     UNKNOWN = "UNKNOWN", "Размер не указан"
 
 
+class SocksSize(models.TextChoices):
+    """Размер носков."""
+
+    S_35 = "35"
+    S_36 = "36"
+    S_37 = "37"
+    S_38 = "38"
+    S_39 = "39"
+    S_40 = "40"
+    S_41 = "41"
+    S_42 = "42"
+    S_43 = "43"
+    S_44 = "44"
+    S_45 = "45"
+    UNKNOWN = "Размер не указан"
+
+
 class PromoStatus(models.TextChoices):
     """Статус промокода."""
 

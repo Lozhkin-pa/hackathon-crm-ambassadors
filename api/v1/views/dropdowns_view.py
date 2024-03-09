@@ -20,6 +20,7 @@ from core.choices import (
     MonthChoices,
     PromoStatus,
     Sex,
+    SocksSize,
 )
 from merch.models import Merch
 
@@ -87,6 +88,7 @@ class DropdownsViewSet(viewsets.ReadOnlyModelViewSet):
             "cities": cities,
             "ambassador_status": {i.value: i.label for i in AmbassadorStatus},
             "clothing_size": {i.value: i.label for i in ClothingSize},
+            "socks_size": [i.value for i in SocksSize],
             "promo_status": {i.value: i.label for i in PromoStatus},
             "sex": {i.value: i.label for i in Sex},
             "months": [i.label for i in MonthChoices],
