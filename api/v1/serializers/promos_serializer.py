@@ -32,5 +32,6 @@ class PromoSerializer(serializers.ModelSerializer):
             "course",
             "value",
             "created",
+            "updated",
             "status",
         )

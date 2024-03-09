@@ -13,18 +13,6 @@
 },
 {
   "model": "content.content",
-  "pk": "0a98c875-5d52-4af6-a5cf-70d13331151b",
-  "fields": {
-    "created": "2024-02-27",
-    "updated": "2024-02-27",
-    "link": "https://habr.com/ru/companies/xeovo/articles/787510/",
-    "file": null,
-    "guide": false,
-    "ambassador": "eef48638-1356-41a4-9f2d-696a446eb1f3"
-  }
-},
-{
-  "model": "content.content",
   "pk": "0ccd5968-b298-4e3c-a5c0-a6764f863706",
   "fields": {
     "created": "2024-02-27",
@@ -49,18 +37,6 @@
 },
 {
   "model": "content.content",
-  "pk": "2f56479c-3606-4ab5-b5cb-51f79f27efe1",
-  "fields": {
-    "created": "2024-02-27",
-    "updated": "2024-02-27",
-    "link": "https://habr.com/ru/companies/xeovo/articles/787510/",
-    "file": null,
-    "guide": false,
-    "ambassador": "e9e6c13f-f165-4ab5-bddb-2087179a8577"
-  }
-},
-{
-  "model": "content.content",
   "pk": "3410810e-691f-440c-b861-c7a071f7932b",
   "fields": {
     "created": "2024-02-27",
@@ -69,18 +45,6 @@
     "file": null,
     "guide": true,
     "ambassador": "e40ada25-7542-4327-9007-ef26266db60c"
-  }
-},
-{
-  "model": "content.content",
-  "pk": "3b5de5f2-6912-4feb-a2c3-d66a9bdf07b4",
-  "fields": {
-    "created": "2024-02-27",
-    "updated": "2024-02-27",
-    "link": "https://x.com/github/status/1762427957295939705?s=20",
-    "file": "https://x.com/github/status/1762427957295939705?s=20",
-    "guide": false,
-    "ambassador": "77a214c7-8d33-45b6-bb93-35cc65e8c02b"
   }
 },
 {
@@ -117,18 +81,6 @@
     "file": null,
     "guide": true,
     "ambassador": "93f18548-2da7-4c17-b7eb-6d9be4be648a"
-  }
-},
-{
-  "model": "content.content",
-  "pk": "5f7601e6-5129-4c3d-bbc2-807a4eef2463",
-  "fields": {
-    "created": "2024-02-27",
-    "updated": "2024-02-27",
-    "link": "https://habr.com/ru/articles/786276/",
-    "file": null,
-    "guide": false,
-    "ambassador": "f60300e1-7484-4e06-8a4f-51963db6a949"
   }
 },
 {

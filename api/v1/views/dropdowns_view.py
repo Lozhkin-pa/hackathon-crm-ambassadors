@@ -1,5 +1,5 @@
 from drf_spectacular.utils import extend_schema, extend_schema_view
-from rest_framework import viewsets
+from rest_framework import mixins, viewsets
 from rest_framework.response import Response
 
 from ambassadors.models import (
@@ -20,6 +20,7 @@ from core.choices import (
     MonthChoices,
     PromoStatus,
     Sex,
+    SocksSize,
 )
 from merch.models import Merch
 
@@ -33,7 +34,7 @@ from merch.models import Merch
         summary="Отключает метод получения индивидуальных объектов."
     ),
 )
-class DropdownsViewSet(viewsets.ReadOnlyModelViewSet):
+class DropdownsViewSet(viewsets.GenericViewSet, mixins.ListModelMixin):
     """
     Выпадающие списки для полей:
         "courses",
@@ -44,8 +45,10 @@ class DropdownsViewSet(viewsets.ReadOnlyModelViewSet):
         "cities",
         "ambassador_status",
         "clothing_size",
+        "socks_size",
         "promo_status",
-        "sex".
+        "sex",
+        "months".
     """
 
     def list(self, request):
@@ -87,14 +90,9 @@ class DropdownsViewSet(viewsets.ReadOnlyModelViewSet):
             "cities": cities,
             "ambassador_status": {i.value: i.label for i in AmbassadorStatus},
             "clothing_size": {i.value: i.label for i in ClothingSize},
+            "socks_size": [i.value for i in SocksSize],
             "promo_status": {i.value: i.label for i in PromoStatus},
             "sex": {i.value: i.label for i in Sex},
             "months": [i.label for i in MonthChoices],
         }
         return Response(data)
-
-    def retrieve(self, request, pk=None):
-        """
-        Отключает метод получения индивидуальных объектов.
-        """
-        return Response(data={"Detail method not allowed!"}, status=405)

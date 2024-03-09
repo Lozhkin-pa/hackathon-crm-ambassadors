@@ -1,6 +1,6 @@
 from django_filters.rest_framework import DjangoFilterBackend
 from drf_spectacular.utils import extend_schema, extend_schema_view
-from rest_framework import viewsets
+from rest_framework import mixins, viewsets
 from rest_framework.filters import OrderingFilter, SearchFilter
 
 from ambassadors.models import Ambassador
@@ -15,7 +15,7 @@ from api.v1.serializers.ambassadors_serializer import (
     list=extend_schema(summary=("Список амбассадоров c отправленным мерчем.")),
     retrieve=extend_schema(summary="Амбассадор c отправленным мерчем."),
 )
-class LoyaltyViewSet(viewsets.ReadOnlyModelViewSet):
+class LoyaltyViewSet(viewsets.GenericViewSet, mixins.ListModelMixin):
     """
     Выводит информацию про мерч, предоставленный амбассадорам.
     Фильтрация по дате /?finish=<date>&start=<date>.

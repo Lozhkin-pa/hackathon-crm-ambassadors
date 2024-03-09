@@ -21,12 +21,29 @@ class Sex(models.TextChoices):
 class ClothingSize(models.TextChoices):
     """Размер одежды."""
 
-    XS = "XS", "XS - Экстра-маленький"
-    S = "S", "S - Маленький"
-    M = "M", "M - Средний"
-    L = "L", "L - Большой"
-    XL = "XL", "XL - Очень большой"
+    XS = "XS", "XS"
+    S = "S", "S"
+    M = "M", "M"
+    L = "L", "L"
+    XL = "XL", "XL"
     UNKNOWN = "UNKNOWN", "Размер не указан"
+
+
+class SocksSize(models.TextChoices):
+    """Размер носков."""
+
+    S_35 = "35"
+    S_36 = "36"
+    S_37 = "37"
+    S_38 = "38"
+    S_39 = "39"
+    S_40 = "40"
+    S_41 = "41"
+    S_42 = "42"
+    S_43 = "43"
+    S_44 = "44"
+    S_45 = "45"
+    UNKNOWN = "Размер не указан"
 
 
 class PromoStatus(models.TextChoices):
