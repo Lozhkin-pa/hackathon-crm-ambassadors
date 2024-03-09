@@ -75,7 +75,7 @@ class AmbassadorRetrieveSerializer(serializers.ModelSerializer):
     education_goal = EducationGoalSerializer(many=False, read_only=True)
     course = CourseSerializer(many=False, read_only=True)
     ambassador_goals = AmbassadorGoalSerializer(many=True, read_only=True)
-    promo = PromoSerializer(many=True, read_only=True)
+    promo = PromoSerializer(source="promos", many=True, read_only=True)
     guide_content = serializers.SerializerMethodField(read_only=True)
     content = ContentSerializer(many=True, read_only=True)
 
