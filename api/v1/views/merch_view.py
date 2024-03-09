@@ -12,6 +12,7 @@ from drf_spectacular.utils import (
 )
 from rest_framework import mixins, viewsets
 from rest_framework.decorators import action
+from rest_framework.permissions import AllowAny
 
 from ambassadors.models import Ambassador, MerchMiddle
 from api.v1.filters import get_period
@@ -116,7 +117,7 @@ class MerchBudgetViewSet(viewsets.GenericViewSet, mixins.ListModelMixin):
             {**grand_total, "data": serializer.data}
         )
 
-    @action(detail=False, methods=["get"])
+    @action(detail=False, methods=["get"], permission_classes=(AllowAny,))
     def download(self, request):
         """Формирование файла отчета по мерчу."""
 
