@@ -48,6 +48,7 @@ class ListContentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Ambassador
         fields = (
+            "id",
             "name",
             "telegram",
             "course",
