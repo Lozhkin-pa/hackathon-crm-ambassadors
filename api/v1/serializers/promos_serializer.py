@@ -15,8 +15,13 @@ class PromoSerializer(serializers.ModelSerializer):
     ambassador_id = serializers.CharField(source="ambassador.id")
 
     def update(self, instance, validated_data):
-        instance.value = validated_data.get("value", instance.value)
-        instance.save()
+        new_promo = validated_data.get("value", None)
+        if new_promo:
+            instance.status = PromoStatus.ARCHIVED
+            Promo.objects.create(
+                value=new_promo, ambassador=instance.ambassador
+            )
+            instance.save()
         return instance
 
     def validate_value(self, value):
