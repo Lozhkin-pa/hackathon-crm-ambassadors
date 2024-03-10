@@ -1,0 +1,2192 @@
+openapi: 3.0.3
+info:
+  title: CRM API
+  version: 0.1.0
+  description: API-Документация для SPA "CRM Амбассадоры".<br>Хакатон "CRM Амбассадоры"
+    Яндекс-Практикум 2024г. Команда № 1.
+paths:
+  /api/v1/ambassadors/:
+    get:
+      operationId: ambassadors_list
+      description: '<ul><h3>Фильтрация:</h3><li>По точному совпадению даты: <code>./?created=2023-04-25</code>
+        </li><li>По дате "старше чем:" <code>./?created__gte=2023-04-25</code>  Т.е.
+        даты старше 2023-04-25</li><li>По дате "младше чем:" <code>./?created__lte=2023-04-25</code>  Т.е.
+        даты младше 2023-04-25</li><li>Множественная фильтрация по дате: <code>./?created__gte=2023-04-25&created__lte=2024-03-25</code>    Т.е.
+        дата старше 2023-04-25 и младше 2024-03-25</li><li>По id курса. id берется
+        в эндпоинте <code>./dropdowns</code></li></ul><br><ul><h3>Поиск:</h3><li>Поиск
+        по имени: <code>./?search=Вася</code></li><li>Поиск по стране: <code>./?search=Россия</code></li><li>Поиск
+        по городу: <code>./?search=Москва</code></li><li>Поиск по курсу: <code>./?search=Веб-разработка</code></li></ul>'
+      summary: Список амбассадоров.
+      parameters:
+      - in: query
+        name: city
+        schema:
+          type: string
+      - in: query
+        name: content
+        schema:
+          type: array
+          items:
+            type: string
+            format: uuid
+            title: Уникальный идентификатор
+        explode: true
+        style: form
+      - in: query
+        name: country
+        schema:
+          type: string
+      - in: query
+        name: course
+        schema:
+          type: integer
+      - in: query
+        name: created
+        schema:
+          type: string
+          format: date-time
+      - in: query
+        name: created__gte
+        schema:
+          type: string
+          format: date-time
+      - in: query
+        name: created__lte
+        schema:
+          type: string
+          format: date-time
+      - in: query
+        name: onboarding_status
+        schema:
+          type: boolean
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      - in: query
+        name: sex
+        schema:
+          type: string
+          title: Пол амбассадора
+          enum:
+          - Unknown
+          - m
+          - w
+        description: |-
+          * `m` - Мужской
+          * `w` - Женский
+          * `Unknown` - Пол не указан
+      - in: query
+        name: status
+        schema:
+          type: string
+          title: Статус амбассадора
+          enum:
+          - active
+          - not_ambassador
+          - paused
+          - pending
+        description: |-
+          * `active` - Активный
+          * `paused` - На паузе
+          * `not_ambassador` - Не амбассадор
+          * `pending` - Уточняется
+      tags:
+      - Амбассадоры
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedAmbassadorListList'
+          description: ''
+    post:
+      operationId: ambassadors_create
+      description: <br><ul><h3>Создание амбассадоров:</h3><li> В полях с дропдаунами
+        нужно передавать id которое пришло вместе со значением с <code>./dropdowns</code></li></ul>
+      summary: Создание амбассадора.
+      tags:
+      - Амбассадоры
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AmbassadorCreateEdit'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/AmbassadorCreateEdit'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/AmbassadorCreateEdit'
+      security:
+      - tokenAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AmbassadorCreateEdit'
+          description: ''
+  /api/v1/ambassadors/{id}/:
+    get:
+      operationId: ambassadors_retrieve
+      description: Амбассадоры.
+      summary: Один амбассадор.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+          title: Уникальный идентификатор
+        description: A UUID string identifying this Амбассадор.
+        required: true
+      tags:
+      - Амбассадоры
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AmbassadorRetrieve'
+          description: ''
+    patch:
+      operationId: ambassadors_partial_update
+      description: Амбассадоры.
+      summary: Редактирование амбассадора.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+          title: Уникальный идентификатор
+        description: A UUID string identifying this Амбассадор.
+        required: true
+      tags:
+      - Амбассадоры
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedAmbassadorCreateEdit'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedAmbassadorCreateEdit'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedAmbassadorCreateEdit'
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AmbassadorCreateEdit'
+          description: ''
+  /api/v1/ambassadors/{id}/content/:
+    get:
+      operationId: ambassadors_content_retrieve
+      description: Контент конкретного амбассадора с возможностью фильтрации по дате.
+      summary: Контент одного амбассадора.
+      parameters:
+      - in: query
+        name: content_after
+        schema:
+          type: string
+          format: date
+        description: Дата после
+      - in: query
+        name: content_before
+        schema:
+          type: string
+          format: date
+        description: Дата до
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+          title: Уникальный идентификатор
+        description: A UUID string identifying this Амбассадор.
+        required: true
+      tags:
+      - Амбассадоры
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Content'
+          description: ''
+  /api/v1/content/:
+    get:
+      operationId: content_retrieve
+      description: '<ul><h3>Фильтрация:</h3><li>Фильтрация по дате: <code>./?created_after=2023-04-25&created_before=2024-03-25</code>   т.е.
+        дата старше 2023-04-25 и младше 2024-03-25</li><li>Фильтрация по статусу гайда:
+        <code>./?guide_step=new</code> т.е. new(новенький)/in_progress(в процессе)/done(выполнено)</li><h3>Поиск:</h3><li>Поиск
+        по имени: <code>./?search=Вася</code></li></ul>'
+      summary: Список амбассадоров с контентом.
+      tags:
+      - Контент
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          description: No response body
+    post:
+      operationId: content_create
+      description: Контент амбассадора.
+      summary: Создание контента.
+      tags:
+      - Контент
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateContent'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/CreateContent'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/CreateContent'
+      security:
+      - tokenAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateContent'
+          description: ''
+  /api/v1/content/{id}/:
+    get:
+      operationId: content_retrieve_2
+      description: Контент амбассадора.
+      summary: Единица контента амбассадора.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+          title: Уникальный идентификатор
+        description: A UUID string identifying this Контент.
+        required: true
+      tags:
+      - Контент
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RetrieveContent'
+          description: ''
+    patch:
+      operationId: content_partial_update
+      description: Контент амбассадора.
+      summary: Редактирование контента амбассадора.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+          title: Уникальный идентификатор
+        description: A UUID string identifying this Контент.
+        required: true
+      tags:
+      - Контент
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedCreateContent'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedCreateContent'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedCreateContent'
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateContent'
+          description: ''
+  /api/v1/content/forms/:
+    post:
+      operationId: content_forms_create
+      description: Получение контента амбассадора из Яндекс Формы.
+      summary: Получение контента из Яндекс Формы
+      tags:
+      - Контент
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          description: No response body
+  /api/v1/dropdowns/:
+    get:
+      operationId: dropdowns_retrieve
+      description: |-
+        Выпадающие списки для полей:
+            "courses",
+            "educational_goals",
+            "ambassador_goals",
+            "merch",
+            "countries",
+            "cities",
+            "ambassador_status",
+            "clothing_size",
+            "socks_size",
+            "promo_status",
+            "sex",
+            "months".
+      summary: Выпадающие списки.
+      tags:
+      - Выпадающие списки
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          description: No response body
+  /api/v1/loyalty/:
+    get:
+      operationId: loyalty_list
+      description: |-
+        Выводит информацию про мерч, предоставленный амбассадорам.
+        Фильтрация по дате /?finish=<date>&start=<date>.
+        Поиск по имени /?search=Мария.
+      summary: Список амбассадоров c отправленным мерчем.
+      parameters:
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      tags:
+      - Программа лояльности
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedAmbassadorLoyaltyList'
+          description: ''
+  /api/v1/merch/:
+    get:
+      operationId: merch_list
+      description: Бюджет мерча.
+      summary: Бюджет отправленного мерча.
+      parameters:
+      - in: query
+        name: finish
+        schema:
+          type: string
+          format: date
+        description: Фильтрация по дате окончания
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - in: query
+        name: start
+        schema:
+          type: string
+          format: date
+        description: Фильтрация по дате начала
+      tags:
+      - Бюджет на мерч
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedMerchBudgetList'
+          description: ''
+  /api/v1/merch/download/:
+    get:
+      operationId: merch_download_retrieve
+      description: Формирование файла отчета по мерчу.
+      summary: Загрузка exel-файла бюджета отправленного мерча.
+      parameters:
+      - in: query
+        name: finish
+        schema:
+          type: string
+          format: date
+        description: Фильтрация по дате окончания
+      - in: query
+        name: start
+        schema:
+          type: string
+          format: date
+        description: Фильтрация по дате начала
+      tags:
+      - Бюджет на мерч
+      security:
+      - tokenAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MerchBudget'
+          description: ''
+  /api/v1/merchinfo/:
+    get:
+      operationId: merchinfo_list
+      description: Доступный мерч.
+      summary: Список доступного мерча.
+      parameters:
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      tags:
+      - Доступный мерч
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedMerchList'
+          description: ''
+  /api/v1/notifications/:
+    get:
+      operationId: notifications_list
+      description: Список уведомлений, общий для всех пользователей CRM. Первыми в
+        списке идут непрочитанные уведомления.
+      summary: Список уведомлений.
+      parameters:
+      - in: query
+        name: ordering
+        schema:
+          type: string
+        description: 'Положительная или отрицательная сортировка по времени создания
+          уведомления. Пример: <code>-timestamp</code>'
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - in: query
+        name: search
+        schema:
+          type: string
+        description: Поиск по ФИО амбассадора
+      - in: query
+        name: timestamp
+        schema:
+          type: string
+          format: date-time
+      - in: query
+        name: timestamp__gte
+        schema:
+          type: string
+          format: date-time
+        description: Дата старше чем
+      - in: query
+        name: timestamp__lte
+        schema:
+          type: string
+          format: date-time
+        description: Дата меньше чем
+      - in: query
+        name: unread
+        schema:
+          type: boolean
+        description: <code>?unread=true</code> - непрочитанные уведомления <code>?unread=false</code>
+          - прочитанные уведомления
+      tags:
+      - Уведомления
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedNotificationList'
+          description: ''
+  /api/v1/notifications/{id}/:
+    get:
+      operationId: notifications_retrieve
+      summary: Одно уведомление.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Notification.
+        required: true
+      tags:
+      - Уведомления
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Notification'
+          description: ''
+    patch:
+      operationId: notifications_partial_update
+      description: Чтобы отметить уведомление как прочитанное, нужно отправить пустой
+        PATCH на <code>./notifications/<id>/</code>
+      summary: Отметить уведомление как прочитанное.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Notification.
+        required: true
+      tags:
+      - Уведомления
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedNotification'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedNotification'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedNotification'
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Notification'
+          description: ''
+  /api/v1/notifications/mark_all_as_read/:
+    get:
+      operationId: notifications_mark_all_as_read_retrieve
+      description: Отметить все уведомления как прочтенные.
+      summary: Отметить все уведомления как прочтенные.
+      tags:
+      - Уведомления
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MarkAllAsRead'
+          description: ''
+  /api/v1/notifications/unseen/:
+    get:
+      operationId: notifications_unseen_retrieve
+      description: Количество непрочитанных уведомлений.
+      summary: Количество непрочитанных уведомлений.
+      tags:
+      - Уведомления
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Unseen'
+          description: ''
+  /api/v1/promos/:
+    get:
+      operationId: promos_list
+      description: '<ul><h3>Фильтрация:</h3><li>Фильтрация по дате: <code>./?created_after=2023-04-25&created_before=2024-03-25</code>    т.е.
+        дата старше 2023-04-25 и младше 2024-03-25</li><li>Фильтрация по статусу амбассадора:
+        <code>./?status=active</code> т.е. active(активный)/paused(на паузе)/not_ambassador(не
+        амбассадор)/pending(уточняется)</li><h3>Поиск:</h3><li>Поиск по имени: <code>./?search=Вася</code></li></ul>'
+      summary: Список промокодов амбассадоров.
+      parameters:
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      - in: query
+        name: status
+        schema:
+          type: string
+          title: Статус амбассадора
+          enum:
+          - active
+          - not_ambassador
+          - paused
+          - pending
+        description: |-
+          * `active` - Активный
+          * `paused` - На паузе
+          * `not_ambassador` - Не амбассадор
+          * `pending` - Уточняется
+      tags:
+      - Промокоды
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedPromoActiveList'
+          description: ''
+  /api/v1/promos/{id}/:
+    patch:
+      operationId: promos_partial_update
+      description: |-
+        Промокоды амбассадоров.
+        Фильтрация по статусу амбассадора (/?status=active).
+        Фильтр по дате (/?created_after=2024-02-23&created_before=2024-02-26).
+        Поиск по имени (/?search=Смирнова).
+        Сортировка по дате (/?ordering=-created).
+      summary: Редактирование промокода амбассадора.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+          title: Уникальный идентификатор
+        description: A UUID string identifying this Амбассадор.
+        required: true
+      tags:
+      - Промокоды
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedPromoActiveUpdate'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedPromoActiveUpdate'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedPromoActiveUpdate'
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PromoActiveUpdate'
+          description: ''
+  /api/v1/promos/archive/:
+    get:
+      operationId: promos_archive_retrieve
+      description: |-
+        Архивные промокоды амбассадоров.
+        Фильтрация по статусу амбассадора (/?status=active).
+        Фильтр по дате (/?created_after=2024-02-23&created_before=2024-02-26).
+        Поиск по имени (/?search=Смирнова).
+        Сортировка по дате (/?ordering=-created).
+      summary: Архивные промокоды амбассадоров
+      tags:
+      - Промокоды
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PromoActiveUpdate'
+          description: ''
+  /api/v1/sending/:
+    post:
+      operationId: sending_create
+      description: Отправить мерч амбассадору.
+      tags:
+      - Отправить (мерч)
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Send'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Send'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Send'
+      security:
+      - tokenAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Send'
+          description: ''
+  /api/v1/token/login/:
+    post:
+      operationId: token_login_create
+      description: Use this endpoint to obtain user authentication token.
+      tags:
+      - token
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TokenCreate'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/TokenCreate'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/TokenCreate'
+      security:
+      - tokenAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenCreate'
+          description: ''
+  /api/v1/token/logout/:
+    post:
+      operationId: token_logout_create
+      description: Use this endpoint to logout user (remove user authentication token).
+      tags:
+      - token
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          description: No response body
+  /api/v1/users/:
+    get:
+      operationId: users_list
+      description: Пользователи.
+      summary: Список пользователей.
+      parameters:
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      tags:
+      - Пользователи
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedUserList'
+          description: ''
+  /api/v1/users/{id}/:
+    get:
+      operationId: users_retrieve
+      description: Пользователи.
+      summary: Профиль пользователя
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Пользователь.
+        required: true
+      tags:
+      - Пользователи
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+          description: ''
+  /api/v1/users/me/:
+    get:
+      operationId: users_me_retrieve
+      description: Пользователи.
+      summary: Текущий пользователь
+      tags:
+      - Пользователи
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomUser'
+          description: ''
+components:
+  schemas:
+    AmbassadorCreateEdit:
+      type: object
+      description: Создание Амбассадора.
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+          title: Уникальный идентификатор
+        telegram:
+          type: string
+          nullable: true
+          title: Ник в телеграм
+          maxLength: 250
+        name:
+          type: string
+          nullable: true
+          title: ФИО
+          maxLength: 250
+        status:
+          allOf:
+          - $ref: '#/components/schemas/Status096Enum'
+          title: Статус амбассадора
+        onboarding_status:
+          type: boolean
+          title: Статус онбординга
+        sex:
+          allOf:
+          - $ref: '#/components/schemas/SexEnum'
+          title: Пол амбассадора
+        country:
+          type: string
+          nullable: true
+          title: Страна
+          maxLength: 250
+        city:
+          type: string
+          nullable: true
+          title: Город
+          maxLength: 250
+        address:
+          type: string
+          nullable: true
+          title: Адрес
+          maxLength: 250
+        index:
+          type: string
+          nullable: true
+          title: Индекс
+          maxLength: 250
+        email:
+          type: string
+          nullable: true
+          maxLength: 250
+        phone:
+          type: string
+          nullable: true
+          title: Телефон
+          maxLength: 250
+        current_work:
+          type: string
+          nullable: true
+          title: Текущее место работы
+          maxLength: 250
+        education:
+          type: string
+          nullable: true
+          title: Образование
+          maxLength: 250
+        blog_link:
+          type: string
+          nullable: true
+          title: Ссылка на блог
+          maxLength: 250
+        clothing_size:
+          allOf:
+          - $ref: '#/components/schemas/ClothingSizeEnum'
+          title: Размер одежды
+        foot_size:
+          type: string
+          nullable: true
+          title: Размер ноги
+          maxLength: 250
+        comment:
+          type: string
+          nullable: true
+          title: Комментарий
+          maxLength: 250
+        course:
+          type: integer
+          nullable: true
+          title: Пройденный курс ЯП
+        created:
+          type: string
+          format: date-time
+          readOnly: true
+          title: Дата создания
+        updated:
+          type: string
+          format: date-time
+          readOnly: true
+          title: Дата последнего изменения
+        education_goal:
+          type: integer
+          nullable: true
+          title: Цель обучения в ЯП
+        ambassador_goals:
+          type: array
+          items:
+            type: integer
+            title: Цели амбассадорства
+          title: Цели амбассадорства
+        promo:
+          type: string
+          writeOnly: true
+      required:
+      - created
+      - id
+      - updated
+    AmbassadorGoal:
+      type: object
+      description: Целей амбассадора.
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        title:
+          type: string
+          title: Цель амбассадорства
+          maxLength: 250
+      required:
+      - id
+      - title
+    AmbassadorList:
+      type: object
+      description: Список амбассадоров.
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+          title: Уникальный идентификатор
+        name:
+          type: string
+          nullable: true
+          title: ФИО
+          maxLength: 250
+        sex:
+          allOf:
+          - $ref: '#/components/schemas/SexEnum'
+          title: Пол амбассадора
+        created:
+          type: string
+          format: date-time
+          readOnly: true
+          title: Дата создания
+        status:
+          allOf:
+          - $ref: '#/components/schemas/Status096Enum'
+          title: Статус амбассадора
+        country:
+          type: string
+          nullable: true
+          title: Страна
+          maxLength: 250
+        city:
+          type: string
+          nullable: true
+          title: Город
+          maxLength: 250
+        course:
+          allOf:
+          - $ref: '#/components/schemas/Course'
+          readOnly: true
+        onboarding_status:
+          type: boolean
+          title: Статус онбординга
+        address:
+          type: string
+          nullable: true
+          title: Адрес
+          maxLength: 250
+        index:
+          type: string
+          nullable: true
+          title: Индекс
+          maxLength: 250
+        phone:
+          type: string
+          nullable: true
+          title: Телефон
+          maxLength: 250
+        current_user:
+          type: string
+          readOnly: true
+      required:
+      - course
+      - created
+      - current_user
+      - id
+    AmbassadorLoyalty:
+      type: object
+      description: Отправленный амбассадору мерч.
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+          title: Уникальный идентификатор
+        name:
+          type: string
+          nullable: true
+          title: ФИО
+          maxLength: 250
+        course:
+          type: string
+        merch:
+          type: string
+          readOnly: true
+        dispatch_date:
+          type: string
+          readOnly: true
+      required:
+      - course
+      - dispatch_date
+      - id
+      - merch
+    AmbassadorRetrieve:
+      type: object
+      description: Чтение одного Амбассадора.
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+          title: Уникальный идентификатор
+        telegram:
+          type: string
+          nullable: true
+          title: Ник в телеграм
+          maxLength: 250
+        name:
+          type: string
+          nullable: true
+          title: ФИО
+          maxLength: 250
+        status:
+          allOf:
+          - $ref: '#/components/schemas/Status096Enum'
+          title: Статус амбассадора
+        onboarding_status:
+          type: boolean
+          title: Статус онбординга
+        sex:
+          allOf:
+          - $ref: '#/components/schemas/SexEnum'
+          title: Пол амбассадора
+        education_goal:
+          allOf:
+          - $ref: '#/components/schemas/EducationGoal'
+          readOnly: true
+        country:
+          type: string
+          nullable: true
+          title: Страна
+          maxLength: 250
+        city:
+          type: string
+          nullable: true
+          title: Город
+          maxLength: 250
+        address:
+          type: string
+          nullable: true
+          title: Адрес
+          maxLength: 250
+        index:
+          type: string
+          nullable: true
+          title: Индекс
+          maxLength: 250
+        email:
+          type: string
+          nullable: true
+          maxLength: 250
+        phone:
+          type: string
+          nullable: true
+          title: Телефон
+          maxLength: 250
+        current_work:
+          type: string
+          nullable: true
+          title: Текущее место работы
+          maxLength: 250
+        education:
+          type: string
+          nullable: true
+          title: Образование
+          maxLength: 250
+        blog_link:
+          type: string
+          nullable: true
+          title: Ссылка на блог
+          maxLength: 250
+        clothing_size:
+          allOf:
+          - $ref: '#/components/schemas/ClothingSizeEnum'
+          title: Размер одежды
+        foot_size:
+          type: string
+          nullable: true
+          title: Размер ноги
+          maxLength: 250
+        comment:
+          type: string
+          nullable: true
+          title: Комментарий
+          maxLength: 250
+        ambassador_goals:
+          type: array
+          items:
+            $ref: '#/components/schemas/AmbassadorGoal'
+          readOnly: true
+        course:
+          allOf:
+          - $ref: '#/components/schemas/Course'
+          readOnly: true
+        created:
+          type: string
+          format: date-time
+          readOnly: true
+          title: Дата создания
+        updated:
+          type: string
+          format: date-time
+          readOnly: true
+          title: Дата последнего изменения
+        promo:
+          type: array
+          items:
+            $ref: '#/components/schemas/Promo'
+          readOnly: true
+        guide_content:
+          type: string
+          readOnly: true
+        content:
+          type: array
+          items:
+            $ref: '#/components/schemas/Content'
+          readOnly: true
+      required:
+      - ambassador_goals
+      - content
+      - course
+      - created
+      - education_goal
+      - guide_content
+      - id
+      - promo
+      - updated
+    BlankEnum:
+      enum:
+      - ''
+    ClothingSizeEnum:
+      enum:
+      - XS
+      - S
+      - M
+      - L
+      - XL
+      - UNKNOWN
+      type: string
+      description: |-
+        * `XS` - XS
+        * `S` - S
+        * `M` - M
+        * `L` - L
+        * `XL` - XL
+        * `UNKNOWN` - Размер не указан
+    Content:
+      type: object
+      description: Список контента.
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+          title: Уникальный идентификатор
+        link:
+          type: string
+          nullable: true
+          title: Ссылка на контент
+          maxLength: 250
+        file:
+          type: string
+          nullable: true
+          title: Ссылка на файл
+          maxLength: 250
+        created:
+          type: string
+          format: date-time
+          readOnly: true
+          title: Дата создания
+        updated:
+          type: string
+          format: date-time
+          readOnly: true
+          title: Дата последнего изменения
+      required:
+      - created
+      - id
+      - updated
+    Course:
+      type: object
+      description: Список курсов.
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        title:
+          type: string
+          title: Название курса
+          maxLength: 250
+      required:
+      - id
+      - title
+    CreateContent:
+      type: object
+      description: Контент амбассадора на запись/редактирование контент-менеджером.
+      properties:
+        link:
+          type: string
+          nullable: true
+          title: Ссылка на контент
+          maxLength: 250
+        file:
+          type: string
+          nullable: true
+          title: Ссылка на файл
+          maxLength: 250
+        guide:
+          type: boolean
+          title: Контент в рамках гайда
+        created:
+          type: string
+          format: date-time
+          readOnly: true
+          title: Дата создания
+        updated:
+          type: string
+          format: date-time
+          readOnly: true
+          title: Дата последнего изменения
+        ambassador:
+          type: string
+          format: uuid
+          title: Амбассадор
+          nullable: true
+      required:
+      - created
+      - updated
+    CustomUser:
+      type: object
+      description: Сериализатор пользователей.
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        first_name:
+          type: string
+          title: Имя
+          maxLength: 150
+        last_name:
+          type: string
+          title: Фамилия
+          maxLength: 150
+        email:
+          type: string
+          format: email
+          title: Электронная почта
+          maxLength: 254
+        img:
+          type: string
+          format: uri
+          title: Аватар
+      required:
+      - email
+      - id
+      - img
+    EducationGoal:
+      type: object
+      description: Цели обучения.
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        title:
+          type: string
+          title: Цель обучения в ЯП
+          maxLength: 250
+      required:
+      - id
+      - title
+    MarkAllAsRead:
+      type: object
+      description: Сериализатор для отметки всех уведомлений как прочитанных.
+      properties:
+        marked_as_read_number:
+          type: integer
+      required:
+      - marked_as_read_number
+    Merch:
+      type: object
+      description: Варианты мерча.
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        title:
+          type: string
+          title: Название
+          maxLength: 250
+        price:
+          type: integer
+          maximum: 2147483647
+          minimum: 0
+          title: Цена
+      required:
+      - id
+    MerchBudget:
+      type: object
+      description: Сериализатор мерча.
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+          title: Уникальный идентификатор
+        name:
+          type: string
+          nullable: true
+          title: ФИО
+          maxLength: 250
+        total_1:
+          type: integer
+        total_2:
+          type: integer
+        total_3:
+          type: integer
+        total_4:
+          type: integer
+        total_5:
+          type: integer
+        total_6:
+          type: integer
+        total_7:
+          type: integer
+        total_8:
+          type: integer
+        total_9:
+          type: integer
+        total_10:
+          type: integer
+        total_11:
+          type: integer
+        total_12:
+          type: integer
+        total_delivery:
+          type: integer
+        total_per_amb:
+          type: integer
+      required:
+      - id
+      - total_1
+      - total_10
+      - total_11
+      - total_12
+      - total_2
+      - total_3
+      - total_4
+      - total_5
+      - total_6
+      - total_7
+      - total_8
+      - total_9
+      - total_delivery
+      - total_per_amb
+    Notification:
+      type: object
+      description: Сериализатор уведомлений.
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        verb:
+          type: string
+          maxLength: 255
+        unread:
+          type: boolean
+        actor_object_id:
+          type: string
+          maxLength: 255
+        actor_object_name:
+          type: string
+          readOnly: true
+        actor_content_type:
+          type: string
+          readOnly: true
+        target_object_id:
+          type: string
+          nullable: true
+          maxLength: 255
+        target_object_content_type:
+          type: string
+          readOnly: true
+        timestamp:
+          type: string
+          format: date-time
+        description:
+          type: string
+          nullable: true
+        time_since:
+          type: string
+          description: Человеко-читаемое время с момента создания уведомления.
+          readOnly: true
+      required:
+      - actor_content_type
+      - actor_object_id
+      - actor_object_name
+      - id
+      - target_object_content_type
+      - time_since
+      - verb
+    NullEnum:
+      enum:
+      - null
+    PaginatedAmbassadorListList:
+      type: object
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/AmbassadorList'
+    PaginatedAmbassadorLoyaltyList:
+      type: object
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/AmbassadorLoyalty'
+    PaginatedMerchBudgetList:
+      type: object
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/MerchBudget'
+    PaginatedMerchList:
+      type: object
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Merch'
+    PaginatedNotificationList:
+      type: object
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Notification'
+    PaginatedPromoActiveList:
+      type: object
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/PromoActive'
+    PaginatedUserList:
+      type: object
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/User'
+    PatchedAmbassadorCreateEdit:
+      type: object
+      description: Создание Амбассадора.
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+          title: Уникальный идентификатор
+        telegram:
+          type: string
+          nullable: true
+          title: Ник в телеграм
+          maxLength: 250
+        name:
+          type: string
+          nullable: true
+          title: ФИО
+          maxLength: 250
+        status:
+          allOf:
+          - $ref: '#/components/schemas/Status096Enum'
+          title: Статус амбассадора
+        onboarding_status:
+          type: boolean
+          title: Статус онбординга
+        sex:
+          allOf:
+          - $ref: '#/components/schemas/SexEnum'
+          title: Пол амбассадора
+        country:
+          type: string
+          nullable: true
+          title: Страна
+          maxLength: 250
+        city:
+          type: string
+          nullable: true
+          title: Город
+          maxLength: 250
+        address:
+          type: string
+          nullable: true
+          title: Адрес
+          maxLength: 250
+        index:
+          type: string
+          nullable: true
+          title: Индекс
+          maxLength: 250
+        email:
+          type: string
+          nullable: true
+          maxLength: 250
+        phone:
+          type: string
+          nullable: true
+          title: Телефон
+          maxLength: 250
+        current_work:
+          type: string
+          nullable: true
+          title: Текущее место работы
+          maxLength: 250
+        education:
+          type: string
+          nullable: true
+          title: Образование
+          maxLength: 250
+        blog_link:
+          type: string
+          nullable: true
+          title: Ссылка на блог
+          maxLength: 250
+        clothing_size:
+          allOf:
+          - $ref: '#/components/schemas/ClothingSizeEnum'
+          title: Размер одежды
+        foot_size:
+          type: string
+          nullable: true
+          title: Размер ноги
+          maxLength: 250
+        comment:
+          type: string
+          nullable: true
+          title: Комментарий
+          maxLength: 250
+        course:
+          type: integer
+          nullable: true
+          title: Пройденный курс ЯП
+        created:
+          type: string
+          format: date-time
+          readOnly: true
+          title: Дата создания
+        updated:
+          type: string
+          format: date-time
+          readOnly: true
+          title: Дата последнего изменения
+        education_goal:
+          type: integer
+          nullable: true
+          title: Цель обучения в ЯП
+        ambassador_goals:
+          type: array
+          items:
+            type: integer
+            title: Цели амбассадорства
+          title: Цели амбассадорства
+        promo:
+          type: string
+          writeOnly: true
+    PatchedCreateContent:
+      type: object
+      description: Контент амбассадора на запись/редактирование контент-менеджером.
+      properties:
+        link:
+          type: string
+          nullable: true
+          title: Ссылка на контент
+          maxLength: 250
+        file:
+          type: string
+          nullable: true
+          title: Ссылка на файл
+          maxLength: 250
+        guide:
+          type: boolean
+          title: Контент в рамках гайда
+        created:
+          type: string
+          format: date-time
+          readOnly: true
+          title: Дата создания
+        updated:
+          type: string
+          format: date-time
+          readOnly: true
+          title: Дата последнего изменения
+        ambassador:
+          type: string
+          format: uuid
+          title: Амбассадор
+          nullable: true
+    PatchedNotification:
+      type: object
+      description: Сериализатор уведомлений.
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        verb:
+          type: string
+          maxLength: 255
+        unread:
+          type: boolean
+        actor_object_id:
+          type: string
+          maxLength: 255
+        actor_object_name:
+          type: string
+          readOnly: true
+        actor_content_type:
+          type: string
+          readOnly: true
+        target_object_id:
+          type: string
+          nullable: true
+          maxLength: 255
+        target_object_content_type:
+          type: string
+          readOnly: true
+        timestamp:
+          type: string
+          format: date-time
+        description:
+          type: string
+          nullable: true
+        time_since:
+          type: string
+          description: Человеко-читаемое время с момента создания уведомления.
+          readOnly: true
+    PatchedPromoActiveUpdate:
+      type: object
+      description: Обновление активного промокода амбассадора.
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+          title: Уникальный идентификатор
+        name:
+          type: string
+          nullable: true
+          title: ФИО
+          maxLength: 250
+        telegram:
+          type: string
+          nullable: true
+          title: Ник в телеграм
+          maxLength: 250
+        course:
+          type: integer
+          nullable: true
+          title: Пройденный курс ЯП
+        promo:
+          type: string
+          writeOnly: true
+        created:
+          type: string
+          format: date-time
+          readOnly: true
+          title: Дата создания
+        updated:
+          type: string
+          format: date-time
+          readOnly: true
+          title: Дата последнего изменения
+        status:
+          allOf:
+          - $ref: '#/components/schemas/Status096Enum'
+          title: Статус амбассадора
+    Promo:
+      type: object
+      description: Список промокодов.
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        value:
+          type: string
+          title: Промокод
+          maxLength: 250
+        status:
+          allOf:
+          - $ref: '#/components/schemas/PromoStatusEnum'
+          title: Статус
+      required:
+      - id
+      - value
+    PromoActive:
+      type: object
+      description: Список активных промокодов амбассадоров.
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+          title: Уникальный идентификатор
+        name:
+          type: string
+          nullable: true
+          title: ФИО
+          maxLength: 250
+        telegram:
+          type: string
+          nullable: true
+          title: Ник в телеграм
+          maxLength: 250
+        course:
+          type: string
+          readOnly: true
+        promo:
+          type: string
+          readOnly: true
+        created:
+          type: string
+          format: date-time
+          readOnly: true
+          title: Дата создания
+        updated:
+          type: string
+          format: date-time
+          readOnly: true
+          title: Дата последнего изменения
+        status:
+          allOf:
+          - $ref: '#/components/schemas/Status096Enum'
+          title: Статус амбассадора
+      required:
+      - course
+      - created
+      - id
+      - promo
+      - updated
+    PromoActiveUpdate:
+      type: object
+      description: Обновление активного промокода амбассадора.
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+          title: Уникальный идентификатор
+        name:
+          type: string
+          nullable: true
+          title: ФИО
+          maxLength: 250
+        telegram:
+          type: string
+          nullable: true
+          title: Ник в телеграм
+          maxLength: 250
+        course:
+          type: integer
+          nullable: true
+          title: Пройденный курс ЯП
+        promo:
+          type: string
+          writeOnly: true
+        created:
+          type: string
+          format: date-time
+          readOnly: true
+          title: Дата создания
+        updated:
+          type: string
+          format: date-time
+          readOnly: true
+          title: Дата последнего изменения
+        status:
+          allOf:
+          - $ref: '#/components/schemas/Status096Enum'
+          title: Статус амбассадора
+      required:
+      - created
+      - id
+      - updated
+    PromoStatusEnum:
+      enum:
+      - active
+      - archived
+      type: string
+      description: |-
+        * `active` - Активный
+        * `archived` - Архивный
+    RetrieveContent:
+      type: object
+      description: Единица контента определенного амбассадора на чтение.
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+          title: Уникальный идентификатор
+        link:
+          type: string
+          nullable: true
+          title: Ссылка на контент
+          maxLength: 250
+        file:
+          type: string
+          nullable: true
+          title: Ссылка на файл
+          maxLength: 250
+        guide:
+          type: boolean
+          title: Контент в рамках гайда
+        created:
+          type: string
+          format: date-time
+          readOnly: true
+          title: Дата создания
+        updated:
+          type: string
+          format: date-time
+          readOnly: true
+          title: Дата последнего изменения
+        ambassador:
+          type: string
+          readOnly: true
+      required:
+      - ambassador
+      - created
+      - id
+      - updated
+    Send:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        created:
+          type: string
+          format: date
+          readOnly: true
+          title: Дата создания
+        updated:
+          type: string
+          format: date
+          readOnly: true
+          title: Дата последнего изменения
+        size:
+          nullable: true
+          title: Размер
+          oneOf:
+          - $ref: '#/components/schemas/SizeEnum'
+          - $ref: '#/components/schemas/BlankEnum'
+          - $ref: '#/components/schemas/NullEnum'
+        delivery_cost:
+          type: integer
+          maximum: 2147483647
+          minimum: 0
+          title: Стоимость доставки
+        count:
+          type: integer
+          maximum: 2147483647
+          minimum: 0
+          title: Количество
+        old_price:
+          type: integer
+          maximum: 2147483647
+          minimum: 0
+          title: Архивная цена
+        ambassador:
+          type: string
+          format: uuid
+          title: Амбассадор
+          nullable: true
+        merch:
+          type: integer
+          nullable: true
+          title: Мерч
+      required:
+      - created
+      - id
+      - updated
+    SexEnum:
+      enum:
+      - m
+      - w
+      - Unknown
+      type: string
+      description: |-
+        * `m` - Мужской
+        * `w` - Женский
+        * `Unknown` - Пол не указан
+    SizeEnum:
+      enum:
+      - XS
+      - S
+      - M
+      - L
+      - XL
+      - UNKNOWN
+      type: string
+      description: |-
+        * `XS` - XS
+        * `S` - S
+        * `M` - M
+        * `L` - L
+        * `XL` - XL
+        * `UNKNOWN` - Размер не указан
+    Status096Enum:
+      enum:
+      - active
+      - paused
+      - not_ambassador
+      - pending
+      type: string
+      description: |-
+        * `active` - Активный
+        * `paused` - На паузе
+        * `not_ambassador` - Не амбассадор
+        * `pending` - Уточняется
+    TokenCreate:
+      type: object
+      properties:
+        password:
+          type: string
+        email:
+          type: string
+    Unseen:
+      type: object
+      description: Сериализатор количества непрочитанных уведомлений.
+      properties:
+        unseen:
+          type: integer
+      required:
+      - unseen
+    User:
+      type: object
+      properties:
+        username:
+          type: string
+          title: Имя пользователя
+          description: Обязательное поле. Не более 150 символов. Только буквы, цифры
+            и символы @/./+/-/_.
+          pattern: ^[\w.@+-]+$
+          maxLength: 150
+        first_name:
+          type: string
+          title: Имя
+          maxLength: 150
+        last_name:
+          type: string
+          title: Фамилия
+          maxLength: 150
+        id:
+          type: integer
+          readOnly: true
+        email:
+          type: string
+          format: email
+          readOnly: true
+          title: Электронная почта
+      required:
+      - email
+      - id
+      - username
+  securitySchemes:
+    tokenAuth:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: Token-based authentication with required prefix "Token"
