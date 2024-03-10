@@ -1,0 +1,194 @@
+[
+{
+  "model": "content.content",
+  "pk": "0339c392-eac3-40ac-b15f-f65cf19d5329",
+  "fields": {
+    "created": "2024-02-27",
+    "updated": "2024-02-27",
+    "link": "https://www.instagram.com/reel/C3M-TlGAREg/",
+    "file": null,
+    "guide": true,
+    "ambassador": "2a6dfea2-c51d-4417-8249-9b4f5ebd71d5"
+  }
+},
+{
+  "model": "content.content",
+  "pk": "0ccd5968-b298-4e3c-a5c0-a6764f863706",
+  "fields": {
+    "created": "2024-02-27",
+    "updated": "2024-02-27",
+    "link": "https://dev.to/emminex/how-to-use-python-lambda-functions-5gac",
+    "file": null,
+    "guide": true,
+    "ambassador": "052fbdfa-6a76-47a7-ae3d-faffa9a46de8"
+  }
+},
+{
+  "model": "content.content",
+  "pk": "24fedbb9-3f4b-4953-b1e3-4ed5f47574bb",
+  "fields": {
+    "created": "2024-02-27",
+    "updated": "2024-02-27",
+    "link": "https://habr.com/ru/news/788132/",
+    "file": null,
+    "guide": true,
+    "ambassador": "e40ada25-7542-4327-9007-ef26266db60c"
+  }
+},
+{
+  "model": "content.content",
+  "pk": "3410810e-691f-440c-b861-c7a071f7932b",
+  "fields": {
+    "created": "2024-02-27",
+    "updated": "2024-02-27",
+    "link": "https://habr.com/ru/articles/788434/",
+    "file": null,
+    "guide": true,
+    "ambassador": "e40ada25-7542-4327-9007-ef26266db60c"
+  }
+},
+{
+  "model": "content.content",
+  "pk": "3b685b8f-43f3-4080-9dd5-510dbfceb166",
+  "fields": {
+    "created": "2024-02-27",
+    "updated": "2024-02-27",
+    "link": "https://habr.com/ru/articles/794556/",
+    "file": null,
+    "guide": true,
+    "ambassador": "680e42a2-a4d2-4d8e-900b-539c36a5a303"
+  }
+},
+{
+  "model": "content.content",
+  "pk": "4e1db630-80c1-4de2-b1b7-a88648026e9b",
+  "fields": {
+    "created": "2024-02-27",
+    "updated": "2024-02-27",
+    "link": "https://www.instagram.com/p/C30QXBNrVk3/",
+    "file": null,
+    "guide": true,
+    "ambassador": "2a6dfea2-c51d-4417-8249-9b4f5ebd71d5"
+  }
+},
+{
+  "model": "content.content",
+  "pk": "5b7122cb-fb87-46f1-8a4e-9b89876dca57",
+  "fields": {
+    "created": "2024-02-27",
+    "updated": "2024-02-27",
+    "link": "https://dev.to/voidzxl/build-user-loginsignup-restful-apis-in-100-lines-of-python-2h8c",
+    "file": null,
+    "guide": true,
+    "ambassador": "93f18548-2da7-4c17-b7eb-6d9be4be648a"
+  }
+},
+{
+  "model": "content.content",
+  "pk": "63724051-fc40-4b75-9636-de3ed15b7f0e",
+  "fields": {
+    "created": "2024-02-27",
+    "updated": "2024-02-27",
+    "link": "https://www.instagram.com/p/C2r6BaQo0NH/",
+    "file": null,
+    "guide": true,
+    "ambassador": "052fbdfa-6a76-47a7-ae3d-faffa9a46de8"
+  }
+},
+{
+  "model": "content.content",
+  "pk": "794e6bf6-a75c-408a-8a58-ac8dee4c1c6d",
+  "fields": {
+    "created": "2024-02-27",
+    "updated": "2024-02-27",
+    "link": "https://habr.com/ru/companies/ruvds/articles/792052/",
+    "file": null,
+    "guide": true,
+    "ambassador": "e40ada25-7542-4327-9007-ef26266db60c"
+  }
+},
+{
+  "model": "content.content",
+  "pk": "b3cf5724-ae15-43c6-8dae-739ffef28099",
+  "fields": {
+    "created": "2024-02-27",
+    "updated": "2024-02-27",
+    "link": "https://habr.com/ru/articles/792630/",
+    "file": null,
+    "guide": true,
+    "ambassador": "052fbdfa-6a76-47a7-ae3d-faffa9a46de8"
+  }
+},
+{
+  "model": "content.content",
+  "pk": "cb9a1db2-55ff-4b0a-b080-d791c45b2c12",
+  "fields": {
+    "created": "2024-02-27",
+    "updated": "2024-02-27",
+    "link": "https://habr.com/ru/articles/789550/",
+    "file": null,
+    "guide": true,
+    "ambassador": "e40ada25-7542-4327-9007-ef26266db60c"
+  }
+},
+{
+  "model": "content.content",
+  "pk": "cc2ac43b-5642-416e-9874-e1cf823ab163",
+  "fields": {
+    "created": "2024-02-27",
+    "updated": "2024-02-27",
+    "link": "https://habr.com/ru/articles/792790/",
+    "file": null,
+    "guide": true,
+    "ambassador": "e40ada25-7542-4327-9007-ef26266db60c"
+  }
+},
+{
+  "model": "content.content",
+  "pk": "cc673cf5-9bdd-4c8d-a155-8971bb113ced",
+  "fields": {
+    "created": "2024-02-27",
+    "updated": "2024-02-27",
+    "link": "https://x.com/jetbrains/status/1762430749406306638?s=20",
+    "file": null,
+    "guide": true,
+    "ambassador": "680e42a2-a4d2-4d8e-900b-539c36a5a303"
+  }
+},
+{
+  "model": "content.content",
+  "pk": "d3b0ce52-041c-4f0f-97e1-295334fb6d06",
+  "fields": {
+    "created": "2024-02-27",
+    "updated": "2024-02-27",
+    "link": "https://www.instagram.com/p/C2AXrJiITq7/",
+    "file": "https://www.instagram.com/p/C2AXrJiITq7/",
+    "guide": true,
+    "ambassador": "052fbdfa-6a76-47a7-ae3d-faffa9a46de8"
+  }
+},
+{
+  "model": "content.content",
+  "pk": "e31073da-52e2-4eb9-a660-e2e7c54fd1ff",
+  "fields": {
+    "created": "2024-02-27",
+    "updated": "2024-02-27",
+    "link": "https://habr.com/ru/articles/793968/",
+    "file": null,
+    "guide": true,
+    "ambassador": "052fbdfa-6a76-47a7-ae3d-faffa9a46de8"
+  }
+},
+{
+  "model": "content.content",
+  "pk": "eefb7d95-f568-4a6b-94ca-efecad5c342b",
+  "fields": {
+    "created": "2024-02-27",
+    "updated": "2024-02-27",
+    "link": "https://habr.com/ru/companies/raft/articles/786738/",
+    "file": null,
+    "guide": true,
+    "ambassador": "e40ada25-7542-4327-9007-ef26266db60c"
+  }
+}
+]

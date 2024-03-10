@@ -1,0 +1,29 @@
+[
+{
+  "model": "ambassadors.educationgoal",
+  "pk": 1,
+  "fields": {
+    "created": "2024-02-24",
+    "updated": "2024-02-24",
+    "title": "Получение новой профессии, чтобы сменить работу"
+  }
+},
+{
+  "model": "ambassadors.educationgoal",
+  "pk": 2,
+  "fields": {
+    "created": "2024-02-24",
+    "updated": "2024-02-24",
+    "title": "Углубление имеющихся знаний, чтобы использовать их в текущей работе"
+  }
+},
+{
+  "model": "ambassadors.educationgoal",
+  "pk": 3,
+  "fields": {
+    "created": "2024-02-24",
+    "updated": "2024-02-24",
+    "title": "Свой вариант"
+  }
+}
+]

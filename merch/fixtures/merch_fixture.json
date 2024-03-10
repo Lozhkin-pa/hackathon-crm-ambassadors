@@ -1,0 +1,145 @@
+[
+{
+  "model": "merch.merch",
+  "pk": 1,
+  "fields": {
+    "created": "2024-02-27",
+    "updated": "2024-02-27",
+    "title": "Толстовка",
+    "article": "452362145724",
+    "price": 2999
+  }
+},
+{
+  "model": "merch.merch",
+  "pk": 2,
+  "fields": {
+    "created": "2024-02-27",
+    "updated": "2024-02-27",
+    "title": "Кофе",
+    "article": "245643161364",
+    "price": 190
+  }
+},
+{
+  "model": "merch.merch",
+  "pk": 3,
+  "fields": {
+    "created": "2024-02-27",
+    "updated": "2024-02-27",
+    "title": "Стикеры",
+    "article": "452762457",
+    "price": 15
+  }
+},
+{
+  "model": "merch.merch",
+  "pk": 4,
+  "fields": {
+    "created": "2024-02-27",
+    "updated": "2024-02-27",
+    "title": "Плюс",
+    "article": "85734502",
+    "price": 199
+  }
+},
+{
+  "model": "merch.merch",
+  "pk": 5,
+  "fields": {
+    "created": "2024-02-27",
+    "updated": "2024-02-27",
+    "title": "Арзамас",
+    "article": "49857450",
+    "price": 299
+  }
+},
+{
+  "model": "merch.merch",
+  "pk": 6,
+  "fields": {
+    "created": "2024-02-27",
+    "updated": "2024-02-27",
+    "title": "Шопер",
+    "article": "4362435645",
+    "price": 499
+  }
+},
+{
+  "model": "merch.merch",
+  "pk": 7,
+  "fields": {
+    "created": "2024-02-27",
+    "updated": "2024-02-27",
+    "title": "Рюкзак",
+    "article": "24564326543",
+    "price": 2499
+  }
+},
+{
+  "model": "merch.merch",
+  "pk": 8,
+  "fields": {
+    "created": "2024-02-27",
+    "updated": "2024-02-27",
+    "title": "Носки",
+    "article": "246346",
+    "price": 99
+  }
+},
+{
+  "model": "merch.merch",
+  "pk": 9,
+  "fields": {
+    "created": "2024-02-27",
+    "updated": "2024-02-27",
+    "title": "Сумка кросс",
+    "article": "4326564",
+    "price": 899
+  }
+},
+{
+  "model": "merch.merch",
+  "pk": 10,
+  "fields": {
+    "created": "2024-02-27",
+    "updated": "2024-02-27",
+    "title": "Скидка 50%",
+    "article": "30958723",
+    "price": 0
+  }
+},
+{
+  "model": "merch.merch",
+  "pk": 11,
+  "fields": {
+    "created": "2024-02-27",
+    "updated": "2024-02-27",
+    "title": "Алиса мини",
+    "article": "4361123462",
+    "price": 399
+  }
+},
+{
+  "model": "merch.merch",
+  "pk": 12,
+  "fields": {
+    "created": "2024-02-27",
+    "updated": "2024-02-27",
+    "title": "Алиса биг",
+    "article": "54743567845",
+    "price": 6999
+  }
+},
+{
+  "model": "merch.merch",
+  "pk": 13,
+  "fields": {
+    "created": "2024-02-27",
+    "updated": "2024-02-27",
+    "title": "Клуб учащихся ночью",
+    "article": "8457309",
+    "price": 0
+  }
+}
+]

@@ -1,0 +1,21 @@
+[
+{
+  "model": "users.extendeduser",
+  "pk": 1,
+  "fields": {
+    "password": "pbkdf2_sha256$600000$AGi0AoFLihhfyDRoW83OIZ$82fIEBJn6SQGZkAk4qdl/9xxpgtAYjBxa7uIyQ4Wtsk=",
+    "last_login": null,
+    "is_superuser": true,
+    "username": "user",
+    "first_name": "Анастасия",
+    "last_name": "Борисова",
+    "is_staff": true,
+    "is_active": true,
+    "date_joined": "2024-02-25T11:25:20.159Z",
+    "email": "user@user.com",
+    "img": "",
+    "groups": [],
+    "user_permissions": []
+  }
+}
+]
