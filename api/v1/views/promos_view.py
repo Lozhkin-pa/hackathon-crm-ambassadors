@@ -3,10 +3,11 @@ from drf_spectacular.utils import extend_schema, extend_schema_view
 from rest_framework import decorators, mixins, viewsets
 from rest_framework.filters import OrderingFilter, SearchFilter
 
-from ambassadors.models import Ambassador, Promo
+from ambassadors.models import Ambassador
 from api.v1.serializers.promos_serializer import (
     AmbassadorPromoArchiveSerializer,
-    PromoSerializer,
+    PromoActiveSerializer,
+    PromoActiveUpdateSerializer,
 )
 from core.choices import PromoStatus
 
@@ -21,7 +22,7 @@ from core.choices import PromoStatus
             "&created_before=2024-03-25</code>    "
             "т.е. дата старше 2023-04-25 и младше 2024-03-25</li>"
             "<li>Фильтрация по статусу амбассадора: "
-            "<code>./?ambassador__status=active</code> "
+            "<code>./?status=active</code> "
             "т.е. active(активный)/paused(на паузе)/"
             "not_ambassador(не амбассадор)/pending(уточняется)</li>"
             "<h3>Поиск:</h3>"
@@ -40,29 +41,35 @@ class PromosViewSet(
 ):
     """
     Промокоды амбассадоров.
-    Фильтрация по статусу амбассадора (/?ambassador__status=active).
+    Фильтрация по статусу амбассадора (/?status=active).
     Фильтр по дате (/?created_after=2024-02-23&created_before=2024-02-26).
     Поиск по имени (/?search=Смирнова).
-    Сортировка по дате (/?ordering=-ambassador__created).
+    Сортировка по дате (/?ordering=-created).
     """
 
     filter_backends = (DjangoFilterBackend, SearchFilter, OrderingFilter)
-    filterset_fields = ("ambassador__status",)
-    search_fields = ("ambassador__name",)
-    ordering_fields = ("ambassador__created",)
-    ordering = ("ambassador__created",)
+    filterset_fields = ("status",)
+    search_fields = ("name",)
+    ordering_fields = ("created",)
+    ordering = ("created",)
     http_method_names = ("get", "head", "options", "patch")
-    serializer_class = PromoSerializer
+    serializer_class = PromoActiveSerializer
 
     def get_queryset(self):
-        queryset = Promo.objects.filter(status=PromoStatus.ACTIVE)
+        queryset = Ambassador.objects.filter(promos__status=PromoStatus.ACTIVE)
         created_after = self.request.query_params.get("created_after")
         created_before = self.request.query_params.get("created_before")
         if created_after:
-            queryset = queryset.filter(ambassador__created__gte=created_after)
+            queryset = queryset.filter(created__gte=created_after)
         if created_before:
-            queryset = queryset.filter(ambassador__created__lte=created_before)
+            queryset = queryset.filter(created__lte=created_before)
         return queryset
+
+    def get_serializer_class(self):
+        """Выбор сериализатора в зависимости от типа запроса."""
+        if self.action == "list":
+            return PromoActiveSerializer
+        return PromoActiveUpdateSerializer
 
     @extend_schema(summary="Архивные промокоды амбассадоров")
     @decorators.action(
@@ -79,9 +86,10 @@ class PromosViewSet(
         Сортировка по дате (/?ordering=-created).
         """
 
-        queryset = Ambassador.objects.filter(
-            promos__status=PromoStatus.ARCHIVED
-        )
+        # queryset = Ambassador.objects.filter(
+        #     promos__status=PromoStatus.ARCHIVED
+        # )
+        queryset = Ambassador.objects.all()
         created_after = self.request.query_params.get("created_after")
         created_before = self.request.query_params.get("created_before")
         ambassador_status = self.request.query_params.get("status")
