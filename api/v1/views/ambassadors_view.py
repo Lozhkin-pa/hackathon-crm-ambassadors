@@ -150,14 +150,10 @@ class AmbassadorsViewSet(ModelViewSet):
             if new_promo:
                 Promo.objects.create(value=new_promo, ambassador=ambassador)
             if ambassador_goals_data:
-                try:
-                    ambassador.ambassador_goals.set(
-                        AmbassadorGoal.objects.filter(
-                            title__in=ambassador_goals_data.split("., ")
-                        )
-                    )
-                except AmbassadorGoal.DoesNotExist:
-                    pass
+                ambassador_goals = AmbassadorGoal.objects.filter(
+                    title=ambassador_goals_data
+                )
+                ambassador.ambassador_goals.set(ambassador_goals)
             if education_goal_data != "Свой вариант":
                 ambassador.education_goal = EducationGoal.objects.get(
                     title=education_goal_data
@@ -176,6 +172,7 @@ class AmbassadorsViewSet(ModelViewSet):
                 data=request.data
             )
             if serializer.is_valid():
+                ambassador.save()
                 return Response(serializer.data)
         return super(AmbassadorsViewSet, self).create(request)
 
