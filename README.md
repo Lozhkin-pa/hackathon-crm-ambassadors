@@ -84,7 +84,7 @@ docker compose -f docker-compose.yaml up -d
 
 * На удаленном сервере: [Swagger](https://crm-ambassadors.hopto.org/api/v1/schema/swagger-ui/#/)
 * Локально после запуска: [Swagger](http://127.0.0.1:8000/api/v1/schema/swagger-ui/)
-* Из дирректории проекта: [CRM_API.yaml]()
+* Из дирректории проекта: [CRM_API.yaml](https://github.com/Lozhkin-pa/hackathon-crm-ambassadors/blob/main/docs/schema/CRM_API.yaml)
 
 ## Авторы
 
