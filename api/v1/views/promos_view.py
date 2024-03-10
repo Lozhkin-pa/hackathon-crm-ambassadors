@@ -56,7 +56,9 @@ class PromosViewSet(
     serializer_class = PromoActiveSerializer
 
     def get_queryset(self):
-        queryset = Ambassador.objects.filter(promos__status=PromoStatus.ACTIVE)
+        queryset = Ambassador.objects.filter(
+            promos__status=PromoStatus.ACTIVE
+        ).distinct()
         created_after = self.request.query_params.get("created_after")
         created_before = self.request.query_params.get("created_before")
         if created_after:
