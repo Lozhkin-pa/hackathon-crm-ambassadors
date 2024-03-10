@@ -3,8 +3,11 @@ from drf_spectacular.utils import extend_schema, extend_schema_view
 from rest_framework import decorators, mixins, viewsets
 from rest_framework.filters import OrderingFilter, SearchFilter
 
-from ambassadors.models import Promo
-from api.v1.serializers.promos_serializer import PromoSerializer
+from ambassadors.models import Ambassador, Promo
+from api.v1.serializers.promos_serializer import (
+    AmbassadorPromoArchiveSerializer,
+    PromoSerializer,
+)
 from core.choices import PromoStatus
 
 
@@ -68,28 +71,32 @@ class PromosViewSet(
         url_path="archive",
     )
     def get_archive_promos(self, request):
-        """Архивные промокоды амбассадоров."""
+        """
+        Архивные промокоды амбассадоров.
+        Фильтрация по статусу амбассадора (/?status=active).
+        Фильтр по дате (/?created_after=2024-02-23&created_before=2024-02-26).
+        Поиск по имени (/?search=Смирнова).
+        Сортировка по дате (/?ordering=-created).
+        """
 
-        queryset = Promo.objects.filter(status=PromoStatus.ARCHIVED)
+        queryset = Ambassador.objects.filter(
+            promos__status=PromoStatus.ARCHIVED
+        )
         created_after = self.request.query_params.get("created_after")
         created_before = self.request.query_params.get("created_before")
-        ambassador__status = self.request.query_params.get(
-            "ambassador__status"
-        )
+        ambassador_status = self.request.query_params.get("status")
         search = self.request.query_params.get("search")
-        ordering = self.request.query_params.get(
-            "ordering", "ambassador__created"
-        )
+        ordering = self.request.query_params.get("ordering", "created")
         if search:
-            queryset = queryset.filter(ambassador__name__icontains=f"{search}")
-        if ambassador__status:
-            queryset = queryset.filter(ambassador__status=ambassador__status)
+            queryset = queryset.filter(name__icontains=f"{search}")
+        if ambassador_status:
+            queryset = queryset.filter(status=ambassador_status)
         if created_after:
-            queryset = queryset.filter(ambassador__created__gte=created_after)
+            queryset = queryset.filter(created__gte=created_after)
         if created_before:
-            queryset = queryset.filter(ambassador__created__lte=created_before)
+            queryset = queryset.filter(created__lte=created_before)
         if ordering:
             queryset = queryset.order_by(f"{ordering}")
         page = self.paginate_queryset(queryset)
-        serializer = PromoSerializer(page, many=True)
+        serializer = AmbassadorPromoArchiveSerializer(page, many=True)
         return self.get_paginated_response(serializer.data)
