@@ -86,10 +86,9 @@ class PromosViewSet(
         Сортировка по дате (/?ordering=-created).
         """
 
-        # queryset = Ambassador.objects.filter(
-        #     promos__status=PromoStatus.ARCHIVED
-        # )
-        queryset = Ambassador.objects.all()
+        queryset = Ambassador.objects.filter(
+            promos__status=PromoStatus.ARCHIVED
+        ).distinct()
         created_after = self.request.query_params.get("created_after")
         created_before = self.request.query_params.get("created_before")
         ambassador_status = self.request.query_params.get("status")
