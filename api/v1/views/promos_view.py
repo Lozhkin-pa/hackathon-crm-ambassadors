@@ -22,7 +22,7 @@ from core.choices import PromoStatus
             "&created_before=2024-03-25</code>    "
             "т.е. дата старше 2023-04-25 и младше 2024-03-25</li>"
             "<li>Фильтрация по статусу амбассадора: "
-            "<code>./?ambassador__status=active</code> "
+            "<code>./?status=active</code> "
             "т.е. active(активный)/paused(на паузе)/"
             "not_ambassador(не амбассадор)/pending(уточняется)</li>"
             "<h3>Поиск:</h3>"
@@ -41,10 +41,10 @@ class PromosViewSet(
 ):
     """
     Промокоды амбассадоров.
-    Фильтрация по статусу амбассадора (/?ambassador__status=active).
+    Фильтрация по статусу амбассадора (/?status=active).
     Фильтр по дате (/?created_after=2024-02-23&created_before=2024-02-26).
     Поиск по имени (/?search=Смирнова).
-    Сортировка по дате (/?ordering=-ambassador__created).
+    Сортировка по дате (/?ordering=-created).
     """
 
     filter_backends = (DjangoFilterBackend, SearchFilter, OrderingFilter)
