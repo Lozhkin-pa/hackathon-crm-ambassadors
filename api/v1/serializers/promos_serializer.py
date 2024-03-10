@@ -58,6 +58,7 @@ class AmbassadorPromoArchiveSerializer(serializers.ModelSerializer):
     """Список амбассадоров c архивными промокодами."""
 
     promos_archive = serializers.SerializerMethodField()
+    course = serializers.StringRelatedField(read_only=True)
 
     def get_promos_archive(self, obj):
         promos_archive = obj.promos.filter(status=PromoStatus.ARCHIVED)
